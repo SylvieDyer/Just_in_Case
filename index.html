@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang ="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+
+        <title>Just in Case</title>
+    </head>
+
+    <body>
+        <header>
+            Just in Case
+        </header>
+
+        <div class="grid">
+            <!--Alert Feed Section-->
+            <div class="mainFeed">
+                <!--Filter Options-->
+                <div class="filters">
+                   <button class="filter" onclick="showFeed(event, 'home')" id="defaultOpen"><h3>Live Feed</h3></button>
+                   <button class="filter" onclick="showFeed(event, 'study')">Study Spots</button>
+                   <button class="filter" onclick="showFeed(event, 'food')">Food</button>
+               </div>
+            
+                <div id="home" class="samplePost">This is a sample general live alert at sample location<br>made by Me</div>
+                <div id="study" class="samplePost">This is a sample study alert at sample location<br>made by Me</div>
+                <div id="food" class="samplePost">This is a sample food alert at sample location<br>made by Me</div>
+            </div>
+            <!--Building Hub Section -->
+            <div class="buildingHub">
+                <div class="biRow">
+                    <div class="biCol">
+                        <form action="#">
+                            <button type="submit">Building 1</button>
+                        </form>
+                        <form action="#">
+                            <button type="submit">Building 2</button>
+                        </form>
+                        <form action="#">
+                            <button type="submit">Building 3</button>
+                        </form>
+                        <form action="#">
+                            <button type="submit">Building 4</button>
+                        </form>
+        
+                    </div>
+
+                    <div class="biCol">
+                        <form action="#">
+                            <button type="submit">Building 1</button>
+                        </form>
+                        <form action="#">
+                            <button type="submit">Building 2</button>
+                        </form>
+                        <!-- NEW WEBPAGE OR JUST OPEN ON LEFT SIDE ? -->
+                            <button type="submit" onclick="showBuilding(event, 'buildingName')" >Building 3</button>
+                        
+                        <form action="#">
+                            <button type="submit">Building 4</button>
+                        </form>
+                    </div>
+
+                   
+                       
+                </div>
+            </div>
+            <!--Post Button-->
+            <button class="post">
+                +
+            </button>
+        </div>
+        <script src="script.js"></script>
+    </body>
+
+
+</html>
