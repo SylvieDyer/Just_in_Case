@@ -88,6 +88,14 @@ header {
     padding: 25%;
     margin: 1rem;
     border-radius: 25px;
+   
+}
+
+
+.buildingPage {
+    display: none;
+    animation: fadeEffect 1s; /* fade in */
+
 }
 
 /* POST BUTTON */
