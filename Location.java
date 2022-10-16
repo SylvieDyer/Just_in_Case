@@ -1,7 +1,6 @@
 package Just_in_Case;
 
 public enum Location {
-    TOMLINSON_HALL, 
     ADELBERT_HALL, 
     ADELBERT_GYM, 
     WOLSTEIN_HALL, 
@@ -66,7 +65,7 @@ public enum Location {
     THWING_CENTER,
     TINKHAM_VEALE_UNIVERSITY_CENTER,
     TOBYS_PLAZA,
-    TOMLINSON,
+    TOMLINSON_HALL,
     VAN_HORN_FIELD,
     VEALE_CENTER,
     WADE_COMMONS,
