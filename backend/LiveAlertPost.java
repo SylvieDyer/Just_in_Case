@@ -39,5 +39,21 @@ public class LiveAlertPost {
         
     }
 
+    public PostType getPostType(){
+        return postType;
+    }
+
+    public Location getLocation(){
+        return location;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public Timestamp getDate(){
+        return date;
+    }
+
 
 }

@@ -1,5 +1,7 @@
 package Just_in_Case.backend;
 
+
+
 public class User {
     private String userType;
     private String name;
@@ -22,6 +24,18 @@ public class User {
 
     public void changePostSettings(boolean b) {
         postAnon = b;
+    }
+
+    public String getUserType(){
+        return userType;
+    }
+    
+    public String getName(){
+        return name;
+    }
+
+    public String getCaseID(){
+        return caseID;
     }
 }
 
