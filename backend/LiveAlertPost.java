@@ -5,7 +5,7 @@ public class LiveAlertPost {
     /*class represents an alert post a user can make that will display on live feed */
     private PostType postType;
     private Location location;
-    private HashSet<Categorization> categorizations;
+    private HashSet<Categorization> categorizations = new HashSet<Categorization>();
     private User user;
     private Timestamp date;
 
