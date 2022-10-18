@@ -1,3 +1,14 @@
+
+// let Location = new Java.type(Location);
+// //fill the select options with values from the ENUM Location [NOT WORKING]
+// $(function(){
+//     var $select = $("#location");
+//     for (location in Location.values()){
+//       $select.append($('<option></option>').val(location).html(location));
+//     }
+//   });
+
+
 // will include filters for the feed and possibly when choosing a building hub
 // Get the element with id="defaultOpen" and click on it : for some reason doesn't occur when in js file
 document.getElementById("defaultOpen").click();
@@ -74,3 +85,21 @@ function showBuilding(b, building){
         filter[i].style = "color: grey";
     }
 }
+
+// when user wants to create new post, form appears
+document.getElementById("postBtn").onclick = function() {
+  document.getElementById("createPost").style.display = "block";
+}
+
+// to discared a new post
+document.getElementById("postClose").onclick = function () {
+    document.getElementById("createPost").style.display = "none";
+}
+
+// to submit a new post
+document.getElementById("submit").onclick = function () {
+    // submit to database!! TODO
+    document.getElementById("createPost").style.display = "none";
+   
+}
+

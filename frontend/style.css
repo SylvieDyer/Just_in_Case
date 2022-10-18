@@ -1,9 +1,15 @@
-header {
+body {
+ overflow: hidden;
+}
+
+.header {
+    grid-area: top;
     font-family: monospace;
     text-align: left;
     font-size: 2rem;
     padding: .8rem 0rem .8rem .4rem;
     border-bottom: solid rgb(206, 206, 206);
+    
 }
 
 /* landing page layout */
@@ -11,6 +17,8 @@ header {
 .mainFeed { 
     grid-area: left;
     padding: 1.5rem;
+    overflow: scroll;
+
 }
 .buildingHub { 
     grid-area: right;
@@ -22,8 +30,15 @@ header {
 .grid {
     position: relative;
     display: grid;
-    grid:   'left left left right right'
-            'left left left right right';
+    grid:   'top top top top'
+            'left left right right'
+            'left left right right'
+            'left left right right'
+            'left left right right'
+            'left left right right';
+    height: 100vh;
+    width: 100vw;
+            
 }
 
 /*LIVE FEED PORTION: */
@@ -76,7 +91,7 @@ header {
 }
 
 /* make hubs stack when small screen  */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
     .buildingHub .biCol{
         flex: 100%;
         max-width: 100%;
@@ -88,25 +103,55 @@ header {
     padding: 25%;
     margin: 1rem;
     border-radius: 25px;
+    overflow: scroll;
    
 }
-
 
 .buildingPage {
     display: none;
     animation: fadeEffect 1s; /* fade in */
-
 }
 
 /* POST BUTTON */
-.post{
-    position: relative;
-    float:left;
+.postBtn{
+    position: absolute;
+    bottom: 5%;
+    float:left ;
     height: 5rem;
     width: 5rem;
     border-radius: 50%;
     font-size: 1.4rem;
-    transform:translate(20%, -25%);
+    z-index: 1;
 }
 
+.createPost {
+    display: none;
+    border-radius: 25px;
+    background-color: rgb(231, 231, 231);
+    position: absolute;
+    z-index: 11;
+    top: 25%;
+    right: 5%;
+    left: 5%;
+    margin-right: 5%;
+    margin-left: 5%;
+    padding: 1rem;
+}
 
+#postClose {
+    font-size:24px; 
+    float: right;
+}
+
+select {
+    padding: .2rem;
+}
+
+#submit {
+    float: right;
+    margin: 5% 5% 2%;
+    padding: .7rem;
+    border-radius: 25px;
+    background-color:rgb(202, 202, 202);
+    border: none;
+}
