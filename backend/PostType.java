@@ -1,4 +1,4 @@
-package Just_in_Case;
+package Just_in_Case.backend;
 
 public enum PostType {
     EXCESSIVE_RAIN,

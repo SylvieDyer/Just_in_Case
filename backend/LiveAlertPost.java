@@ -1,4 +1,4 @@
-package Just_in_Case;
+package Just_in_Case.backend;
 import java.sql.Timestamp;
 import java.util.*;
 public class LiveAlertPost {
