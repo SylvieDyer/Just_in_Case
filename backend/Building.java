@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class Building {
     private String buildingName;
-    private HashMap<String,Status> status;
+    private HashMap<String,Status> status = new HashMap<String,Status>();
     private String description;
     private HashMap<String, Timestamp> timeOfLastEvent;
 
