@@ -96,10 +96,17 @@ document.getElementById("postClose").onclick = function () {
     document.getElementById("createPost").style.display = "none";
 }
 
+
 // to submit a new post
 document.getElementById("submit").onclick = function () {
+    let postType = document.getElementById("postType").value;
+    let location = document.getElementById("location").value;
     // submit to database!! TODO
     document.getElementById("createPost").style.display = "none";
    
+    $('.postFeed').prepend("<div id='home' class='samplePost' style='display: block'>hello</div>");
+    showFeed($("#submit").onclick, 'home');
+    //$("#mainFeed").append($('<div id="home" class="samplePost">postType location</div>'));
 }
+
 

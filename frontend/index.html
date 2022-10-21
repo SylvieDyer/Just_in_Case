@@ -31,7 +31,7 @@
                     <option value="Bringham">Bingham</option>
                 </select>
             </div>
-            <input type="submit" id="submit"/>
+            <button type="submit" id="submit">Submit</button>
         </form>
 
         <div class="grid">
@@ -39,19 +39,19 @@
             <div class="header">Just in Case</div>
                 
             <!--Feed/Building Page Section [LEFT]-->
-            <div class="mainFeed">
+            <div class="mainFeed" id="mainFeed">
                 <!--Feed Filter Options-->
                 <div class="filters">
                     <button class="filter" onclick="showFeed(event, 'home')" id="defaultOpen"><h3>Live Feed</h3></button>
                     <button class="filter" onclick="showFeed(event, 'study')">Study Spots</button>
                     <button class="filter" onclick="showFeed(event, 'food')">Food</button>
                 </div>
-            
-                <!--Feed Posts-->
-                <div id="home" class="samplePost">This is a sample general live alert at sample location<br>made by Me</div>
-                <div id="study" class="samplePost">This is a sample study alert at sample location<br>made by Me</div>
-                <div id="food" class="samplePost">This is a sample food alert at sample location<br>made by Me</div>
-
+                <div class="postFeed">
+                    <!--Feed Posts-->
+                    <div id="home" class="samplePost">This is a sample general live alert at sample location<br>made by Me</div>
+                    <div id="study" class="samplePost">This is a sample study alert at sample location<br>made by Me</div>
+                    <div id="food" class="samplePost">This is a sample food alert at sample location<br>made by Me</div>
+                </div>
                 <!--Building Pages-->
                 <div id="A" class="buildingPage">
                     <h3>THIS IS FOR BUILDING A</h3>
