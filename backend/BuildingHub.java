@@ -23,8 +23,8 @@ public class BuildingHub {
         }
     }
 
-    public void addBuilding(Building building){
-        buildings.add(building);
+    public boolean addBuilding(Building building){
+        return buildings.add(building);
     }
 
     public void removeBuilding(Building building){
@@ -57,7 +57,7 @@ public class BuildingHub {
     private void openConnection() throws FileNotFoundException {
         String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
         String USER = "admin";
-        Scanner fr = new Scanner(new File("./untracked.txt"));
+        Scanner fr = new Scanner(new File("C:/Users/prart/OneDrive/Documents/2022Fall/csds393/Just_in_Case/untracked.txt"));
         String PASS = fr.nextLine();
 
         try {
