@@ -1,24 +1,25 @@
 import java.util.*;
 import java.sql.Timestamp;
-import static Just_in_Case.Location.BINGHAM;
+import static backend.Location.BINGHAM;
 import static org.junit.Assert.*;
-
-import Just_in_Case.PostType;
 import org.junit.Test;
+import backend.LiveAlertPost;
+import backend.User;
+import backend.PostType;
 
 public class LiveAlertPostTest{
     @Test
     public void testLiveAlertPost(){
-        Just_in_Case.User user = new Just_in_Case.User("administrator", "Liyi", "lxc596");
-        Just_in_Case.LiveAlertPost  testEXCESSIVE_RAIN = new Just_in_Case.LiveAlertPost(PostType.EXCESSIVE_RAIN, BINGHAM, user, null);
+        User user = new User("administrator", "Liyi", "lxc596");
+        LiveAlertPost  testEXCESSIVE_RAIN = new LiveAlertPost(PostType.EXCESSIVE_RAIN, BINGHAM, user);
         assertEquals("WEATHER",testEXCESSIVE_RAIN.getCategorizations().iterator().next().toString());
-        Just_in_Case.LiveAlertPost  testEXCESSIVE_SNOW = new Just_in_Case.LiveAlertPost(PostType.EXCESSIVE_SNOW, BINGHAM, user, null);
+        LiveAlertPost  testEXCESSIVE_SNOW = new LiveAlertPost(PostType.EXCESSIVE_SNOW, BINGHAM, user);
         assertEquals("WEATHER",testEXCESSIVE_SNOW.getCategorizations().iterator().next().toString());
-        Just_in_Case.LiveAlertPost  testSUSPICIOUS_BEHAVIOR = new Just_in_Case.LiveAlertPost(PostType.SUSPICIOUS_BEHAVIOR, BINGHAM, user, null);
+        LiveAlertPost  testSUSPICIOUS_BEHAVIOR = new LiveAlertPost(PostType.SUSPICIOUS_BEHAVIOR, BINGHAM, user);
         assertEquals("SAFETY",testSUSPICIOUS_BEHAVIOR.getCategorizations().iterator().next().toString());
-        Just_in_Case.LiveAlertPost  testCROWDED = new Just_in_Case.LiveAlertPost(PostType.CROWDED, BINGHAM, user, null);
+        LiveAlertPost  testCROWDED = new LiveAlertPost(PostType.CROWDED, BINGHAM, user);
         assertEquals("STUDY",testCROWDED.getCategorizations().iterator().next().toString());
-        Just_in_Case.LiveAlertPost  testCLOSED = new Just_in_Case.LiveAlertPost(PostType.CLOSED, BINGHAM, user, null);
+        LiveAlertPost  testCLOSED = new LiveAlertPost(PostType.CLOSED, BINGHAM, user);
         assertEquals("STUDY",testCLOSED.getCategorizations().iterator().next().toString());
     }
 }
