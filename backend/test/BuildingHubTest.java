@@ -1,13 +1,12 @@
 import java.util.*;
-import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import backend.Building;
-import backend.BuildingHub;
 import java.io.*;
 import java.sql.*;
+import org.junit.*;
+import static org.junit.Assert.*;
+
+import backend.Building;
+import backend.BuildingHub;
+
 
 public class BuildingHubTest {
     Connection conn;
@@ -16,14 +15,13 @@ public class BuildingHubTest {
         String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
         String USER = "admin";
         try (Scanner fr = new Scanner(new 
-            File("C:/Users/prart/OneDrive/Documents/2022Fall/csds393/Just_in_Case/untracked.txt"))) {
+            File("./untracked.txt"))) {
             String PASS = fr.nextLine();
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             conn.setAutoCommit(true);
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
