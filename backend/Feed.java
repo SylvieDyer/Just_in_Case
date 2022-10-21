@@ -10,17 +10,15 @@ public class Feed {
     public Feed(){
         category = new ArrayList<Categorization>();
         category.add(Categorization.LIVE_ALERT);
-        alertFeed = parseFeed();
+        alertFeed = new ArrayList<LiveAlertPost>();
     }
 
-    public ArrayList<LiveAlertPost> parseFeed() {
-        //prar do ur database thingy - what is this?????
-        return null;
-    }
+    // public ArrayList<LiveAlertPost> parseFeed() {
+    //     return null;
+    // }
 
     public boolean addPost(LiveAlertPost p){
-        alertFeed.add(p);
-        return true; 
+        return alertFeed.add(p);
         /* I'm sorry I'm not entirely sure how yall wanna do this */
     }
 

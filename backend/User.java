@@ -16,11 +16,13 @@ public class User {
         this.caseID = caseID;
         postAnon = true;
 
+        boolean isAdmin = userType.equals("Administrator");
+
         try {
             openConnection();
             try(Statement stmt = conn.createStatement()) {
                 stmt.executeUpdate("INSERT INTO just_in_case.user VALUES ('" 
-                + caseID + "', '" + name + "', '" + postAnon + "', '" + false + "')"); 
+                + caseID + "', '" + name + "', '" + postAnon + "', '" + isAdmin + "')"); 
             } catch(SQLException e) {
                 e.printStackTrace();
             }
@@ -33,8 +35,8 @@ public class User {
         postAnon = b;
     }
 
-    public String getUserType(){
-        return userType;
+    public boolean isAdmin(){
+        return userType.equals("Administrator");
     }
     
     public String getName(){
@@ -49,10 +51,15 @@ public class User {
         return postAnon;
     }
 
+    public void setPostAnon(boolean anon) {
+        postAnon = anon;
+    }
+
+
     private void openConnection() throws FileNotFoundException {
         String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
         String USER = "admin";
-        Scanner fr = new Scanner(new File("C:/Users/prart/OneDrive/Documents/2022Fall/csds393/Just_in_Case/untracked.txt"));
+        Scanner fr = new Scanner(new File("./untracked.txt"));
         String PASS = fr.nextLine();
 
         try {
