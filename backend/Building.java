@@ -18,16 +18,16 @@ public class Building {
         }
         try {
             openConnection();
+            try(Statement stmt = conn.createStatement()) {
+                stmt.executeUpdate("INSERT INTO just_in_case.building(buildingName, description) VALUES ('"
+                 + buildingName + "', '" + description + "')"); 
+            } catch(SQLException e) {
+                e.printStackTrace();
+                System.out.println("connection failed");
+            }
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
-        }
-
-        try(Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate("INSERT INTO just_in_case.building(buildingName, description) VALUES ('"
-             + buildingName + "', '" + description + "')"); 
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
+        }        
     }
     
     private void openConnection() throws FileNotFoundException {

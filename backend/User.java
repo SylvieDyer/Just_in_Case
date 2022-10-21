@@ -18,16 +18,15 @@ public class User {
 
         try {
             openConnection();
+            try(Statement stmt = conn.createStatement()) {
+                stmt.executeUpdate("INSERT INTO just_in_case.user VALUES ('" 
+                + caseID + "', '" + name + "', '" + postAnon + "', '" + false + "')"); 
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
-        }
-
-        try(Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate("INSERT INTO just_in_case.user VALUES ('" 
-            + caseID + "', '" + name + "', '" + postAnon + "', '" + false + "')"); 
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
+        }        
     }
 
     public void changePostSettings(boolean b) {
