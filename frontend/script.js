@@ -99,14 +99,17 @@ document.getElementById("postClose").onclick = function () {
 
 // to submit a new post
 document.getElementById("submit").onclick = function () {
-    let postType = document.getElementById("postType").value;
-    let location = document.getElementById("location").value;
+    let postType = document.getElementById("postType").textContent;
+    let location = document.getElementById("location").textContent;
     // submit to database!! TODO
     document.getElementById("createPost").style.display = "none";
+    const post = document.createElement("div");
+    post.id = "home";
+    post.class = "samplePost";
+    const postContent = document.createTextNode(""+postType +" " + location);
+    post.append(postContent);
    
-    $('.postFeed').prepend("<div id='home' class='samplePost' style='display: block'>hello</div>");
+    document.getElementById('postFeed').prepend(post);
+
     showFeed($("#submit").onclick, 'home');
-    //$("#mainFeed").append($('<div id="home" class="samplePost">postType location</div>'));
 }
-
-
