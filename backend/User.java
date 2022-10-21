@@ -37,5 +37,9 @@ public class User {
     public String getCaseID(){
         return caseID;
     }
+    
+    public boolean getPostAnon(){
+        return postAnon;
+    }
 }
 
