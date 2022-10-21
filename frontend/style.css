@@ -46,6 +46,7 @@ body {
     border: solid;
     padding: 5%;
     display: none;
+    margin-bottom: 5%;
 
     animation: fadeEffect 1s; /* fade in */
 }

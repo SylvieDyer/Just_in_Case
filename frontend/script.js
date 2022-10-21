@@ -21,7 +21,10 @@ function showFeed(e, selection){
     // gets elements with class="samplePost"
     samplePost = document.getElementsByClassName("samplePost");
     for (i = 0; i < samplePost.length; i++){
-        samplePost[i].style.display = "none";
+        if (samplePost[i].id != selection)
+            samplePost[i].style.display = "none";
+        else   
+            samplePost[i].style.display = "block";
     }
 
     // get all feed filters (class="filter") and remove class "Active", change style
@@ -32,7 +35,7 @@ function showFeed(e, selection){
     }
 
     // show current tab + add active label to button of tab
-    document.getElementById(selection).style.display = "block";
+   // document.getElementById(selection).style.display = "block";
     e.currentTarget.className += " active";
     e.currentTarget.style = "color: black";
 
