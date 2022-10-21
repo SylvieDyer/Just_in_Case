@@ -1,4 +1,4 @@
-package Just_in_Case.backend;
+package backend;
 import java.util.*;
 import java.sql.*;
 
@@ -7,6 +7,7 @@ public class Building {
     private HashMap<String,Status> status = new HashMap<String,Status>();
     private String description;
     private HashMap<String, Timestamp> timeOfLastEvent;
+    private Connection conn;
 
     public Building(String name, String description, List<String> facilities){
         this.buildingName = name;
@@ -14,7 +15,25 @@ public class Building {
         for(String facility : facilities){
             status.put(facility, Status.NOT_BUSY);
         }
-        
+        openConnection();
+
+        try(Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate("INSERT INTO just_in_case.building VALUES ('" + 1 + "', '" + buildingName + "', '" + description + "')"); 
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void openConnection() {
+        String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
+        String USER = "admin";
+        String PASS = "";
+        try {
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn.setAutoCommit(true);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Status getStatus(String buildingUnit){

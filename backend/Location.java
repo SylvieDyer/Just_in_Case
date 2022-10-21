@@ -1,4 +1,4 @@
-package Just_in_Case.backend;
+package backend;
 
 public enum Location {
     ADELBERT_HALL, 

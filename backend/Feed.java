@@ -1,4 +1,4 @@
-package Just_in_Case.backend;
+package backend;
 import java.util.*;
 
 /* class that stores all posts */

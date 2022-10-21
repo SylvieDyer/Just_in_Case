@@ -1,4 +1,4 @@
-package Just_in_Case.backend;
+package backend;
 import java.util.*;
 
 public class BuildingHub {

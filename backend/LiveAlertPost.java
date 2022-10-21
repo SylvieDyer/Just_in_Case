@@ -1,6 +1,8 @@
-package Just_in_Case.backend;
+package backend;
 import java.sql.Timestamp;
 import java.util.*;
+import java.sql.*;
+
 public class LiveAlertPost {
     /*class represents an alert post a user can make that will display on live feed */
     private PostType postType;
@@ -8,6 +10,7 @@ public class LiveAlertPost {
     private HashSet<Categorization> categorizations = new HashSet<Categorization>();
     private User user;
     private Timestamp date;
+    private Connection conn;
 
     //Constructor initializes a post with post type, location, user, and date
     public LiveAlertPost(PostType postType, Location location, User user, Timestamp date) {
@@ -16,6 +19,14 @@ public class LiveAlertPost {
         this.user = user;
         this.date = date;
         updateCategorization();
+
+        // openConnection();
+
+        // try(Statement stmt = conn.createStatement()) {
+        //     stmt.executeUpdate("INSERT INTO just_in_case.building VALUES ('" + 1 + "', '" + buildingName + "', '" + description + "')"); 
+        // } catch(SQLException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     private void updateCategorization() {
