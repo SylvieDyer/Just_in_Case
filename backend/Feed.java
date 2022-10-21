@@ -13,22 +13,22 @@ public class Feed {
         alertFeed = parseFeed();
     }
 
-    private ArrayList<LiveAlertPost> parseFeed() {
-        //prar do ur database thingy
+    public ArrayList<LiveAlertPost> parseFeed() {
+        //prar do ur database thingy - what is this?????
         return null;
     }
 
-    private boolean addPost(LiveAlertPost p){
+    public boolean addPost(LiveAlertPost p){
         alertFeed.add(p);
         return true; 
         /* I'm sorry I'm not entirely sure how yall wanna do this */
     }
 
-    private void setCategory(List<Categorization> c){
+    public void setCategory(List<Categorization> c){
         category = c;
     }
 
-    private List<LiveAlertPost> filterFeed(List<Categorization> c) {
+    public List<LiveAlertPost> filterFeed(List<Categorization> c) {
         ArrayList<LiveAlertPost> posts = new ArrayList<>();
         for(Categorization cat: c){
             for(LiveAlertPost post : alertFeed){

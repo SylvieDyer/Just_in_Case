@@ -1,25 +1,33 @@
 package backend;
-
-
+import java.sql.*;
+import java.io.*;
+import java.util.*;
 
 public class User {
     private String userType;
     private String name;
     private String caseID;
     private boolean postAnon;
-
-    public User() {
-        userType = null;
-        name = null;
-        caseID = null;
-        postAnon = true;
-    }
+    private Connection conn;
 
     public User(String userType, String name, String caseID){
         this.userType = userType;
         this.name = name;
         this.caseID = caseID;
-        postAnon =true;
+        postAnon = true;
+
+        try {
+            openConnection();
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        }
+
+        try(Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate("INSERT INTO just_in_case.user VALUES ('" 
+            + caseID + "', '" + name + "', '" + postAnon + "', '" + false + "')"); 
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void changePostSettings(boolean b) {
@@ -40,6 +48,20 @@ public class User {
     
     public boolean getPostAnon(){
         return postAnon;
+    }
+
+    private void openConnection() throws FileNotFoundException {
+        String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
+        String USER = "admin";
+        Scanner fr = new Scanner(new File("./untracked.txt"));
+        String PASS = fr.nextLine();
+
+        try {
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn.setAutoCommit(true);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 

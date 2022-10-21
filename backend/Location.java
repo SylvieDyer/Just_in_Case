@@ -9,6 +9,7 @@ public enum Location {
     BOOKSTORE, 
     BELLFLOWER_HALL, 
     BINGHAM, 
+    BIOMEDICAL_RESEARCH_BUILDING, //brb
     CARLTON_COMMONS, 
     CLARK_HALL, 
     //CLEVELAND_CENTER_FOR_MOLECULAR_AND_STRUCTURAL_BIOLOGY
@@ -45,6 +46,7 @@ public enum Location {
     OLIN,
     ONE_TO_ONE_FITNESS,
     PUBLIC_SAFETY_AND_SECURITY,
+    PETER_B_LEWIS,
     PYTTE_SCIENCE_CENTER,
     MILLIS_SCHMITT,
     CLAPP,
@@ -177,11 +179,11 @@ public enum Location {
     gund hall school of law
     jack, joseph and morton mandel school of applied social sciences
     school of dental medicine clinic
-    weatherhead school of management (peter b lewis)
+    weatherhead school of management (peter b lewis) (added)
     SCHOOL OF GRADUATE STUDIES- TOMLINSON
     ALLEN MEMORAL MEDICAL LIBRARY
     BIOENTERPRISE
-    BIOMEDICAL RESEARCH
+    BIOMEDICAL RESEARCH (added)
     CEDAR AVENUE SERVICE CENTER
 
 

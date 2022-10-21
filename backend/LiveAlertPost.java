@@ -2,6 +2,7 @@ package backend;
 import java.sql.Timestamp;
 import java.util.*;
 import java.sql.*;
+import java.io.*;
 
 public class LiveAlertPost {
     /*class represents an alert post a user can make that will display on live feed */
@@ -12,21 +13,44 @@ public class LiveAlertPost {
     private Timestamp date;
     private Connection conn;
 
-    //Constructor initializes a post with post type, location, user, and date
-    public LiveAlertPost(PostType postType, Location location, User user, Timestamp date) {
+    //Constructor initializes a post with post type, location, user, and current datetime
+    public LiveAlertPost(PostType postType, Location location, User user) {
         this.postType = postType;
         this.location = location;
         this.user = user;
-        this.date = date;
+        this.date = new Timestamp(System.currentTimeMillis());
         updateCategorization();
 
-        // openConnection();
+        try {
+            openConnection();
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        }
 
-        // try(Statement stmt = conn.createStatement()) {
-        //     stmt.executeUpdate("INSERT INTO just_in_case.building VALUES ('" + 1 + "', '" + buildingName + "', '" + description + "')"); 
-        // } catch(SQLException e) {
-        //     e.printStackTrace();
-        // }
+        try(Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(
+                "INSERT INTO just_in_case.livealertpost(postType, location, time, numUpvotes, numDownvotes)"
+                + " VALUES ('" + postType + "', '" + location + "', '" + date + "', '" + 0 + "', '" + 0 + "')"); 
+            // stmt.executeUpdate(
+            //     "INSERT INTO just_in_case.posts"
+            //     + " VALUES ('" +  + "', '" + user.getCaseID()); 
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void openConnection() throws FileNotFoundException {
+        String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
+        String USER = "admin";
+        Scanner fr = new Scanner(new File("./untracked.txt"));
+        String PASS = fr.nextLine();
+
+        try {
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn.setAutoCommit(true);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateCategorization() {
@@ -47,7 +71,6 @@ public class LiveAlertPost {
     
     public HashSet<Categorization> getCategorizations(){
         return categorizations;
-        
     }
 
     public PostType getPostType(){
@@ -65,6 +88,4 @@ public class LiveAlertPost {
     public Timestamp getDate(){
         return date;
     }
-
-
 }
