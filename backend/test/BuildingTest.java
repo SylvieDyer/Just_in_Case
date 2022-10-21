@@ -1,8 +1,9 @@
 import java.util.*;
 import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
+import backend.Building;
+
 public class BuildingTest{
     @Test
     public void testInitialization(){
@@ -12,7 +13,7 @@ public class BuildingTest{
         facilities.add("cafe");
         String name = "Building A";
         String description = "This is a building";
-        Just_in_Case.Building building = new Just_in_Case.Building(name, description, facilities);
+        Building building = new Building(name, description, facilities);
         assertEquals("This is a building", building.getDescription());
         assertEquals("NOT_BUSY",building.getStatus("restroom").toString());
         assertEquals("NOT_BUSY",building.getStatus("classroom").toString());
@@ -26,7 +27,7 @@ public class BuildingTest{
         facilities.add("classroom");
         String name = "Building A";
         String description = "This is a building";
-        Just_in_Case.Building building = new Just_in_Case.Building(name, description, facilities);
+        Building building = new Building(name, description, facilities);
         building.addBuildingUnit("cafe");
         building.removeBuildingUnit("classroom");
         assertEquals("NOT_BUSY", building.getStatus("cafe").toString());
