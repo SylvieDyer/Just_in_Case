@@ -3,12 +3,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   
-  <parent>
-	  <groupId>org.springframework.boot</groupId>
-	  <artifactId>spring-boot-starter-parent</artifactId>
-	  <version>2.7.5</version>
-  </parent>
-  
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.csds393</groupId>
   <artifactId>just-in-case</artifactId>
@@ -26,7 +20,6 @@
   </properties>
 
   <dependencies>
-
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
@@ -34,25 +27,19 @@
     </dependency>
 
     <dependency>
-      <groupId>com.amazonaws</groupId>
-      <artifactId>aws-java-sdk-bom</artifactId>
-      <version>1.12.334</version>
-      <type>pom</type>
-    </dependency>
-
-    <dependency>
-        <groupId>software.amazon.awssdk</groupId>
-        <artifactId>bom</artifactId>
-        <version>2.16.1</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
       <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <!-- Import dependency management from Spring Boot -->
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-dependencies</artifactId>
+      <version>2.7.5</version>
+      <type>pom</type>
+      <scope>import</scope>
     </dependency>
   </dependencies>
 
