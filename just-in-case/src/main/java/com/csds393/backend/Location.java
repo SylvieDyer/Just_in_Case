@@ -1,4 +1,4 @@
-package backend;
+package com.csds393.backend;
 
 public enum Location {
     ADELBERT_HALL, 

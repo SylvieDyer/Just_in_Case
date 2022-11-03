@@ -1,4 +1,4 @@
-package backend;
+package com.csds393.backend;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ public class TestForPrar {
         
         String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
         String USER = "admin";
-        try (Scanner fr = new Scanner(new File("./untracked.txt"))) {
+        try (Scanner fr = new Scanner(new File("./././untracked.txt"))) {
             String PASS = fr.nextLine();
 
             try {

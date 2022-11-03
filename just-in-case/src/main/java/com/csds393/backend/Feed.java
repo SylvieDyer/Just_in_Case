@@ -1,4 +1,4 @@
-package backend;
+package com.csds393.backend;
 import java.util.*;
 
 /* class that stores all posts */
