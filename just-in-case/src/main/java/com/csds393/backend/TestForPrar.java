@@ -1,14 +1,13 @@
 package com.csds393.backend;
-
 import java.util.ArrayList;
-
 import java.sql.*;
 import java.util.*;
 import java.io.*;
-
+import com.csds393.backend.*;
 
 public class TestForPrar {
-    public static void main(String[] args) {
+
+    public static void run() {
         ArrayList<String> testFacilities = new ArrayList<String>(Arrays.asList("1", "2", "3"));
         
         String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
