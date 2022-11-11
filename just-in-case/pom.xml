@@ -53,6 +53,21 @@
         <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
+    <dependency>      
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+        
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -101,6 +116,14 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+           <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>             
+            <configuration>    
+                <mainClass>com.csds393.HomeController</mainClass>
+            </configuration>
+        </plugin>
+
       </plugins>
     </pluginManagement>
   </build>

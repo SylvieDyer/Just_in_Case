@@ -1,25 +1,23 @@
 package com.csds393;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
+import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
-
-import com.csds393.backend.TestForPrar;
 
  
 @RestController
 @EnableAutoConfiguration
-public class BuildingController {
-
+public class HomeController {
+    
     @RequestMapping("/")
-    String home() {
-        return "Hello World!";
+    public String test() {
+        // should be displying the index.html file
+        return "index";
     }
-
+    
     public static void main(String[] args) throws Exception {
-        //SpringApplication.run(BuildingController.class, args);
-        System.out.println("\nTEST FOR PRAR OUTPUT:\n");
-        TestForPrar.run();
+        SpringApplication.run(HomeController.class, args);
+        System.out.println("\nRUNNING HOME CONTROLLER:\n");
     }
-
 }
