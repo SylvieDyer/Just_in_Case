@@ -67,6 +67,17 @@ public class LiveAlertPost {
                 break;
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof LiveAlertPost ){
+            LiveAlertPost p = (LiveAlertPost) obj;
+            if (p.getPostType() == this.getPostType() && p.getLocation() == this.getLocation()){
+                return true;
+            }
+        }
+        return false;
+    }
     
     public HashSet<Categorization> getCategorizations(){
         return categorizations;
