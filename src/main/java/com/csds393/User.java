@@ -16,7 +16,10 @@ public class User {
         this.caseID = caseID;
         postAnon = 1;
 
-        boolean isAdmin = userType.equals("Administrator");
+        int isAdmin = 0;
+        if (userType.equals("Administrator")) {
+            isAdmin = 1;
+        }
 
         try {
             openConnection();

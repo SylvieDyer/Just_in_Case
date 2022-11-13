@@ -12,9 +12,9 @@ public class DemoController
     @RequestMapping("/")  
     public String index()
     {  
-        LiveAlertPost test = new LiveAlertPost(PostType.CROWDED, Location.ADELBERT_HALL, new User("User", "Prarthana", "pjg83"));
-        feed.addPost(test);
-        modelAndView.addObject("feed", feed.getFeed());
+        // LiveAlertPost test = new LiveAlertPost(PostType.CROWDED, Location.ADELBERT_HALL, new User("User", "Prarthana", "pjg83"));
+        // feed.addPost(test);
+        // modelAndView.addObject("feed", feed.getFeed());
         System.out.println("entering first mapping");
         //returns to index.html
         return"index";      
