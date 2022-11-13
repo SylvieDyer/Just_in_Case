@@ -7,14 +7,14 @@ public class User {
     private String userType;
     private String name;
     private String caseID;
-    private boolean postAnon;
+    private int postAnon;
     private Connection conn;
 
     public User(String userType, String name, String caseID){
         this.userType = userType;
         this.name = name;
         this.caseID = caseID;
-        postAnon = true;
+        postAnon = 1;
 
         boolean isAdmin = userType.equals("Administrator");
 
@@ -31,7 +31,7 @@ public class User {
         }        
     }
 
-    public void changePostSettings(boolean b) {
+    public void changePostSettings(int b) {
         postAnon = b;
     }
 
@@ -47,11 +47,11 @@ public class User {
         return caseID;
     }
     
-    public boolean getPostAnon(){
+    public int getPostAnon(){
         return postAnon;
     }
 
-    public void setPostAnon(boolean anon) {
+    public void setPostAnon(int anon) {
         postAnon = anon;
     }
 
@@ -59,7 +59,7 @@ public class User {
     private void openConnection() throws FileNotFoundException {
         String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
         String USER = "admin";
-        Scanner fr = new Scanner(new File("C:/Users/prart/OneDrive/Documents/2022Fall/csds393/Just_in_Case/untracked.txt"));
+        Scanner fr = new Scanner(new File(("./././untracked.txt")));
         String PASS = fr.nextLine();
 
         try {

@@ -39,11 +39,17 @@ public class BuildingHub {
     }
 
     public void removeBuildingByName(String buildingName){
+        boolean removed = false;
         for(int i = 0; i < buildings.size(); i++) {
             if(buildings.get(i).getName().equals(buildingName)) {
                 buildings.remove(i);
                 i--;
+                removed = true;
             }
+        }
+        
+        if (removed == false) {
+            throw new IllegalArgumentException("Tried to remove building that does not exist");
         }
 
         try(Statement stmt = conn.createStatement()) {
@@ -52,6 +58,20 @@ public class BuildingHub {
         } catch(SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Building> getAllBuildings() {
+        return buildings;
+    }
+
+    //Returns null if no such building.
+    public Building getBuildingByName(String name) {
+        for (Building b : buildings) {
+            if (b.getName().equals(name)) {
+                return b;
+            }
+        }
+        return null;
     }
 
     private void openConnection() throws FileNotFoundException {

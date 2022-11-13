@@ -7,23 +7,28 @@ import org.springframework.stereotype.Controller;
 @Controller  
 public class DemoController 
 {  
-@RequestMapping("/")  
-public String index()
-{  
-    System.out.println("entering first mapping");
-//returns to index.html
-return"index";  
-}  
+    ModelAndView modelAndView = new ModelAndView("redirect:/"); 
+    Feed feed = new Feed();
+    @RequestMapping("/")  
+    public String index()
+    {  
+        LiveAlertPost test = new LiveAlertPost(PostType.CROWDED, Location.ADELBERT_HALL, new User("User", "Prarthana", "pjg83"));
+        feed.addPost(test);
+        modelAndView.addObject("feed", feed.getFeed());
+        System.out.println("entering first mapping");
+        //returns to index.html
+        return"index";      
+    }  
 
-// when form is submitted (action save)
-@RequestMapping(value="/createPost", method=RequestMethod.POST)  
-public ModelAndView newPost(@ModelAttribute LiveAlertPost post){  
-
-    System.out.println(post.getLocation());
-    ModelAndView modelAndView = new ModelAndView();  
-    modelAndView.setViewName("user-data");      
-    modelAndView.addObject("post", post);    
-    
-    return modelAndView;  
-    }
+    // when form is submitted (action save)
+    @RequestMapping(value="/createPost", method=RequestMethod.POST)  
+    public ModelAndView newPost(@ModelAttribute LiveAlertPost post){  
+        System.out.println(post.getLocation());
+        feed.addPost(post);
+        
+        //modelAndView.setViewName("user-data");      
+        modelAndView.addObject("feed", feed.getFeed());    
+        
+        return modelAndView;  
+        }
 }  

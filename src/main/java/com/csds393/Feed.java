@@ -17,6 +17,10 @@ public class Feed {
     //     return null;
     // }
 
+    public List<LiveAlertPost> getFeed() {
+        return alertFeed;
+    }
+
     public boolean addPost(LiveAlertPost p){
         return alertFeed.add(p);
         /* I'm sorry I'm not entirely sure how yall wanna do this */

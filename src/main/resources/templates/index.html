@@ -75,6 +75,9 @@
                     <div id="home" class="samplePost">This is a sample general live alert at sample location<br>made by Me</div>
                     <div id="study" class="samplePost">This is a sample study alert at sample location<br>made by Me</div>
                     <div id="food" class="samplePost">This is a sample food alert at sample location<br>made by Me</div>
+                    <tr th:each="post: ${feed}">
+                        <td th:text="${{post.postType}">
+                    </tr>
                 </div>
                 <!--Building Pages-->
                 <div id="A" class="buildingPage">
