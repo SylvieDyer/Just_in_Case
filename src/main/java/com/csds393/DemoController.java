@@ -26,9 +26,9 @@ public class DemoController
         System.out.println(post.getLocation());
         feed.addPost(post);
         
-        //modelAndView.setViewName("user-data");      
+        modelAndView.setViewName("index");      
         modelAndView.addObject("feed", feed.getFeed());    
-        
+       
         return modelAndView;  
         }
 }  
