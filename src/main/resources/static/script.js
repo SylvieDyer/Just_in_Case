@@ -113,6 +113,6 @@ document.getElementById("submit").onclick = function () {
     post.append(postContent);
    
     document.getElementById('postFeed').prepend(post);
-
+    console.log("POSTING");
     showFeed($("#submit").onclick, 'home');
 }

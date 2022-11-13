@@ -33,7 +33,7 @@
     </head>
 
     <body>
-        <form action="createPost" method="post" class="createPost" id="createPost">
+        <form action="" method="post" class="createPost" id="createPost">
             <h1>New Post <i id="postClose" class="fa fa-close"></i></h1>
             <div>
                 Alert! 
@@ -70,9 +70,11 @@
                     <button class="filter" onclick="showFeed(event, 'food')">Food</button>
                 </div>
                 <tr class="postFeed" id="postFeed" th:each="post:${feed}">
-                    <td id="home" class="samplePost">
+                    <div id="home" class="samplePost">
+                    <td>
                         <p th:text="${post.postType}"></p>at <p th:text="${post.location}"></p>
                     </td>
+                    </div>  
                     <!--Feed Posts-->
                     <!-- <div id="home" class="samplePost">This is a sample general live alert at sample location<br>made by Me</div>
                     <div id="home" class="samplePost">This is a sample general live alert at sample location<br>made by Me</div>

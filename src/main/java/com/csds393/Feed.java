@@ -22,6 +22,10 @@ public class Feed {
     }
 
     public boolean addPost(LiveAlertPost p){
+        for (LiveAlertPost post : alertFeed){
+            if (post.equals(p))
+                return false;
+        }
         return alertFeed.add(p);
         /* I'm sorry I'm not entirely sure how yall wanna do this */
     }
