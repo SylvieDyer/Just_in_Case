@@ -1,8 +1,0 @@
-{
-    "java.configuration.updateBuildConfiguration": "interactive",
-    "java.project.sourcePaths": [
-        "test/java/com/csds393",
-        "backend",
-        ""
-    ]
-}
