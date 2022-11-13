@@ -69,16 +69,19 @@
                     <button class="filter" onclick="showFeed(event, 'study')">Study Spots</button>
                     <button class="filter" onclick="showFeed(event, 'food')">Food</button>
                 </div>
-                <div class="postFeed" id="postFeed">
+                <tr class="postFeed" id="postFeed" th:each="post:${feed}">
+                    <td id="home" class="samplePost">
+                        <p th:text="${post.postType}"></p>at <p th:text="${post.location}"></p>
+                    </td>
                     <!--Feed Posts-->
+                    <!-- <div id="home" class="samplePost">This is a sample general live alert at sample location<br>made by Me</div>
                     <div id="home" class="samplePost">This is a sample general live alert at sample location<br>made by Me</div>
-                    <div id="home" class="samplePost">This is a sample general live alert at sample location<br>made by Me</div>
-                    <div id="study" class="samplePost">This is a sample study alert at sample location<br>made by Me</div>
+                    <div id="study" class="samsplePost">This is a sample study alert at sample location<br>made by Me</div>
                     <div id="food" class="samplePost">This is a sample food alert at sample location<br>made by Me</div>
                     <tr id="home" th:each="post: ${feed}">
                         <td th:text="${post.postType}">
-                    </tr>
-                </div>
+                    </tr> -->
+                </tr>
                 <!--Building Pages-->
                 <div id="A" class="buildingPage">
                     <h3>THIS IS FOR BUILDING A</h3>

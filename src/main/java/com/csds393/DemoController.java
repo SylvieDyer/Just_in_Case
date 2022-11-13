@@ -16,6 +16,7 @@ public class DemoController
         // feed.addPost(test);
         // modelAndView.addObject("feed", feed.getFeed());
         System.out.println("entering first mapping");
+        modelAndView.addObject("feed", feed.getFeed());
         //returns to index.html
         return"index";      
     }  
@@ -28,7 +29,7 @@ public class DemoController
         
         modelAndView.setViewName("index");      
         modelAndView.addObject("feed", feed.getFeed());    
-       
+        
         return modelAndView;  
         }
 }  
