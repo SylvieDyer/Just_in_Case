@@ -26,17 +26,6 @@ public class BuildingHubTest {
         }
     }
 
-    @After
-    public void clearDatabase() {
-        Statement stmt;
-        try {
-            stmt = conn.createStatement();
-            stmt.executeUpdate("DELETE FROM just_in_case.building");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Test
     public void testAddBuilding() {
         BuildingHub buildingHub = new BuildingHub();
@@ -49,5 +38,18 @@ public class BuildingHubTest {
         Building building = new Building(name, description, facilities);
         assertTrue(buildingHub.addBuilding(building)); 
     }
+
+    @After
+    public void clearDatabase() {
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM just_in_case.building");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
 }
 

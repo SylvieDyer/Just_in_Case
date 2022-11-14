@@ -24,24 +24,24 @@ public class Building {
         } catch (NullPointerException e){
             
         }
-        // try {
-        //     openConnection();
-        //     try(Statement stmt = conn.createStatement()) {
-        //         stmt.executeUpdate("INSERT INTO just_in_case.building(buildingName, description) VALUES ('"
-        //          + buildingName + "', '" + description + "')"); 
-        //     } catch(SQLException e) {
-        //         e.printStackTrace();
-        //         System.out.println("connection failed");
-        //     }
-        // } catch (FileNotFoundException e1) {
-        //     e1.printStackTrace();
-        // }        
+        try {
+             openConnection();
+             try(Statement stmt = conn.createStatement()) {
+                 stmt.executeUpdate("INSERT INTO just_in_case.building(buildingName, description) VALUES ('"
+                  + buildingName + "', '" + description + "')"); 
+             } catch(SQLException e) {
+                 e.printStackTrace();
+                 System.out.println("connection failed");
+             }
+         } catch (FileNotFoundException e1) {
+             e1.printStackTrace();
+         }        
     }
     
     private void openConnection() throws FileNotFoundException {
         String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
         String USER = "admin";
-        Scanner fr = new Scanner(new File("../untracked.txt"));
+        Scanner fr = new Scanner(new File("././untracked.txt"));
         String PASS = fr.nextLine();
 
         try {
