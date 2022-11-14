@@ -29,7 +29,7 @@ public class Feed {
                 String postTypeString = rs.getString("postType");
                 PostType postType = PostType.DEFAULT;
                 for(PostType pt : PostType.values()) {
-                    if (postTypeString == pt.toString()) {
+                    if (postTypeString.equals(pt.toString())) {
                         postType = pt;
                     }
                 }
@@ -37,11 +37,10 @@ public class Feed {
                 String locationString = rs.getString("location");
                 Location location = Location.DEFAULT;
                 for (Location l : Location.values()) {
-                    if(locationString == l.toString()) {
+                    if(locationString.equals(l.toString())) {
                         location = l;
                     }
                 }
-                System.out.println(location.toString());
                 alertFeed.add(new LiveAlertPost(postType, location, user));
             }
 

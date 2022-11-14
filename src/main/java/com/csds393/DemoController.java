@@ -41,11 +41,12 @@ public class DemoController{
 
 
     @RequestMapping("/")  
-    public String index(){  
+    public ModelAndView index(){  
         System.out.println("entering first mapping");
         modelAndView.addObject("feed", feed.getFeed());
+        modelAndView.setViewName("index");
         //returns to index.html
-        return"index";      
+        return modelAndView;      
     }  
 
     // when form is submitted (action save)
