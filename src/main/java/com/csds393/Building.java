@@ -81,7 +81,7 @@ public class Building {
         try(Statement stmt = conn.createStatement()) {
             stmt.executeUpdate(
                 "INSERT INTO just_in_case.facility(facilityName, status, statusLastUpdated) VALUES ('" 
-                + u + "', 'NOT_BUSY',"+ new Timestamp(System.currentTimeMillis()) +")"); 
+                + u + "', 'NOT_BUSY', '"+ new Timestamp(System.currentTimeMillis()).toString() +"')"); 
         } catch(SQLException e) {
             e.printStackTrace();
         }
@@ -96,6 +96,10 @@ public class Building {
         } catch(SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public String toString() {
+        return "name: " + buildingName + "description: " + description;
     }
 
 }
