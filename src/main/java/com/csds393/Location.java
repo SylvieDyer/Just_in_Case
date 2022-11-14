@@ -1,6 +1,7 @@
 package com.csds393;
 
 public enum Location {
+    DEFAULT,
     ADELBERT_HALL, 
     ADELBERT_GYM, 
     WOLSTEIN_HALL, 
