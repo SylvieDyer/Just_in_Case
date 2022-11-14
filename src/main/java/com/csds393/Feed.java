@@ -65,7 +65,6 @@ public class Feed {
                 return false;
         }
         return alertFeed.add(p);
-        /* I'm sorry I'm not entirely sure how yall wanna do this */
     }
 
     public void setCategory(List<Categorization> c){
