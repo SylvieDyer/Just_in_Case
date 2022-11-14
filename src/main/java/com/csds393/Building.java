@@ -33,9 +33,13 @@ public class Building {
                  e.printStackTrace();
                  System.out.println("connection failed");
              }
+             conn.close();
          } catch (FileNotFoundException e1) {
              e1.printStackTrace();
-         }        
+         } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }        
     }
     
     private void openConnection() throws FileNotFoundException {
@@ -77,25 +81,47 @@ public class Building {
     }
 
     public void addBuildingUnit(String u){
-        status.put(u, Status.NOT_BUSY);
-        try(Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate(
-                "INSERT INTO just_in_case.facility(facilityName, status, statusLastUpdated) VALUES ('" 
-                + u + "', 'NOT_BUSY', '"+ new Timestamp(System.currentTimeMillis()).toString() +"')"); 
-        } catch(SQLException e) {
+        try {
+            openConnection();
+            status.put(u, Status.NOT_BUSY);
+            try(Statement stmt = conn.createStatement()) {
+                stmt.executeUpdate(
+                    "INSERT INTO just_in_case.facility(facilityName, status, statusLastUpdated) VALUES ('" 
+                    + u + "', 'NOT_BUSY', '"+ new Timestamp(System.currentTimeMillis()).toString() +"')"); 
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+            conn.close();
+        } catch (FileNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        
     }
 
     public void removeBuildingUnit(String u){
-        status.remove(u);
-        try(Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate(
-                "DELETE FROM just_in_case.facility WHERE just_in_case.facility.facilityName = '" 
-                + u + "'"); 
-        } catch(SQLException e) {
+        try {
+            openConnection();
+            status.remove(u);
+            try(Statement stmt = conn.createStatement()) {
+                stmt.executeUpdate(
+                    "DELETE FROM just_in_case.facility WHERE just_in_case.facility.facilityName = '" 
+                    + u + "'"); 
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+            conn.close();
+        } catch (FileNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        
     }
 
     public String toString() {

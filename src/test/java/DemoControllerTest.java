@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -41,6 +42,7 @@ public class DemoControllerTest {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(obj);
      }
+
      protected <T> T mapFromJson(String json, Class<T> clazz)
         throws JsonParseException, JsonMappingException, IOException {
         
@@ -52,16 +54,80 @@ public class DemoControllerTest {
     public void testBuildingAGET() throws Exception{
         String uri = "/buildingA";
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
-             .accept(MediaType.ALL))
+            .accept(MediaType.ALL))
             .andReturn();
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
-        String content = mvcResult.getResponse().getContentAsString();
-        System.out.println(content);
-        Building buildingA = mapFromJson(content, Building.class);
-        assertTrue(buildingA.getName().equals("Building A"));
-        assertTrue(buildingA.getDescription().equals("This is building A, A is for Apple and Anaconda."));
-        assertTrue(buildingA.getStatus("Study Room A").toString().equals("NOT_BUSY"));
+    }
+
+    @Test
+    public void testBuildingBGET() throws Exception{
+        String uri = "/buildingB";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+            .accept(MediaType.ALL))
+            .andReturn();
+        int status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+    }
+
+    @Test
+    public void testBuildingCGET() throws Exception{
+        String uri = "/buildingC";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+            .accept(MediaType.ALL))
+            .andReturn();
+        int status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+    }
+
+    @Test
+    public void testBuildingDGET() throws Exception{
+        String uri = "/buildingD";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+            .accept(MediaType.ALL))
+            .andReturn();
+        int status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+    }
+
+    @Test
+    public void testBuildingEGET() throws Exception{
+        String uri = "/buildingE";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+            .accept(MediaType.ALL))
+            .andReturn();
+        int status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+    }
+
+    @Test
+    public void testBuildingFGET() throws Exception{
+        String uri = "/buildingF";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+            .accept(MediaType.ALL))
+            .andReturn();
+        int status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+    }
+
+    @Test
+    public void testBuildingGGET() throws Exception{
+        String uri = "/buildingG";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+            .accept(MediaType.ALL))
+            .andReturn();
+        int status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+    }
+
+    @Test
+    public void testBuildingHGET() throws Exception{
+        String uri = "/buildingH";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+            .accept(MediaType.ALL))
+            .andReturn();
+        int status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
     }
 
 }
