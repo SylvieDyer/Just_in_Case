@@ -1,26 +1,3 @@
-<!-- <html lang="en">    
-<head>    
-<title>Index Page</title>    
-</head>    
-<body>    
-<form action="save" method="post">    
-<table>    
-<tr>    
-<td><label for="user-name">User Name</label></td>    
-<td><input type="text" name="name"></input></td>    
- </tr>    
-<tr>    
-<td><label for="email">Email</label></td>    
-<td><input type="text" name="email"></input></td>    
-</tr>    
-<tr>    
-<td></td>    
-<td><input type="submit" value="Submit"></input></td>    
-</tr>    
-</table>    
-</form>    
-</body>    
-</html>   -->
 <!DOCTYPE html>
 <html lang ="en">
     <head>
@@ -40,7 +17,7 @@
                 <select name="postType" id="postType">
                     <option value="EXCESSIVE_RAIN">There is excessive rain on </option>
                     <option value="EXCESSIVE_SNOW">There is excessive snow on </option>
-                    <option value="CROWDED">It is crowed at </option>
+                    <option value="CROWDED">It is crowded at </option>
                     <option value="CLOSED">The following location is closed- </option>
                 </select>
                 <select name="location" id="location">
@@ -215,7 +192,9 @@
                 <!--Two Columns of Buttons-->
                 <div class="biRow">
                     <div class="biCol">
-                        <button type="submit" class="buildingSelect" onclick="showBuilding(event, 'A')" >Building A</button>
+                        <button type="submit" class="buildingSelect" onclick="showBuilding(event, 'A')" >                        
+                            <a th:href="@{buildingA}">Building A</a> 
+                        </button>
                         <button type="submit" class="buildingSelect" onclick="showBuilding(event, 'C')" >Building C</button>
                         <button type="submit" class="buildingSelect" onclick="showBuilding(event, 'E')" >Building E</button>
                         <button type="submit" class="buildingSelect" onclick="showBuilding(event, 'G')" >Building G</button>
@@ -232,6 +211,4 @@
         </div>
         <script src="./script.js"></script>
     </body>
-
-
-</html> -->
+</html>

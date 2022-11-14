@@ -2,7 +2,12 @@ package com.csds393;
 import org.springframework.web.bind.annotation.ModelAttribute;  
 import org.springframework.web.bind.annotation.RequestMapping;  
 import org.springframework.web.bind.annotation.RequestMethod;  
-import org.springframework.web.servlet.ModelAndView;  
+import org.springframework.web.servlet.ModelAndView;
+
+import java.io.Console;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;  
 @Controller  
 public class DemoController{  
@@ -27,6 +32,30 @@ public class DemoController{
 
         return modelAndView;  
     }
+   
+    @RequestMapping(value="/buildingA", method=RequestMethod.GET)
+    public ModelAndView showBuildingPage(@ModelAttribute Building building){
+        System.out.println("found building A");
+        ModelAndView buildingModelAndView = new ModelAndView("buildingInfo"); 
+        List<String> facs = new ArrayList<>();
+        facs.add("Study Room A");
+        facs.add("Study Room B");
+        building = new Building("Building A", "This is building A, blah blah blah blah", facs);
+        buildingModelAndView.addObject("building", building);
+
+        return buildingModelAndView;
+    }
+    // @RequestMapping(value = "/buildingA")
+    // public String getBuilding(@ModelAttribute Building building) 
+    // {				
+    //    System.out.println("hell0???");
+    //    List<String> facs = new ArrayList<>();
+    //        facs.add("Study Room A");
+    //        facs.add("Study Room B");
+    //        building = new Building("Building A", "This is building A, blah blah blah blah", facs);
+    //     //    buildingModelAndView.addObject("building", building);
+    //    return "buildingInfo";		
+    // }
 
    
 }  

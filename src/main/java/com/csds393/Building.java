@@ -13,21 +13,21 @@ public class Building {
     public Building(String name, String description, List<String> facilities){
         this.buildingName = name;
         this.description = description;
-        for(String facility : facilities){
-            status.put(facility, Status.NOT_BUSY);
-        }
-        try {
-            openConnection();
-            try(Statement stmt = conn.createStatement()) {
-                stmt.executeUpdate("INSERT INTO just_in_case.building(buildingName, description) VALUES ('"
-                 + buildingName + "', '" + description + "')"); 
-            } catch(SQLException e) {
-                e.printStackTrace();
-                System.out.println("connection failed");
-            }
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        }        
+        // for(String facility : facilities){
+        //     status.put(facility, Status.NOT_BUSY);
+        // }
+        // try {
+        //     openConnection();
+        //     try(Statement stmt = conn.createStatement()) {
+        //         stmt.executeUpdate("INSERT INTO just_in_case.building(buildingName, description) VALUES ('"
+        //          + buildingName + "', '" + description + "')"); 
+        //     } catch(SQLException e) {
+        //         e.printStackTrace();
+        //         System.out.println("connection failed");
+        //     }
+        // } catch (FileNotFoundException e1) {
+        //     e1.printStackTrace();
+        // }        
     }
     
     private void openConnection() throws FileNotFoundException {
