@@ -1,18 +1,26 @@
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.csds393.Building;
 
-@ContextConfiguration(locations = {"/./resources/test-context.xml" })
 public class DemoControllerTest extends AbstractTest {
+    @Override
+    @Before
+    public void setUp() {
+        super.setUp();
+    }
+
     @Test
     public void testBuildingAGET() throws Exception{
         String uri = "/buildingA";
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri))
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+             .accept(MediaType.ALL))
             .andReturn();
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
