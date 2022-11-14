@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 import com.csds393.User;
 
 public class UserTest{
-    User user = new User("Administrator", "Liyi", "lxc596");
+    User user = new User("Administrator", "Liyi", "testtest");
     Connection conn;
 
     @Before
