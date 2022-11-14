@@ -23,19 +23,20 @@ public class LiveAlertPost {
 
         try {
             openConnection();
-            try(Statement stmt = conn.createStatement()) {
-                stmt.executeUpdate(
-                    "INSERT INTO just_in_case.livealertpost(postType, location, time, numUpvotes, numDownvotes)"
-                    + " VALUES ('" + postType + "', '" + location + "', '" + date + "', '" + 0 + "', '" + 0 + "')"); 
-                // stmt.executeUpdate(
-                //     "INSERT INTO just_in_case.posts"
-                //     + " VALUES ('" +  + "', '" + user.getCaseID()); 
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(
+                "INSERT INTO just_in_case.livealertpost(postType, location, time, numUpvotes, numDownvotes)"
+                + " VALUES ('" + postType + "', '" + location + "', '" + date + "', '" + 0 + "', '" + 0 + "')"); 
+            // stmt.executeUpdate(
+            //     "INSERT INTO just_in_case.posts"
+            //     + " VALUES ('" +  + "', '" + user.getCaseID()); 
+            
+            conn.close();
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
-        }        
+        }   catch(SQLException e) {
+            e.printStackTrace();
+        }      
     }
 
     private void openConnection() throws FileNotFoundException {
