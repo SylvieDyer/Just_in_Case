@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 import java.io.*;
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,6 +20,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.csds393.Building;
 import com.csds393.DemoController;
+import com.csds393.LiveAlertPost;
+import com.csds393.Location;
+import com.csds393.PostType;
+import com.csds393.User;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -129,5 +135,38 @@ public class DemoControllerTest {
         int status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
     }
+
+    @Test
+    public void testGetIndex() throws Exception{
+        String uri = "/";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+            .accept(MediaType.ALL))
+            .andReturn();
+        int status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+    }
+
+    // @Test
+    // public void testPostIndex() throws Exception{
+    //     String uri = "/";
+    //     LiveAlertPost post = new LiveAlertPost(PostType.CLOSED, Location.BINGHAM, new User("User", "P", "p"));
+    //     String inputJson = mapToJson(post);
+    //     MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+    //         .contentType(MediaType.ALL)
+    //         .content(inputJson))
+    //         .andReturn();
+    //     int status = mvcResult.getResponse().getStatus();
+    //     assertEquals(201, status);
+    // }
+
+    // @Test
+    // public void testPostBuilding() throws Exception {
+    //     String uri = "/building/post";
+    //     MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+    //         .contentType(MediaType.ALL))
+    //         .andReturn();
+    //     int status = mvcResult.getResponse().getStatus();
+    //     assertEquals(200, status);
+    // }
 
 }
