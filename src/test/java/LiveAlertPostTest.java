@@ -35,6 +35,7 @@ public class LiveAlertPostTest{
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate("DELETE FROM just_in_case.livealertpost");
+            stmt.executeUpdate("DELETE FROM just_in_case.user");
         } catch (SQLException e) {
             e.printStackTrace();
         }
