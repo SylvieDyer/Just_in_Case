@@ -50,13 +50,13 @@ public class UserTest{
 
     @Test
     public void testPostAnon_True() {
-        assertTrue(user.getPostAnon());
+        assertEquals(1,user.getPostAnon());
     }
 
     @Test
     public void testPostAnon_False() {
-        user.setPostAnon(false);
-        assertFalse(user.getPostAnon());
+        user.setPostAnon(0);
+        assertEquals(0,user.getPostAnon());
     }
 
     @Test
