@@ -7,15 +7,23 @@ public class Building {
     private String buildingName;
     private HashMap<String,Status> status = new HashMap<String,Status>();
     private String description;
+    private List<String> facilities;
     private HashMap<String, Timestamp> timeOfLastEvent;
     private Connection conn;
 
     public Building(String name, String description, List<String> facilities){
+        System.out.println("CONSTRUCTING BUILDING");
         this.buildingName = name;
         this.description = description;
-        // for(String facility : facilities){
-        //     status.put(facility, Status.NOT_BUSY);
-        // }
+        System.out.println(name);
+        this.facilities = facilities;
+        try {
+        for(String facility : facilities){
+            status.put(facility, Status.NOT_BUSY);
+        }
+        } catch (NullPointerException e){
+            
+        }
         // try {
         //     openConnection();
         //     try(Statement stmt = conn.createStatement()) {

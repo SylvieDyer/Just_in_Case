@@ -54,40 +54,40 @@ function showFeed(e, selection){
 }
 
 // show building hub
-function showBuilding(b, building){
-    // declare variables
-    var x, buildingPage, buildingSelect, alertFeed;
+// function showBuilding(b, building){
+//     // declare variables
+//     var x, buildingPage, buildingSelect, alertFeed;
 
-    // get all building pages (class="buildingPage") and hide them 
-    buildingPage = document.getElementsByClassName("buildingPage");
-    for (x = 0; x < buildingPage.length; x++){
-        buildingPage[x].style.display = "none";
-    }
+//     // get all building pages (class="buildingPage") and hide them 
+//     buildingPage = document.getElementsByClassName("buildingPage");
+//     for (x = 0; x < buildingPage.length; x++){
+//         buildingPage[x].style.display = "none";
+//     }
 
-    // get all building buttons  (class="buildingSelect") and remove style and active status
-    buildingSelect = document.getElementsByClassName("buildingSelect");
-    for (x = 0; x < buildingSelect.length; x++){
-        buildingSelect[x].className = buildingSelect[x].className.replace("active", "");
-    }
+//     // get all building buttons  (class="buildingSelect") and remove style and active status
+//     buildingSelect = document.getElementsByClassName("buildingSelect");
+//     for (x = 0; x < buildingSelect.length; x++){
+//         buildingSelect[x].className = buildingSelect[x].className.replace("active", "");
+//     }
 
-    // show building page and add active label to button of selected building
-    document.getElementById(building).style.display = "block";
-    b.currentTarget.className += "active";
+//     // show building page and add active label to button of selected building
+//     document.getElementById(building).style.display = "block";
+//     b.currentTarget.className += "active";
 
-    /* REMOVING FEED SECTION / STYLING */
-    // hide all the feed posts
-    alertFeed = document.getElementsByClassName("samplePost");
-    for (x = 0; x < alertFeed.length; x++){
-        alertFeed[x].style.display = "none";
-    }
+//     /* REMOVING FEED SECTION / STYLING */
+//     // hide all the feed posts
+//     alertFeed = document.getElementsByClassName("samplePost");
+//     for (x = 0; x < alertFeed.length; x++){
+//         alertFeed[x].style.display = "none";
+//     }
 
-    // get all feed filters (class="filter") and remove class "Active", change style
-    filter = document.getElementsByClassName("filter");
-    for (i = 0; i < filter.length; i++) {
-        filter[i].className = filter[i].className.replace(" active", "");
-        filter[i].style = "color: grey";
-    }
-}
+//     // get all feed filters (class="filter") and remove class "Active", change style
+//     filter = document.getElementsByClassName("filter");
+//     for (i = 0; i < filter.length; i++) {
+//         filter[i].className = filter[i].className.replace(" active", "");
+//         filter[i].style = "color: grey";
+//     }
+// }
 
 // when user wants to create new post, form appears
 document.getElementById("postBtn").onclick = function() {

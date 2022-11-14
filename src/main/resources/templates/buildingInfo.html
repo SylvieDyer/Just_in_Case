@@ -18,22 +18,24 @@
             <div class="mainFeed" id="mainFeed">
                 <!--Feed Filter Options-->
                 <div class="filters">
-                    <button class="filter" onclick="showFeed(event, 'home')" id="defaultOpen"><h3>Live Feed</h3></button>
-                    <button class="filter" onclick="showFeed(event, 'study')">Study Spots</button>
-                    <button class="filter" onclick="showFeed(event, 'food')">Food</button>
+                    <button class="filter"><a class="link" th:href="@{/}"><h3>Live Feed</h3></a></button>
+                    <button class="filter"><a class="link" th:href="@{/}"><h3>Study Spots</h3></a></button>
+                    <button class="filter"><a class="link" th:href="@{/}"><h3>Food</h3></a></button>
+
                 </div>
                 </tr>
                 <!--Building Pages-->
-                <div id="A" class="buildingPage">
-
-                    <h3 th:text="${building.buildingName}"></h3>
+                <div style="display: block" class="buildingPage">
+                    <h3 th:text="${building.name}"></h3>
                     <br>
                     <p th:text="${building.description}"></p>
                     <br><br><br>
                     <!--Will Hold the Dynamic Statuses-->
 
-                    <!-- <div class="status" th:each="facility :${building.status}">
+                    <!-- <div class="status" th:each="facility:${building.facilities}">
+                        <td>
                         <p th:text="${facility}"></p>
+                        </td>   
                     </div> -->
                 </div>
                 
@@ -45,22 +47,39 @@
                 <!--Two Columns of Buttons-->
                 <div class="biRow">
                     <div class="biCol">
-                        <button type="submit" class="buildingSelect" onclick="showBuilding(event, 'A')" >Building A</button>
-                        <button type="submit" class="buildingSelect" onclick="showBuilding(event, 'C')" >Building C</button>
-                        <button type="submit" class="buildingSelect" onclick="showBuilding(event, 'E')" >Building E</button>
-                        <button type="submit" class="buildingSelect" onclick="showBuilding(event, 'G')" >Building G</button>
+                        
+                        <a th:href="@{buildingA}" >
+                            <button type="submit" class="buildingSelect" >Building A</button>
+                        </a>
+                        <a th:href="@{buildingC}" >
+                            <button type="submit" class="buildingSelect" >Building C</button>
+                        </a>
+                        <a th:href="@{buildingE}" >
+                            <button type="submit" class="buildingSelect" >Building E</button>
+                        </a>
+                        <a th:href="@{buildingG}" >
+                            <button type="submit" class="buildingSelect" >Building G</button>
+                        </a>
                     </div>
 
                     <div class="biCol">
-                        <button type="submit" class="buildingSelect" onclick="showBuilding(event, 'B')" >Building B</button>
-                        <button type="submit" class="buildingSelect" onclick="showBuilding(event, 'D')" >Building D</button>
-                        <button type="submit" class="buildingSelect" onclick="showBuilding(event, 'F')" >Building F</button>
-                        <button type="submit" class="buildingSelect" onclick="showBuilding(event, 'H')" >Building H</button>
+                        <a th:href="@{buildingB}" >
+                            <button type="submit" class="buildingSelect" >Building B</button>
+                        </a>
+                        <a th:href="@{buildingD}" >
+                            <button type="submit" class="buildingSelect" >Building D</button>
+                        </a>
+                        <a th:href="@{buildingF}" >
+                            <button type="submit" class="buildingSelect" >Building F</button>
+                        </a>
+                        <a th:href="@{buildingH}" >
+                            <button type="submit" class="buildingSelect" >Building H</button>
+                        </a>
+                        
                     </div>
                 </div>
             </div> 
         </div>
-        <script src="./script.js"></script>
     </body>
 
 

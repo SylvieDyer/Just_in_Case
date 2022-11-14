@@ -60,7 +60,11 @@ body {
     overflow: hidden;
     border-bottom: 1px solid #ccc;
     margin-bottom: 1rem;
-    
+}
+
+.link {
+    text-decoration: none;
+    color: black;
 }
 
 .filters button {
@@ -109,7 +113,7 @@ body {
 }
 
 .buildingPage {
-    display: none;
+    display: block;
     animation: fadeEffect 1s; /* fade in */
 }
 
