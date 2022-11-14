@@ -1,5 +1,6 @@
 package com.csds393;  
-import org.springframework.web.bind.annotation.ModelAttribute;  
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;  
 import org.springframework.web.bind.annotation.RequestMethod;  
 import org.springframework.web.servlet.ModelAndView;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 public class DemoController{  
     ModelAndView modelAndView = new ModelAndView("redirect:/"); 
     Feed feed = new Feed();
+    BuildingHub bh = new BuildingHub();
 
     /* fake buildings */
     List<String> facilities = new ArrayList<String>(){
@@ -134,5 +136,18 @@ public class DemoController{
     //    return "buildingInfo";		
     // }
 
-   
+
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    @RequestMapping(value="/building/get/{name}") 
+    public String getBuildingByName(@PathVariable(value = "name") String name) {
+        Building building = bh.getBuildingByName(name);
+        return building.toString();
+    }
+
+    @RequestMapping(value="/building/post")
+    public boolean postBuilding(Building b) {
+        return bh.addBuilding(b);
+    }
+
 }  
