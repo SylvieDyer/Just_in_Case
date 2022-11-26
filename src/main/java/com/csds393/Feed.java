@@ -11,44 +11,39 @@ public class Feed {
 
     private List<LiveAlertPost> alertFeed; //stores posts
     private List<Categorization> category; //stores categories to filter posts
-    private Connection conn;
 
     public Feed(){
         category = new ArrayList<Categorization>();
         category.add(Categorization.LIVE_ALERT);
         alertFeed = new ArrayList<LiveAlertPost>();
+        // this.conn = conn;
+        // try {
+        //     Statement stmt = conn.createStatement();
+        //     //clearUsersFromDatabase();
+        //     ResultSet rs = stmt.executeQuery("SELECT * FROM just_in_case.livealertpost");
 
-        try {
-            openConnection();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM just_in_case.livealertpost");
-            clearUsersFromDatabase();
-            User user = new User("User", "User", "user");
-
-            while(rs.next()) {
-                String postTypeString = rs.getString("postType");
-                PostType postType = PostType.DEFAULT;
-                for(PostType pt : PostType.values()) {
-                    if (postTypeString.equals(pt.toString())) {
-                        postType = pt;
-                    }
-                }
+        //     while(rs.next()) {
+        //         String postTypeString = rs.getString("postType");
+        //         PostType postType = PostType.DEFAULT;
+        //         for(PostType pt : PostType.values()) {
+        //             if (postTypeString.equals(pt.toString())) {
+        //                 postType = pt;
+        //             }
+        //         }
                 
-                String locationString = rs.getString("location");
-                Location location = Location.DEFAULT;
-                for (Location l : Location.values()) {
-                    if(locationString.equals(l.toString())) {
-                        location = l;
-                    }
-                }
-                alertFeed.add(new LiveAlertPost(postType, location, user));
-            }
+        //         String locationString = rs.getString("location");
+        //         Location location = Location.DEFAULT;
+        //         for (Location l : Location.values()) {
+        //             if(locationString.equals(l.toString())) {
+        //                 location = l;
+        //             }
+        //         }
+        //         alertFeed.add(new LiveAlertPost(postType, location, user));
+        //     }
 
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     // public ArrayList<LiveAlertPost> parseFeed() {
@@ -71,40 +66,33 @@ public class Feed {
         category = c;
     }
 
-    public List<LiveAlertPost> filterFeed(List<Categorization> c) {
-        ArrayList<LiveAlertPost> posts = new ArrayList<>();
-        for(Categorization cat: c){
-            for(LiveAlertPost post : alertFeed){
-                if(post.getCategorizations().contains(cat)){
-                    posts.add(post);
-                }
-            }
-        }
-        return posts;
-    }
+    // public List<LiveAlertPost> filterFeed(List<Categorization> c) {
+    //     ArrayList<LiveAlertPost> posts = new ArrayList<>();
+    //     for(Categorization cat: c){
+    //         for(LiveAlertPost post : alertFeed){
+    //             if(post.getCategorizations().contains(cat)){
+    //                 posts.add(post);
+    //             }
+    //         }
+    //     }
+    //     return posts;
+    // }
 
-    private void openConnection() throws FileNotFoundException {
-        String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
-        String USER = "admin";
-        Scanner fr = new Scanner(new File("././untracked.txt"));
-        String PASS = fr.nextLine();
+    // public void clearUsersFromDatabase() {
+    //     Statement stmt;
+    //     try {
+    //         stmt = conn.createStatement();
+    //         stmt.executeUpdate("DELETE FROM just_in_case.user");
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
-        try {
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            conn.setAutoCommit(true);
-        } catch(SQLException e) {
-            e.printStackTrace();
+    public boolean isEmpty() {
+        if(this.alertFeed.size() <= 0) {
+            return true;
         }
-    }
-
-    public void clearUsersFromDatabase() {
-        Statement stmt;
-        try {
-            stmt = conn.createStatement();
-            stmt.executeUpdate("DELETE FROM just_in_case.user");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        return false;
     }
 
 }

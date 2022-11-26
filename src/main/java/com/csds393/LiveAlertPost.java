@@ -6,67 +6,47 @@ import java.io.*;
 
 public class LiveAlertPost {
     /*class represents an alert post a user can make that will display on live feed */
+    private long postID;
     private PostType postType;
     private Location location;
-    private HashSet<Categorization> categorizations = new HashSet<Categorization>();
-    private User user;
+    //private HashSet<Categorization> categorizations = new HashSet<Categorization>();
+    //private User user;
     private Timestamp date;
-    private Connection conn;
+    private int numUpvotes;
+    private int numDownvotes;
+
+    public LiveAlertPost() {
+
+    }
 
     //Constructor initializes a post with post type, location, user, and current datetime
-    public LiveAlertPost(PostType postType, Location location, User user) {
+    public LiveAlertPost(PostType postType, Location location, int numUpvotes, int numDownvotes) {
         this.postType = postType;
         this.location = location;
-        this.user = user;
         this.date = new Timestamp(System.currentTimeMillis());
-        updateCategorization();
-
-        try {
-            openConnection();
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(
-                "INSERT INTO just_in_case.livealertpost(postType, location, time, numUpvotes, numDownvotes)"
-                + " VALUES ('" + postType + "', '" + location + "', '" + date + "', '" + 0 + "', '" + 0 + "')"); 
-            // stmt.executeUpdate(
-            //     "INSERT INTO just_in_case.posts"
-            //     + " VALUES ('" +  + "', '" + user.getCaseID()); 
-            
-            conn.close();
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        }   catch(SQLException e) {
-            e.printStackTrace();
-        }      
+        this.numUpvotes = numUpvotes;
+        this.numDownvotes = numDownvotes;
+        //updateCategorization();   
     }
 
-    private void openConnection() throws FileNotFoundException {
-        String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
-        String USER = "admin";
-        Scanner fr = new Scanner(new File("./././untracked.txt"));
-        String PASS = fr.nextLine();
-
-        try {
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            conn.setAutoCommit(true);
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
+    public LiveAlertPost(PostType postType, Location location, Timestamp date, int numUpvotes, int numDownvotes) {
+        this.postType = postType;
+        this.location = location;
+        this.date = date;
+        this.numUpvotes = numUpvotes;
+        this.numDownvotes = numDownvotes;
+        //updateCategorization();   
     }
 
-    private void updateCategorization() {
-        switch(postType){
-            case EXCESSIVE_RAIN:
-            case EXCESSIVE_SNOW:
-                categorizations.add(Categorization.WEATHER);
-                break;
-            case SUSPICIOUS_BEHAVIOR:
-                categorizations.add(Categorization.SAFETY);
-                break;
-            case CROWDED:
-            case CLOSED:
-                categorizations.add(Categorization.STUDY);
-                break;
-        }
+    public LiveAlertPost(long postID, PostType postType, Location location, Timestamp date, int numUpvotes, int numDownvotes) {
+        this.postID = postID;
+        this.postType = postType;
+        this.location = location;
+        this.date = date;
+        //new Timestamp(System.currentTimeMillis());
+        this.numUpvotes = numUpvotes;
+        this.numDownvotes = numDownvotes;
+        //updateCategorization();   
     }
 
     @Override
@@ -79,24 +59,76 @@ public class LiveAlertPost {
         }
         return false;
     }
-    
-    public HashSet<Categorization> getCategorizations(){
-        return categorizations;
+
+
+    public long getPostID() {
+        return this.postID;
     }
 
-    public PostType getPostType(){
-        return postType;
+    public void setPostID(long postID) {
+        this.postID = postID;
     }
 
-    public Location getLocation(){
-        return location;
+    public PostType getPostType() {
+        return this.postType;
     }
 
-    public User getUser(){
-        return user;
+    public void setPostType(PostType postType) {
+        this.postType = postType;
     }
 
-    public Timestamp getDate(){
-        return date;
+    public Location getLocation() {
+        return this.location;
     }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Timestamp getDate() {
+        return this.date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
+    public int getNumUpvotes() {
+        return this.numUpvotes;
+    }
+
+    public void setNumUpvotes(int numUpvotes) {
+        this.numUpvotes = numUpvotes;
+    }
+
+    public int getNumDownvotes() {
+        return this.numDownvotes;
+    }
+
+    public void setNumDownvotes(int numDownvotes) {
+        this.numDownvotes = numDownvotes;
+    }
+
+
+    // public HashSet<Categorization> getCategorizations(){
+    //     return categorizations;
+    // }
+
+
+
+    // private void updateCategorization() {
+    //     switch(postType){
+    //         case EXCESSIVE_RAIN:
+    //         case EXCESSIVE_SNOW:
+    //             categorizations.add(Categorization.WEATHER);
+    //             break;
+    //         case SUSPICIOUS_BEHAVIOR:
+    //             categorizations.add(Categorization.SAFETY);
+    //             break;
+    //         case CROWDED:
+    //         case CLOSED:
+    //             categorizations.add(Categorization.STUDY);
+    //             break;
+    //     }
+    // }
 }

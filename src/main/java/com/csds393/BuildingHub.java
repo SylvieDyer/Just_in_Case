@@ -16,11 +16,11 @@ public class BuildingHub {
     public BuildingHub(){
         buildings = new ArrayList<Building>();
 
-        try {
-            openConnection();
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        }
+        // try {
+        //     openConnection();
+        // } catch (FileNotFoundException e1) {
+        //     e1.printStackTrace();
+        // }
     }
 
     public boolean addBuilding(Building building){
@@ -30,12 +30,12 @@ public class BuildingHub {
     public void removeBuilding(Building building){
         buildings.remove(building);
 
-        try(Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate(
-                "DELETE FROM just_in_case.building WHERE just_in_case.building.buildingName = '" + building.getName() + "'"); 
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
+        // try(Statement stmt = conn.createStatement()) {
+        //     stmt.executeUpdate(
+        //         "DELETE FROM just_in_case.building WHERE just_in_case.building.buildingName = '" + building.getName() + "'"); 
+        // } catch(SQLException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     public void removeBuildingByName(String buildingName){
@@ -52,12 +52,12 @@ public class BuildingHub {
             throw new IllegalArgumentException("Tried to remove building that does not exist");
         }
 
-        try(Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate(
-                "DELETE FROM just_in_case.building WHERE just_in_case.building.buildingName = '" + buildingName + "'"); 
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
+        // try(Statement stmt = conn.createStatement()) {
+        //     stmt.executeUpdate(
+        //         "DELETE FROM just_in_case.building WHERE just_in_case.building.buildingName = '" + buildingName + "'"); 
+        // } catch(SQLException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     public List<Building> getAllBuildings() {
@@ -72,19 +72,5 @@ public class BuildingHub {
             }
         }
         return null;
-    }
-
-    private void openConnection() throws FileNotFoundException {
-        String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
-        String USER = "admin";
-        Scanner fr = new Scanner(new File("././untracked.txt"));
-        String PASS = fr.nextLine();
-
-        try {
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            conn.setAutoCommit(true);
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
