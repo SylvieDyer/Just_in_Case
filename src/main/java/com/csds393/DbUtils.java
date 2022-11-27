@@ -87,10 +87,9 @@ public class DbUtils {
                 + " VALUES ('" + postID + "', '" + user.getCaseID() + "')");
 
                 ResultSet insertedResultSet = stmt.executeQuery(
-                    "GET * FROM just_in_case.livealertpost WHERE postId='"+ postID + "'");
+                    "SELECT * FROM just_in_case.livealertpost WHERE postId='"+ postID + "'");
                 if(insertedResultSet.next()) {
-                    stmt.close();
-                    return getLiveAlertPostFromResultSet(rs);
+                    return getLiveAlertPostFromResultSet(insertedResultSet);
                 }                
                 stmt.close();
                 return null;
@@ -109,18 +108,20 @@ public class DbUtils {
         return null;
     }
 
-    public boolean deleteLiveAlertPost(LiveAlertPost liveAlertPost) {
-        Statement stmt;
+    /** Returns id of deleted post. If no post deleted successfully, returns -1. */
+    public long deleteLiveAlertPost(LiveAlertPost liveAlertPost) {
         try {
-            stmt = conn.createStatement();
-            stmt.executeUpdate("DELETE FROM just_in_case.livealertpost WHERE just_in_case.livealertpost.postType = '" 
-                         + liveAlertPost.getPostType() + "' AND just_in_case.livealertpost.location = '" 
-                         + liveAlertPost.getLocation()+ "'");
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next()) {
-                return true;
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM just_in_case.livealertpost WHERE just_in_case.livealertpost.postID = '" 
+                         + liveAlertPost.getPostID() + "'", stmt.RETURN_GENERATED_KEYS);
+            ResultSet deletedResultSet = stmt.executeQuery(
+                "SELECT * FROM just_in_case.livealertpost WHERE postId='"+ liveAlertPost.getPostID() + "'");
+            if(deletedResultSet.next()) {
+                conn.close();
+                return -1;
             }
-            return false;            
+            conn.close();
+            return liveAlertPost.getPostID();            
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -128,7 +129,7 @@ public class DbUtils {
                 conn.close();
             } catch (SQLException e) {}
         }
-        return false;
+        return -1;
     }
 
     private User initDefaultUser() {
