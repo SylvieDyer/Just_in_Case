@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SpringBootApplication
-// @RequestMapping("/api")
+@CrossOrigin
 public class AppController {
 
     @GetMapping("/feed")
