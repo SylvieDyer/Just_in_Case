@@ -47,6 +47,25 @@ public class DbUtils {
         return null;
     }
     
+    public LiveAlertPost getPost(long postID) {
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(
+                "SELECT * FROM just_in_case.livealertpost WHERE postId='"+ postID + "'");
+            if(rs.next()) {
+                return getLiveAlertPostFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {}
+        }
+        return null;  
+    }
+
     public List<LiveAlertPost> getFeed() {
         List<LiveAlertPost> alertFeed = new ArrayList<LiveAlertPost>();
         Statement stmt;
@@ -91,10 +110,10 @@ public class DbUtils {
                 if(insertedResultSet.next()) {
                     return getLiveAlertPostFromResultSet(insertedResultSet);
                 }                
-                stmt.close();
+                conn.close();
                 return null;
             } else {
-                stmt.close();
+                conn.close();
                 return null;
             }
             
