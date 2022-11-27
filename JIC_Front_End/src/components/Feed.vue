@@ -32,10 +32,9 @@ export default {
   methods: {
     // pull the live alert posts from the DB
     retrieveLiveAlertPosts() {
-      TutorialDataService.getAll()
+      TutorialDataService.getFeed()
         .then(response => {
           this.feed = response.data;
-          console.log(response.data);
         })
         .catch(e => {
           console.log(e);

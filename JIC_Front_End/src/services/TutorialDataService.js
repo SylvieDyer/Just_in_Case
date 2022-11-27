@@ -1,13 +1,24 @@
 import http from "../http-common";
 
 class TutorialDataService {
-  getAll() {
-    console.log("hi, calling getAll()");
+  getFeed() {
     return http.get("/feed");
   }
 
   create(post) {
     return http.post("/feed", post);
+  }
+
+  getBuildings(){
+    return http.get("/buildinghub");
+  }
+
+  getBuildingByName(name) {
+    return http.get(`/buildingname/${name}`);
+  }
+
+  getBuildingByID(id) {
+    return http.get(`/buildingid/${id}`);
   }
 
 }

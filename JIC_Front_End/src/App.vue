@@ -50,12 +50,15 @@
       <div class="mainFeed" id="mainFeed">
         <!--Feed Filter Options-->
         <div class="filters">
-          <button class="filter" v-on:click="showFeed(this, 'home')" id="defaultOpen"><h3>Live Feed</h3></button>
+          <router-link to="/feed">
+          <button class="filter" id="defaultOpen"><h3>Live Feed</h3></button>
+        </router-link>
           <button class="filter" onclick="showFeed(event, 'study')">Study Spots</button>
           <button class="filter" onclick="showFeed(event, 'food')">Food</button>
         </div>
         <tr class="postFeed" id="postFeed">
           <router-view/>
+          <!-- <Building :buildingName=this.selectedBuilding /> -->
         </tr>
         <!--Building Pages-->
     
@@ -70,12 +73,13 @@
         <!--Two Columns of Buttons-->
         <div class="biRow">
           <div class="biCol"> 
-            <a th:href="@{buildingA}" >
+            <router-link :to="'/buildingid/' + this.selectedBuildingID">
+              <button type="submit" class="buildingSelect" v-on:click="selectBuilding(665)">Building B Using ID</button>
+            </router-link>
+            <a th:href="@{buildingB}" >
               <button type="submit" class="buildingSelect" >Building A</button>
             </a>
-            <a th:href="@{buildingC}" >
-              <button type="submit" class="buildingSelect" >Building C</button>
-            </a>
+            
             <a th:href="@{buildingE}" >
               <button type="submit" class="buildingSelect" >Building E</button>
             </a>
@@ -85,9 +89,10 @@
           </div>
 
           <div class="biCol">
-            <a th:href="@{buildingB}" >
-              <button type="submit" class="buildingSelect" >Building B</button>
-            </a>
+            <router-link :to="'/buildingname/' + this.selectedBuildingName">
+              <button type="submit" class="buildingSelect" v-on:click="selectBuilding('Building C')">Building C Using Name </button>
+            </router-link>
+            
             <a th:href="@{buildingD}" >
               <button type="submit" class="buildingSelect" >Building D</button>
             </a>
@@ -106,10 +111,15 @@
 
 <script>
 import TutorialDataService from "./services/TutorialDataService";
+// import Building from "./components/Building.vue"
 
 // import { onMounted } from 'vue'; 
 export default {
   name: 'app',
+  //selectedBuilding: 'A',
+  components: {
+    // Building
+  },
   data() {
     return {
       post: {
@@ -119,7 +129,9 @@ export default {
         // postID: 0,
         postType: "EXCESSIVE_RAIN",
       },
-      submitted: false
+      submitted: false,
+      selectedBuildingID: null,
+      selectedBuildingName: null,
     }
   },
   mounted() {
@@ -150,53 +162,64 @@ export default {
         });
     },
 
-    // filter out the posts 
-    showFeed(e, selection){
-        console.log("SHOW FEED CAL");
-        // declare variables
-        var i, x, samplePost, filter, buildingPage, buildingSelect;
+    selectBuilding(val){
+      this.selectedBuildingID = val;
+      this.selectedBuildingName = val;
+      console.log("ID: " + this.selectedBuildingID);
+      console.log("NAME: " + this.selectedBuildingName);
 
-        // gets elements with class="samplePost"
-        samplePost = document.getElementsByClassName("samplePost");
-        for (i = 0; i < samplePost.length; i++){
-            if (samplePost[i].id != selection)
-                samplePost[i].style.display = "none";
-            else   
-                samplePost[i].style.display = "block";
-        }
-
-        // get all feed filters (class="filter") and remove class "Active", change style
-        filter = document.getElementsByClassName("filter");
-        for (i = 0; i < filter.length; i++) {
-            filter[i].className = filter[i].className.replace(" active", "");
-            filter[i].style = "color: grey";
-        }
-
-        // show current tab + add active label to button of tab
-    // document.getElementById(selection).style.display = "block";
-        // e.currentTarget.className += " active";
-        // e.currentTarget.style = "color: black";
-
-        /* REMOVING BUILDING PAGE */
-        // get all building pages (class="buildingPage") and hide them 
-        buildingPage = document.getElementsByClassName("buildingPage");
-        for (x = 0; x < buildingPage.length; x++){
-            buildingPage[x].style.display = "none";
-        }
-
-        // get all building buttons  (class="buildingSelect") and remove style and active status
-        buildingSelect = document.getElementsByClassName("buildingSelect");
-        for (x = 0; x < buildingSelect.length; x++){
-            buildingSelect[x].className = buildingSelect[x].className.replace("active", "");
-        }
     },
+    // // filter out the posts 
+    // showFeed(e, selection){
+    //     console.log("SHOW FEED CAL");
+    //     // declare variables
+    //     var i, x, samplePost, filter, buildingPage, buildingSelect;
+
+    //     // gets elements with class="samplePost"
+    //     samplePost = document.getElementsByClassName("samplePost");
+    //     for (i = 0; i < samplePost.length; i++){
+    //         if (samplePost[i].id != selection)
+    //             samplePost[i].style.display = "none";
+    //         else   
+    //             samplePost[i].style.display = "block";
+    //     }
+
+    //     // get all feed filters (class="filter") and remove class "Active", change style
+    //     filter = document.getElementsByClassName("filter");
+    //     for (i = 0; i < filter.length; i++) {
+    //         filter[i].className = filter[i].className.replace(" active", "");
+    //         filter[i].style = "color: grey";
+    //     }
+
+    //     // show current tab + add active label to button of tab
+    // // document.getElementById(selection).style.display = "block";
+    //     // e.currentTarget.className += " active";
+    //     // e.currentTarget.style = "color: black";
+
+    //     /* REMOVING BUILDING PAGE */
+    //     // get all building pages (class="buildingPage") and hide them 
+    //     buildingPage = document.getElementsByClassName("buildingPage");
+    //     for (x = 0; x < buildingPage.length; x++){
+    //         buildingPage[x].style.display = "none";
+    //     }
+
+    //     // get all building buttons  (class="buildingSelect") and remove style and active status
+    //     buildingSelect = document.getElementsByClassName("buildingSelect");
+    //     for (x = 0; x < buildingSelect.length; x++){
+    //         buildingSelect[x].className = buildingSelect[x].className.replace("active", "");
+    //     }
+    // },
 
     // when user wants to create new post, form appears
     createPost() {
       console.log("POST BUTTON CLICKED");
       document.getElementById("createPost").style.display = "block";
-    }
-  }
+    },
+
+    // showBuilding(buildingName){
+    //   this.$router.push('/buildinghub')
+    // }
+  },
   
   
 }

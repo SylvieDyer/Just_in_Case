@@ -8,6 +8,23 @@ const routes =  [
     component: () => import("./components/Feed")
   },
   {
+    path: "/buildinghub",
+    name: "buildinghub",
+    component: () => import("./components/Building")
+
+  },
+  {
+    path: "/buildingname/:name",
+    name: "buildingname",
+    component: () => import("./components/Building")
+
+  },
+  {
+    path: "/buildingid/:id",
+    name: "buildingID",
+    component: () => import("./components/Building")
+  },
+  {
     path: "/tutorials/:id",
     name: "tutorial-details",
     component: () => import("./components/Tutorial")

@@ -121,6 +121,7 @@ li, ul {
 .buildingPage {
     display: block;
     animation: fadeEffect 1s; /* fade in */
+    width: 100%;
 }
 
 /* POST BUTTON */
