@@ -6,6 +6,8 @@ import java.util.*;
 
 import org.springframework.lang.Nullable;
 
+import com.mysql.cj.xdevapi.Result;
+
 public class DbUtils {
     Connection conn;
     public DbUtils() {
@@ -16,6 +18,34 @@ public class DbUtils {
             e.printStackTrace();
         }
     }
+
+    private LiveAlertPost getLiveAlertPostFromResultSet(ResultSet rs) {
+        String postTypeString;
+        try {
+            postTypeString = rs.getString("postType");
+            PostType postType = PostType.DEFAULT;
+            for(PostType pt : PostType.values()) {
+                if (postTypeString.equals(pt.toString())) {
+                    postType = pt;
+                }
+            }
+                
+            String locationString = rs.getString("location");
+            Location location = Location.DEFAULT;
+            for (Location l : Location.values()) {
+                if(locationString.equals(l.toString())) {
+                    location = l;
+                }
+            }
+            return new LiveAlertPost(rs.getLong("postID"), postType, location, 
+                rs.getTimestamp("time"), rs.getInt("numUpvotes"), 
+                rs.getInt("numDownvotes"));
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
     
     public List<LiveAlertPost> getFeed() {
         List<LiveAlertPost> alertFeed = new ArrayList<LiveAlertPost>();
@@ -24,22 +54,8 @@ public class DbUtils {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM just_in_case.livealertpost");
             while(rs.next()) {
-                String postTypeString = rs.getString("postType");
-                PostType postType = PostType.DEFAULT;
-                for(PostType pt : PostType.values()) {
-                    if (postTypeString.equals(pt.toString())) {
-                        postType = pt;
-                    }
-                }
-                    
-                String locationString = rs.getString("location");
-                Location location = Location.DEFAULT;
-                for (Location l : Location.values()) {
-                    if(locationString.equals(l.toString())) {
-                        location = l;
-                    }
-                }
-                alertFeed.add(new LiveAlertPost(postType, location, rs.getInt("numUpvotes"), rs.getInt("numDownvotes")));
+                //TODO: Null handling
+                alertFeed.add(getLiveAlertPostFromResultSet(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,10 +85,15 @@ public class DbUtils {
                 long postID = rs.getLong(1);
                 stmt.executeUpdate("INSERT INTO just_in_case.posts(postID, caseID)"
                 + " VALUES ('" + postID + "', '" + user.getCaseID() + "')");
+
+                ResultSet insertedResultSet = stmt.executeQuery(
+                    "GET * FROM just_in_case.livealertpost WHERE postId='"+ postID + "'");
+                if(insertedResultSet.next()) {
+                    stmt.close();
+                    return getLiveAlertPostFromResultSet(rs);
+                }                
                 stmt.close();
-                // TODO: fetch liveAlertPost from db by postId
-                liveAlertPost.setPostID(postID);
-                return liveAlertPost;
+                return null;
             } else {
                 stmt.close();
                 return null;
