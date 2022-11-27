@@ -10,7 +10,7 @@ const routes =  [
   {
     path: "/buildinghub",
     name: "buildinghub",
-    component: () => import("./components/Building")
+    component: () => import("./components/AllBuildings")
 
   },
   {

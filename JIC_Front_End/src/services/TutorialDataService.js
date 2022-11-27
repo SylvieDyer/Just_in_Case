@@ -5,7 +5,7 @@ class TutorialDataService {
     return http.get("/feed");
   }
 
-  create(post) {
+  createPost(post) {
     return http.post("/feed", post);
   }
 
@@ -19,6 +19,10 @@ class TutorialDataService {
 
   getBuildingByID(id) {
     return http.get(`/buildingid/${id}`);
+  }
+
+  createBuilding(building) {
+    return http.post("/buildinghub", building);
   }
 
 }

@@ -141,7 +141,7 @@ li, ul {
     opacity: .9;
 }
 
-.createPost {
+.create {
     display: none;
     border-radius: 25px;
     background-color: rgb(231, 231, 231);
@@ -172,3 +172,17 @@ select {
     background-color:rgb(202, 202, 202);
     border: none;
 }
+
+#addBuilding {
+    font-size: 1rem;
+    float: right;
+    margin: .8rem .6rem .8rem .4rem;
+}
+
+.addBuildingInput {
+    width: 100%;
+    padding: .5rem;
+    margin: 1%;
+    border-radius: 10px;
+}
+

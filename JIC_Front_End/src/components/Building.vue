@@ -6,18 +6,6 @@
         <br>
         <p>{{ this.building.description }}</p>
         <!--Will Hold the Dynamic Statuses-->
-
-       
-       <!-- <ul style="list-style: none;">
-        <li class="samplePost"
-          v-for="building in buildings"
-          :key="building.buildingName" 
-        >        
-          {{ building.buildingName }} <br>
-          {{ building.description }}
-          
-        </li>
-      </ul> -->
     </div>
 </template>
 
@@ -41,19 +29,7 @@ export default {
     };
   },
   methods: {
-    // pull the live alert posts from the DB
-    retrieveBuildings() {
-      TutorialDataService.getBuildings()
-        .then(response => {
-        //   this.buildings = response.data;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
-
+    // pull from DB by ID
     getBuildingByID(id) {
         console.log("GETTING BUILDING BY ID..: "+ id);
       TutorialDataService.getBuildingByID(id)
@@ -101,10 +77,8 @@ export default {
     
   },
   mounted() {
-    // this.retrieveBuildings();
-   
     this.getBuildingByID(this.$route.params.id);
-    // console.log(this.$route.params.name);
+    console.log(this.$route.params.id);
     // this.getBuildingByName(this.$route.params.name);
   }
 };

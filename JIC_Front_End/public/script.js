@@ -101,9 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // }
 
     // to discared a new post
-    document.getElementById("postClose").onclick = function () {
-        document.getElementById("createPost").style.display = "none";
-    }
 
 
     // // to submit a new post

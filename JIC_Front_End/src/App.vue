@@ -18,8 +18,9 @@
     </div>
   </div> -->
   <div id="app">
-    <form class="createPost" id="createPost">
-      <h1>New Post <i id="postClose" class="fa fa-close"></i></h1>
+    <AddBuilding @add-building="addBuildingBtn"/>
+    <form class="create" id="createPost">
+      <h1>New Post <i id="postClose" class="fa fa-close" v-on:click="closePost()"></i></h1>
       <div>
           Alert! 
           <select v-model="post.postType" name="postType" id="postType">
@@ -44,7 +45,10 @@
 
     <div class="grid">
 
-      <div class="header">Just in Case</div>
+      <div class="header">
+        Just in Case
+        <button id="addBuilding" v-on:click="addBuilding()">Add Building</button>
+      </div>
           
       <!--Feed/Building Page Section [LEFT]-->
       <div class="mainFeed" id="mainFeed">
@@ -71,10 +75,11 @@
       <!--Building Hub Section [RIGHT]-->
       <div class="buildingHub">
         <!--Two Columns of Buttons-->
-        <div class="biRow">
-          <div class="biCol"> 
+        <!-- <div class="biRow">
+          <div class="biCol" id="leftCol"> 
+            OLD WAY TO GET ROUTE FOR EACH BUILDING:
             <router-link :to="'/buildingid/' + this.selectedBuildingID">
-              <button type="submit" class="buildingSelect" v-on:click="selectBuilding(665)">Building B Using ID</button>
+              <button  class="buildingSelect" v-on:click="selectBuilding(665)">Building B Using ID</button>
             </router-link>
             <a th:href="@{buildingB}" >
               <button type="submit" class="buildingSelect" >Building A</button>
@@ -88,7 +93,7 @@
             </a>
           </div>
 
-          <div class="biCol">
+          <div class="biCol" id="rightCol">
             <router-link :to="'/buildingname/' + this.selectedBuildingName">
               <button type="submit" class="buildingSelect" v-on:click="selectBuilding('Building C')">Building C Using Name </button>
             </router-link>
@@ -103,6 +108,26 @@
               <button type="submit" class="buildingSelect" >Building H</button>
             </a>
           </div>
+        </div> -->
+
+
+        <div class="biRow" v-for="(building, index) in buildings" :key="index">
+          <router-link :to="'/buildingid/' + building[`buildingID`]" >
+              <button  class="buildingSelect">{{ building.buildingName }}</button>
+          </router-link>
+
+          <!-- WITH PAIRS-->
+        <!-- <div class="biRow" v-for="(buildingPair, index) in buildingPairs" :key="index"> -->
+       
+
+          <!-- <router-link :to="'/buildingid/' + buildingPair[0][`buildingID`]" >
+              <button  class="buildingSelect">{{ buildingPair[0].buildingName }}</button>
+          </router-link> -->
+
+          <!-- <router-link :to="'/buildingid/' + buildingPair[1][`buildingID`]" >
+              <button  class="buildingSelect">{{ buildingPair[1].buildingName }}</button>
+          </router-link> -->
+
         </div>
       </div> 
     </div>
@@ -111,14 +136,14 @@
 
 <script>
 import TutorialDataService from "./services/TutorialDataService";
-// import Building from "./components/Building.vue"
+ import AddBuilding from "./components/AddBuilding.vue"
 
 // import { onMounted } from 'vue'; 
 export default {
   name: 'app',
   //selectedBuilding: 'A',
   components: {
-    // Building
+    AddBuilding
   },
   data() {
     return {
@@ -132,9 +157,16 @@ export default {
       submitted: false,
       selectedBuildingID: null,
       selectedBuildingName: null,
+      buildingPairs: [],
+      buildings: [],
     }
   },
   mounted() {
+    this.setButtons();
+    // this.$root.$on("new-building", (building) => {
+    //   console.log("trying to add; "+ building.name);
+    // });
+
     // let externalScript = document.createElement('script');
     // externalScript.setAttribute('src', './script.js');
     // document.head.appendChild(externalScript); 
@@ -215,6 +247,47 @@ export default {
       console.log("POST BUTTON CLICKED");
       document.getElementById("createPost").style.display = "block";
     },
+
+    addBuilding() {
+      document.getElementById("createBuilding").style.display = "block";
+    },
+    closePost(){
+      document.getElementById("createPost").style.display = "none";
+    },
+    addBuildingBtn(){
+     this.setButtons()
+    },
+
+    setButtons(){
+      TutorialDataService.getBuildings()
+        .then(response => {
+          console.log(response.data);
+          this.buildings = response.data;
+          for (let i = 0; i < response.data.length; i += 2) {
+            let chunk = response.data.slice(i, i + 2);
+            console.log(chunk);
+            this.buildingPairs.push(chunk);
+          }
+          // this.buildings.forEach(buildingPair => {
+          //   // console.log("PAIR:" +buildingPair);
+          //   // console.log("index 0: ");
+          //   // console.log(buildingPair[0]);
+
+          //   // console.log("index 1: ");
+          //   // console.log(buildingPair[1]);
+
+
+            
+          // });
+          console.log(this.buildings);
+        })
+
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
+  
 
     // showBuilding(buildingName){
     //   this.$router.push('/buildinghub')
