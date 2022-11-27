@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <!-- <div id="app">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
       <router-link to="/" class="navbar-brand">bezKoder</router-link>
       <div class="navbar-nav mr-auto">
@@ -13,13 +13,148 @@
     </nav>
 
     <div class="container mt-3">
+      hello
       <router-view />
+    </div>
+  </div> -->
+  <div id="app">
+    <form action="" method="post" class="createPost" id="createPost">
+      <h1>New Post <i id="postClose" class="fa fa-close"></i></h1>
+      <div>
+          Alert! 
+          <select name="postType" id="postType">
+              <option value="EXCESSIVE_RAIN">There is excessive rain on </option>
+              <option value="EXCESSIVE_SNOW">There is excessive snow on </option>
+              <option value="CROWDED">It is crowded at </option>
+              <option value="CLOSED">The following location is closed- </option>
+          </select>
+          <select name="location" id="location">
+              <option value="ADELBERT_HALL">Adelbert Hall</option>
+              <option value="ADELBERT_GYM">Adelbert Gym</option>
+              <option value="WOLSTEIN_HALL">Wolstein Hall</option>
+              <option value="AMASA_STONE_CHAPEL">Amasa Stone Chapel</option>
+              <option value="ART_STUDIO">Art Studio</option>
+              <option value="BOOKSTORE">Bookstore</option>
+              <option value="BELLFLOWER_HALL">Bellflower Hall</option>
+              <option value="Bingham">Bingham</option>
+          </select>
+        </div>
+        <input type="submit" id="submit"/>
+    </form>
+
+    <div class="grid">
+
+      <div class="header">Just in Case</div>
+          
+      <!--Feed/Building Page Section [LEFT]-->
+      <div class="mainFeed" id="mainFeed">
+        <!--Feed Filter Options-->
+        <div class="filters">
+          <button class="filter" v-on:click="showFeed(this, 'home')" id="defaultOpen"><h3>Live Feed</h3></button>
+          <button class="filter" onclick="showFeed(event, 'study')">Study Spots</button>
+          <button class="filter" onclick="showFeed(event, 'food')">Food</button>
+        </div>
+        <tr class="postFeed" id="postFeed">
+          <router-view/>
+        </tr>
+        <!--Building Pages-->
+    
+        <!--Post Button-->
+        <button class="postBtn" id="postBtn">
+            +
+        </button>
+      </div>
+      <!--Building Hub Section [RIGHT]-->
+      <div class="buildingHub">
+        <!--Two Columns of Buttons-->
+        <div class="biRow">
+          <div class="biCol"> 
+            <a th:href="@{buildingA}" >
+              <button type="submit" class="buildingSelect" >Building A</button>
+            </a>
+            <a th:href="@{buildingC}" >
+              <button type="submit" class="buildingSelect" >Building C</button>
+            </a>
+            <a th:href="@{buildingE}" >
+              <button type="submit" class="buildingSelect" >Building E</button>
+            </a>
+            <a th:href="@{buildingG}" >
+              <button type="submit" class="buildingSelect" >Building G</button>
+            </a>
+          </div>
+
+          <div class="biCol">
+            <a th:href="@{buildingB}" >
+              <button type="submit" class="buildingSelect" >Building B</button>
+            </a>
+            <a th:href="@{buildingD}" >
+              <button type="submit" class="buildingSelect" >Building D</button>
+            </a>
+            <a th:href="@{buildingF}" >
+              <button type="submit" class="buildingSelect" >Building F</button>
+            </a>
+            <a th:href="@{buildingH}" >
+              <button type="submit" class="buildingSelect" >Building H</button>
+            </a>
+          </div>
+        </div>
+      </div> 
     </div>
   </div>
 </template>
 
 <script>
+// import { onMounted } from 'vue'; 
 export default {
-  name: "app"
-};
+  name: 'app',
+  mounted() {
+    // let externalScript = document.createElement('script');
+    // externalScript.setAttribute('src', './script.js');
+    // document.head.appendChild(externalScript); 
+  },
+  methods: {
+    // filter out the posts 
+    showFeed(e, selection){
+        console.log("SHOW FEED CAL");
+        // declare variables
+        var i, x, samplePost, filter, buildingPage, buildingSelect;
+
+        // gets elements with class="samplePost"
+        samplePost = document.getElementsByClassName("samplePost");
+        for (i = 0; i < samplePost.length; i++){
+            if (samplePost[i].id != selection)
+                samplePost[i].style.display = "none";
+            else   
+                samplePost[i].style.display = "block";
+        }
+
+        // get all feed filters (class="filter") and remove class "Active", change style
+        filter = document.getElementsByClassName("filter");
+        for (i = 0; i < filter.length; i++) {
+            filter[i].className = filter[i].className.replace(" active", "");
+            filter[i].style = "color: grey";
+        }
+
+        // show current tab + add active label to button of tab
+    // document.getElementById(selection).style.display = "block";
+        // e.currentTarget.className += " active";
+        // e.currentTarget.style = "color: black";
+
+        /* REMOVING BUILDING PAGE */
+        // get all building pages (class="buildingPage") and hide them 
+        buildingPage = document.getElementsByClassName("buildingPage");
+        for (x = 0; x < buildingPage.length; x++){
+            buildingPage[x].style.display = "none";
+        }
+
+        // get all building buttons  (class="buildingSelect") and remove style and active status
+        buildingSelect = document.getElementsByClassName("buildingSelect");
+        for (x = 0; x < buildingSelect.length; x++){
+            buildingSelect[x].className = buildingSelect[x].className.replace("active", "");
+        }
+    }
+  }
+  
+  
+}
 </script>
