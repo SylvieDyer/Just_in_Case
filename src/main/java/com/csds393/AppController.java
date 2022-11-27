@@ -62,6 +62,12 @@ public class AppController {
         return dbUtils.getBuildingByName(name);
     }
 
+    @PostMapping(path = "/buildinghub", consumes = "application/json", produces = "application/json")
+    public Building createBuilding(@RequestBody Building building) {
+        DbUtils dbUtils = new DbUtils(); 
+        return dbUtils.addBuilding(building, null);
+    }
+
     @PostMapping(path = "/building/{id}", consumes = "application/json", produces = "application/json")
     public Building createBuilding(@RequestBody Building post, @PathVariable("id") String buildingID) {
         DbUtils dbUtils = new DbUtils(); 
