@@ -1,18 +1,17 @@
 <template>
     <div class="postFeed" id="postFeed">
-        <div id="home" class="samplePost">This is a sample general live alert at a sample location</div>
-        <h4>Tutorials List</h4>
-      <ul class="postFeed" id="postFeed">
+      <ul style="list-style: none;">
         <li class="samplePost"
           v-for="(post, index) in feed"
-          :key="index"
+          :key="index" 
         >
           {{ post.postID }} <br>
-          {{ post.postType }} <br>
-          {{ post.location }}<br>
+          New Alert! <br>
+          Reports of <b>{{ post.postType }}</b> at <b>{{ post.location }}</b> <br>
         </li>
       </ul>
     </div>
+  
 </template>
 
 <script>
@@ -25,10 +24,11 @@ export default {
       feed: [],
       currentTutorial: null,
       currentIndex: -1,
-      title: ""
+      title: "",
     };
   },
   methods: {
+    // pull the live alert posts from the DB
     retrieveLiveAlertPosts() {
       TutorialDataService.getAll()
         .then(response => {
@@ -45,23 +45,6 @@ export default {
       this.currentTutorial = null;
       this.currentIndex = -1;
     },
-
-    setActiveTutorial(tutorial, index) {
-      this.currentTutorial = tutorial;
-      this.currentIndex = tutorial ? index : -1;
-    },
-
-    removeAllTutorials() {
-      TutorialDataService.deleteAll()
-        .then(response => {
-          console.log(response.data);
-          this.refreshList();
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    
     
   },
   mounted() {

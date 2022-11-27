@@ -51,6 +51,12 @@ body {
     animation: fadeEffect 1s; /* fade in */
 }
 
+li, ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
 @keyframes fadeEffect {
     from {opacity: 0}
     to {opacity: 1;}
@@ -121,12 +127,17 @@ body {
 .postBtn{
     position: absolute;
     bottom: 5%;
-    float:left ;
+    float:left;
     height: 5rem;
     width: 5rem;
     border-radius: 50%;
     font-size: 1.4rem;
     z-index: 1;
+    opacity: .7;
+}
+
+.postBtn:hover {
+    opacity: .9;
 }
 
 .createPost {

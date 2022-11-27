@@ -18,17 +18,17 @@
     </div>
   </div> -->
   <div id="app">
-    <form action="" method="post" class="createPost" id="createPost">
+    <form class="createPost" id="createPost">
       <h1>New Post <i id="postClose" class="fa fa-close"></i></h1>
       <div>
           Alert! 
-          <select name="postType" id="postType">
+          <select v-model="post.postType" name="postType" id="postType">
               <option value="EXCESSIVE_RAIN">There is excessive rain on </option>
               <option value="EXCESSIVE_SNOW">There is excessive snow on </option>
               <option value="CROWDED">It is crowded at </option>
               <option value="CLOSED">The following location is closed- </option>
           </select>
-          <select name="location" id="location">
+          <select v-model="post.location" name="location" id="location">
               <option value="ADELBERT_HALL">Adelbert Hall</option>
               <option value="ADELBERT_GYM">Adelbert Gym</option>
               <option value="WOLSTEIN_HALL">Wolstein Hall</option>
@@ -39,7 +39,7 @@
               <option value="Bingham">Bingham</option>
           </select>
         </div>
-        <input type="submit" id="submit"/>
+        <button type="submit" id="submit" v-on:click="newPost()">Submit</button>
     </form>
 
     <div class="grid">
@@ -59,10 +59,11 @@
         </tr>
         <!--Building Pages-->
     
-        <!--Post Button-->
-        <button class="postBtn" id="postBtn">
-            +
-        </button>
+          <!--Post Button-->
+    <button class="postBtn" id="postBtn" v-on:click="createPost()">
+        +
+    </button>
+       
       </div>
       <!--Building Hub Section [RIGHT]-->
       <div class="buildingHub">
@@ -104,15 +105,51 @@
 </template>
 
 <script>
+import TutorialDataService from "./services/TutorialDataService";
+
 // import { onMounted } from 'vue'; 
 export default {
   name: 'app',
+  data() {
+    return {
+      post: {
+        location: "ADELBERT_HALL",
+        // numDownVotes: 0,
+        // numUpVotes: 0,
+        // postID: 0,
+        postType: "EXCESSIVE_RAIN",
+      },
+      submitted: false
+    }
+  },
   mounted() {
     // let externalScript = document.createElement('script');
     // externalScript.setAttribute('src', './script.js');
     // document.head.appendChild(externalScript); 
   },
   methods: {
+    // send info in new post 
+    newPost() {
+      console.log(this.post);
+      var newPost = {
+        location: this.post.location,
+        numDownVotes: this.post.numDownVotes,
+        numUpVotes: this.post.numUpVotes,
+        postID: this.post.postID,
+        postType: this.post.postType,
+      };
+
+      TutorialDataService.create(newPost)
+        .then(response => {
+          this.post.id = response.newPost.id;
+          console.log("ADDING POST: "+response.data);
+          this.submitted = true;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
     // filter out the posts 
     showFeed(e, selection){
         console.log("SHOW FEED CAL");
@@ -152,6 +189,12 @@ export default {
         for (x = 0; x < buildingSelect.length; x++){
             buildingSelect[x].className = buildingSelect[x].className.replace("active", "");
         }
+    },
+
+    // when user wants to create new post, form appears
+    createPost() {
+      console.log("POST BUTTON CLICKED");
+      document.getElementById("createPost").style.display = "block";
     }
   }
   

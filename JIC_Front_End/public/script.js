@@ -94,11 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
     //     }
     // }
 
-    // when user wants to create new post, form appears
-    document.getElementById("postBtn").onclick = function() {
-        console.log("POST BUTTON CLICKED");
-    document.getElementById("createPost").style.display = "block";
-    }
+    // // when user wants to create new post, form appears
+    // document.getElementById("postBtn").onclick = function() {
+    //     console.log("POST BUTTON CLICKED");
+    // document.getElementById("createPost").style.display = "block";
+    // }
 
     // to discared a new post
     document.getElementById("postClose").onclick = function () {
@@ -106,20 +106,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // to submit a new post
-    document.getElementById("submit").onclick = function () {
-        let postType = document.getElementById("postType").textContent;
-        let location = document.getElementById("location").textContent;
-        // submit to database!! TODO
-        document.getElementById("createPost").style.display = "none";
-        const post = document.createElement("div");
-        post.id = "home";
-        post.class = "samplePost";
-        const postContent = document.createTextNode(""+postType +" " + location);
-        post.append(postContent);
+    // // to submit a new post
+    // document.getElementById("submit").onclick = function () {
+    //     let postType = document.getElementById("postType").textContent;
+    //     let location = document.getElementById("location").textContent;
+    //     // submit to database!! TODO
+    //     document.getElementById("createPost").style.display = "none";
+    //     const post = document.createElement("div");
+    //     post.id = "home";
+    //     post.class = "samplePost";
+    //     const postContent = document.createTextNode(""+postType +" " + location);
+    //     post.append(postContent);
     
-        document.getElementById('postFeed').prepend(post);
-        console.log("POSTING");
-        showFeed($("#submit").onclick, 'home');
-    }
+    //     document.getElementById('postFeed').prepend(post);
+    //     console.log("POSTING");
+    //     showFeed($("#submit").onclick, 'home');
+    // }
 });
