@@ -1,11 +1,14 @@
 package com.csds393;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class Facility {
+    long facilityID;
     String facilityName;
     Status status;
     Timestamp statusLastUpdated; 
+
+    public Facility() {}
 
     public Facility(String facilityName, Status status, Timestamp statusLastUpdated) {
         this.facilityName = facilityName;
@@ -13,8 +16,23 @@ public class Facility {
         this.statusLastUpdated = statusLastUpdated;
     } 
 
+    public Facility(long facilityID, String facilityName, Status status, Timestamp statusLastUpdated) {
+        this.facilityID = facilityID;
+        this.facilityName = facilityName;
+        this.status = status;
+        this.statusLastUpdated = statusLastUpdated;
+    } 
+
+    public long getFacilityID() {
+        return this.facilityID;
+    }
+
+    public void setFacilityID(long facilityID) {
+        this.facilityID = facilityID;
+    }
+
     public String getFacilityName() {
-        return facilityName;
+        return this.facilityName;
     }
 
     public void setFacilityName(String facilityName) {
@@ -22,7 +40,7 @@ public class Facility {
     }
 
     public Status getStatus() {
-        return status;
+        return this.status;
     }
 
     public void setStatus(Status status) {
@@ -30,10 +48,11 @@ public class Facility {
     }
 
     public Timestamp getStatusLastUpdated() {
-        return statusLastUpdated;
+        return this.statusLastUpdated;
     }
 
-    public void setStatusLastUpdated(Timestamp ts) {
-        this.statusLastUpdated = ts;
+    public void setStatusLastUpdated(Timestamp statusLastUpdated) {
+        this.statusLastUpdated = statusLastUpdated;
     }
+
 }

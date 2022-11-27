@@ -41,7 +41,7 @@ public class BuildingHub {
     public void removeBuildingByName(String buildingName){
         boolean removed = false;
         for(int i = 0; i < buildings.size(); i++) {
-            if(buildings.get(i).getName().equals(buildingName)) {
+            if(buildings.get(i).getBuildingName().equals(buildingName)) {
                 buildings.remove(i);
                 i--;
                 removed = true;
@@ -67,7 +67,7 @@ public class BuildingHub {
     //Returns null if no such building.
     public Building getBuildingByName(String name) {
         for (Building b : buildings) {
-            if (b.getName().equals(name)) {
+            if (b.getBuildingName().equals(name)) {
                 return b;
             }
         }

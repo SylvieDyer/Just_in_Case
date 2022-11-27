@@ -4,45 +4,46 @@ import java.sql.*;
 import java.io.*;
 
 public class Building {
+    private long buildingID;
     private String buildingName;
-    //private HashMap<String,Status> status = new HashMap<String,Status>();
     private String description;
-    // private List<String> facilities;
-    // private HashMap<String, Timestamp> timeOfLastEvent;
 
-    public Building(String name, String description, List<String> facilities){
-        System.out.println("CONSTRUCTING BUILDING");
+    public Building() {}
+
+    public Building(long buildingID, String name, String description){
+        this.buildingID = buildingID;
         this.buildingName = name;
         this.description = description;
-        System.out.println(name);
-        //this.facilities = facilities;
-        // try {
-        // for(String facility : facilities){
-        //     status.put(facility, Status.NOT_BUSY);
-        // }
-        // } catch (NullPointerException e){
-            
-        // }       
     }
 
-    public void setName(String name) {
+    public Building(String name, String description){
         this.buildingName = name;
+        this.description = description;
+    }
+    
+
+    public long getBuildingID() {
+        return this.buildingID;
     }
 
-    public String getName() {
+    public void setBuildingID(long buildingID) {
+        this.buildingID = buildingID;
+    }
+
+    public String getBuildingName() {
         return this.buildingName;
     }
 
-    // public Status getStatus(String buildingUnit){
-    //     return status.get(buildingUnit);
-    // }
-
-    public void setDescription(String description_) {
-        this.description = description_;
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
     }
-    
-    public String getDescription(){
+
+    public String getDescription() {
         return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     // public Status updateBuildingStatus(Status s, String u){
