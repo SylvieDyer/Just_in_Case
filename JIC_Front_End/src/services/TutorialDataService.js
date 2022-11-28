@@ -38,6 +38,15 @@ class TutorialDataService {
     return http.get(`/user/${caseEmail}`);
   }
 
+  isAdmin(caseEmail){
+    return http.get(`user/isAdmin/${caseEmail}`);
+
+  }
+
+  checkPassword(caseEmail, password){
+    return http.get(`user/${caseEmail}/${password}`);
+  }
+
 }
 
 export default new TutorialDataService();

@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if="!this.loggedIn" class="logInContainer">
+    <div class="logInContainer">
         <div class="topHalf">
             <h3>Just in Case</h3>
         </div>
@@ -14,7 +14,7 @@
                     <label for="email"><b>Case Email: </b></label><br>
                     <input id="email" v-model="this.user.email" type="text" placeholder="Enter Your Case Email" name="email" required>
                     <div id="emptyEmail" class="hasError">Please enter you case email</div>
-                    <!-- <div id="wrongEmail" class="hasError">There is no account associated with this email! Try again!</div> -->
+                    <div id="wrongEmail" class="hasError">There is no account associated with this email! Try again!</div>
                     <div id="invalidEmail" class="hasError">Invalid Case email! Try again!</div>
 
                 </div>
@@ -28,10 +28,10 @@
                     <label for="psw"><b>Password: </b></label><br>
                     <input id="password" v-model="this.user.password" type="password" placeholder="Enter Password" name="psw" required>
                     <div id="emptyPassword" class="hasError">Please enter a password</div>
-                    <!-- <div id="wrongPassword" class="hasError">Incorrect password! Try again!</div> -->
+                    <div id="wrongPassword" class="hasError">Incorrect password! Try again!</div>
                 </div>
 
-                <div id="noUser" class="hasError">The email or password you have entered is wrong. <br>Please try again! </div>
+                <div id="noUser" class="hasError">Unable to log you in right now.<br>Please try again later! </div>
 
                 <button v-if="!this.newUser" v-on:click="newAccount()" type="submit" id="login">Login</button>
                 <button v-if="!this.newUser" v-on:click="setNewUser()" id="newUser">New User?</button>
@@ -49,13 +49,17 @@ import TutorialDataService from '../services/TutorialDataService';
 
 export default {
     name: 'login',
-   
+    // props :{
+    //     loggedOut: Boolean,
+    // },
+    emits: ["logged-in"],
     data() {
         return {
             newUser: false,
             user: {
                 email: "",
                 password: "",
+                admin: false,
             },
             caseEmailVerif: new RegExp("^[a-z]{3}[0-9]+@case+.edu"),
         }
@@ -96,7 +100,7 @@ export default {
                     TutorialDataService.addUser(this.user)
                     .then(response => {
                         console.log(response.data);
-                        this.loggedIn = true;
+                        this.newUser = false;
                     })
                     .catch(e => {
                         console.log(e);
@@ -109,9 +113,29 @@ export default {
                     // check DB for the email inputted 
                     TutorialDataService.checkUser(this.user.email)
                     .then(response => {
+                        let passwordMatch = false;
+                        console.log("USER: "+response.data);
                         console.log(response.data);
-                        this.loggedIn = true;
-                        this.$emit("logged-in", this.user);
+                        if (response.data == "")
+                            document.getElementById("wrongEmail").style.display = "block";
+
+                        else{
+                            this.user = response.data;
+                            // check password
+                            TutorialDataService.checkPassword(this.user.caseID, this.user.password)
+                            .then(response => {
+                                passwordMatch = response.data;
+                            })
+                            .catch(e =>{
+                                console.log(e);
+                                document.getElementById("wrongPassword").style.display = "block";
+                            })
+
+                            if (passwordMatch){
+                                console.log("LOGGING IN USER: "+this.user);
+                                this.$emit("logged-in", this.user);
+                            }
+                        }
                     })
                     .catch(e => {
                         console.log(e);
@@ -135,7 +159,7 @@ export default {
         width: 100%;
         height: 100vh;
     }
-    
+
     .topHalf {
         width: 100%;
         height: 40%;

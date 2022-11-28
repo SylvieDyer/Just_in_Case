@@ -62,7 +62,6 @@ export default {
   },
   mounted() {
     this.retrieveBuildings();
-
   }
 };
 </script>

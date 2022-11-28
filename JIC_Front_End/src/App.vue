@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <LogIn id="login" @logged-in="login"/>
+    <LogIn id="login" @logged-in="login" />
     <AddBuilding @add-building="setButtons"/>
     <EditBuildings @edit-buildings="setButtons"/>
     <form class="popUp" id="createPost">
@@ -32,7 +32,9 @@
       <div class="header">
         Just in Case
         <div id="userInfo">
+          <button v-on:click="logOut()">Log Out</button>
           {{ this.user.email }}
+          {{this.user.admin }}
         </div>
       </div>
           
@@ -77,7 +79,7 @@
           </div>  
           <div class="biCol" v-if="buildings.length % 2 != 0"> </div>
         </div>
-        <div id="buildingEditors">
+        <div v-if="this.user.admin" id="buildingEditors">
           <button id="addBuilding" v-on:click="addBuilding()">Add Building</button>
           <button id="removeBuilding" v-on:click="editBuildings()">Edit Buildings</button>
         </div>
@@ -120,9 +122,12 @@ export default {
       buildingPairs: [],
       buildings: [],
       user: {
-        email: "",
-        password: "",
-      }
+        caseID: "",
+        userName: "",
+        passWord: "",
+        isAdmin: false,
+      },
+      loggedIn: false,
     }
   },
   mounted() {
@@ -130,8 +135,15 @@ export default {
   },
   methods: {
     login(user){
+      console.log("login in app called");
       document.getElementById("login").style.display = "none";
-      this.user= user;
+      this.user = user;
+      this.loggedIn = true;
+    
+    },
+
+    logOut(){
+      this.loggedIn = false;
     },
     // send info in new post 
     newPost() {
