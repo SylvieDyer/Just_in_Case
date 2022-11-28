@@ -74,10 +74,17 @@ public class AppController {
         return dbUtils.addBuilding(post, null);
     }
 
+    // @DeleteMapping(path = "/building", consumes = "application/json", produces = "application/json")
+    // public long deleteBuilding(@RequestBody Building building) {
+    //     DbUtils dbUtils = new DbUtils(); 
+    //     return dbUtils.deleteBuilding(building);
+    // }
+
     @DeleteMapping(path = "/building", consumes = "application/json", produces = "application/json")
-    public long deleteBuilding(@RequestBody Building building) {
+    public long deleteBuilding(@RequestBody String building) {
         DbUtils dbUtils = new DbUtils(); 
-        return dbUtils.deleteBuilding(building);
+
+        return dbUtils.deleteBuilding(dbUtils.getBuildingByName(building));
     }
 
     @GetMapping("/facility/{id}")
