@@ -23,9 +23,6 @@ export default {
         buildingName: null,
         description: null,
       },
-    //   currentTutorial: null,
-    //   currentIndex: -1,
-  
     };
   },
   methods: {

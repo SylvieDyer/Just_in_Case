@@ -11,7 +11,6 @@
         >        
           {{ building.buildingName }} <br>
           {{ building.description }}
-          
         </li>
       </ul>
     </div>

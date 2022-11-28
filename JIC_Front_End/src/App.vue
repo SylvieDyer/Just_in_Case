@@ -1,25 +1,8 @@
 <template>
-  <!-- <div id="app">
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <router-link to="/" class="navbar-brand">bezKoder</router-link>
-      <div class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link to="/tutorials" class="nav-link">Tutorials</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/add" class="nav-link">Add</router-link>
-        </li>
-      </div>
-    </nav>
-
-    <div class="container mt-3">
-      hello
-      <router-view />
-    </div>
-  </div> -->
   <div id="app">
-    <AddBuilding @add-building="addBuildingBtn"/>
-    <form class="create" id="createPost">
+    <AddBuilding @add-building="setButtons"/>
+    <EditBuildings @edit-buildings="setButtons"/>
+    <form class="popUp" id="createPost">
       <h1>New Post <i id="postClose" class="fa fa-close" v-on:click="closePost()"></i></h1>
       <div>
           Alert! 
@@ -47,7 +30,6 @@
 
       <div class="header">
         Just in Case
-        <button id="addBuilding" v-on:click="addBuilding()">Add Building</button>
       </div>
           
       <!--Feed/Building Page Section [LEFT]-->
@@ -55,79 +37,45 @@
         <!--Feed Filter Options-->
         <div class="filters">
           <router-link to="/feed">
-          <button class="filter" id="defaultOpen"><h3>Live Feed</h3></button>
-        </router-link>
+            <button class="filter" id="defaultOpen"><h3>Live Feed</h3></button>
+          </router-link>
           <button class="filter" onclick="showFeed(event, 'study')">Study Spots</button>
           <button class="filter" onclick="showFeed(event, 'food')">Food</button>
         </div>
-        <tr class="postFeed" id="postFeed">
+        <!-- <div class="postFeed" id="postFeed"> -->
           <router-view/>
           <!-- <Building :buildingName=this.selectedBuilding /> -->
-        </tr>
+        <!-- </div> -->
         <!--Building Pages-->
     
           <!--Post Button-->
-    <button class="postBtn" id="postBtn" v-on:click="createPost()">
-        +
-    </button>
-       
+        <button class="postBtn" id="postBtn" v-on:click="createPost()">
+            +
+        </button>
+          
       </div>
       <!--Building Hub Section [RIGHT]-->
       <div class="buildingHub">
-        <!--Two Columns of Buttons-->
-        <!-- <div class="biRow">
-          <div class="biCol" id="leftCol"> 
-            OLD WAY TO GET ROUTE FOR EACH BUILDING:
-            <router-link :to="'/buildingid/' + this.selectedBuildingID">
-              <button  class="buildingSelect" v-on:click="selectBuilding(665)">Building B Using ID</button>
-            </router-link>
-            <a th:href="@{buildingB}" >
-              <button type="submit" class="buildingSelect" >Building A</button>
-            </a>
-            
-            <a th:href="@{buildingE}" >
-              <button type="submit" class="buildingSelect" >Building E</button>
-            </a>
-            <a th:href="@{buildingG}" >
-              <button type="submit" class="buildingSelect" >Building G</button>
-            </a>
-          </div>
-
-          <div class="biCol" id="rightCol">
-            <router-link :to="'/buildingname/' + this.selectedBuildingName">
-              <button type="submit" class="buildingSelect" v-on:click="selectBuilding('Building C')">Building C Using Name </button>
-            </router-link>
-            
-            <a th:href="@{buildingD}" >
-              <button type="submit" class="buildingSelect" >Building D</button>
-            </a>
-            <a th:href="@{buildingF}" >
-              <button type="submit" class="buildingSelect" >Building F</button>
-            </a>
-            <a th:href="@{buildingH}" >
-              <button type="submit" class="buildingSelect" >Building H</button>
-            </a>
-          </div>
-        </div> -->
-
-
-        <div class="biRow" v-for="(building, index) in buildings" :key="index">
-          <router-link :to="'/buildingid/' + building[`buildingID`]" >
-              <button  class="buildingSelect">{{ building.buildingName }}</button>
-          </router-link>
-
-          <!-- WITH PAIRS-->
-        <!-- <div class="biRow" v-for="(buildingPair, index) in buildingPairs" :key="index"> -->
-       
-
-          <!-- <router-link :to="'/buildingid/' + buildingPair[0][`buildingID`]" >
-              <button  class="buildingSelect">{{ buildingPair[0].buildingName }}</button>
-          </router-link> -->
-
-          <!-- <router-link :to="'/buildingid/' + buildingPair[1][`buildingID`]" >
-              <button  class="buildingSelect">{{ buildingPair[1].buildingName }}</button>
-          </router-link> -->
-
+        <div class="biRow">
+          <div class="biCol" v-for="(building, index) in buildings.slice(0, buildings.length / 2 + 1)" :key="index">
+            <!-- <template v-if="index <= buildings.length / 2"> -->
+                <router-link :to="'/buildingid/' + building[`buildingID`]" >
+                    <button  class="buildingSelect">{{ building.buildingName }}</button>
+                </router-link>  
+            <!-- </template> -->
+          </div>  
+          <div class="biCol" v-for="(building, index) in buildings.slice(buildings.length / 2 + 1)" :key="index">
+            <!-- <template v-if="index > buildings.length / 2"> -->
+                <router-link :to="'/buildingid/' + building[`buildingID`]" >
+                    <button  class="buildingSelect">{{ building.buildingName }}</button>
+                </router-link>  
+            <!-- </template> -->
+          </div>  
+          <div class="biCol" v-if="buildings.length % 2 != 0"> </div>
+        </div>
+        <div id="buildingEditors">
+          <button id="addBuilding" v-on:click="addBuilding()">Add Building</button>
+          <button id="removeBuilding" v-on:click="editBuildings()">Edit Buildings</button>
         </div>
       </div> 
     </div>
@@ -136,14 +84,18 @@
 
 <script>
 import TutorialDataService from "./services/TutorialDataService";
- import AddBuilding from "./components/AddBuilding.vue"
+ import AddBuilding from "./components/AddBuilding.vue";
+ import EditBuildings from "./components/EditBuildings.vue"
+
+
 
 // import { onMounted } from 'vue'; 
 export default {
   name: 'app',
   //selectedBuilding: 'A',
   components: {
-    AddBuilding
+    AddBuilding,
+    EditBuildings
   },
   data() {
     return {
@@ -163,13 +115,6 @@ export default {
   },
   mounted() {
     this.setButtons();
-    // this.$root.$on("new-building", (building) => {
-    //   console.log("trying to add; "+ building.name);
-    // });
-
-    // let externalScript = document.createElement('script');
-    // externalScript.setAttribute('src', './script.js');
-    // document.head.appendChild(externalScript); 
   },
   methods: {
     // send info in new post 
@@ -186,7 +131,6 @@ export default {
       TutorialDataService.create(newPost)
         .then(response => {
           this.post.id = response.newPost.id;
-          console.log("ADDING POST: "+response.data);
           this.submitted = true;
         })
         .catch(e => {
@@ -194,13 +138,13 @@ export default {
         });
     },
 
-    selectBuilding(val){
-      this.selectedBuildingID = val;
-      this.selectedBuildingName = val;
-      console.log("ID: " + this.selectedBuildingID);
-      console.log("NAME: " + this.selectedBuildingName);
+    // selectBuilding(val){
+    //   this.selectedBuildingID = val;
+    //   this.selectedBuildingName = val;
+    //   console.log("ID: " + this.selectedBuildingID);
+    //   console.log("NAME: " + this.selectedBuildingName);
 
-    },
+    // },
     // // filter out the posts 
     // showFeed(e, selection){
     //     console.log("SHOW FEED CAL");
@@ -244,54 +188,34 @@ export default {
 
     // when user wants to create new post, form appears
     createPost() {
-      console.log("POST BUTTON CLICKED");
       document.getElementById("createPost").style.display = "block";
+    },
+
+    closePost(){
+      document.getElementById("createPost").style.display = "none";
     },
 
     addBuilding() {
       document.getElementById("createBuilding").style.display = "block";
     },
-    closePost(){
-      document.getElementById("createPost").style.display = "none";
+
+    editBuildings() {
+      document.getElementById("editBuildings").style.display = "block";
     },
-    addBuildingBtn(){
-     this.setButtons()
-    },
+   
 
     setButtons(){
+      console.log("SETTING BUTTONS");
       TutorialDataService.getBuildings()
         .then(response => {
           console.log(response.data);
           this.buildings = response.data;
-          for (let i = 0; i < response.data.length; i += 2) {
-            let chunk = response.data.slice(i, i + 2);
-            console.log(chunk);
-            this.buildingPairs.push(chunk);
-          }
-          // this.buildings.forEach(buildingPair => {
-          //   // console.log("PAIR:" +buildingPair);
-          //   // console.log("index 0: ");
-          //   // console.log(buildingPair[0]);
-
-          //   // console.log("index 1: ");
-          //   // console.log(buildingPair[1]);
-
-
-            
-          // });
-          console.log(this.buildings);
         })
 
         .catch(e => {
           console.log(e);
         });
     },
-
-  
-
-    // showBuilding(buildingName){
-    //   this.$router.push('/buildinghub')
-    // }
   },
   
   

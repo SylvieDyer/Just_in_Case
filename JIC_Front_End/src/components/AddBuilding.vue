@@ -1,5 +1,5 @@
 <template>
-    <form class="create" id="createBuilding">
+    <form class="popUp" id="createBuilding">
         <h1>New Building <i id="postClose" class="fa fa-close" v-on:click="close()"></i></h1>
      
         <input class="addBuildingInput" type="text" placeholder="Building Name" v-model="newBuilding.name"/><br>
@@ -41,9 +41,6 @@ export default {
             .catch(e => {
                 console.log(e);
             }); 
-
-           
-
              this.$emit("add-building");
         },
 

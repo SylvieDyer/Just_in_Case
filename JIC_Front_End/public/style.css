@@ -9,36 +9,28 @@ body {
     font-size: 2rem;
     padding: .8rem 0rem .8rem .4rem;
     border-bottom: solid rgb(206, 206, 206);
-    
 }
 
 /* landing page layout */
-
-.mainFeed { 
-    grid-area: left;
-    padding: 1.5rem;
-    overflow: scroll;
-
-}
-.buildingHub { 
-    grid-area: right;
-    border-left: solid;
-    padding: 5%;
-    overflow: scroll;
-}
-
 .grid {
     position: relative;
     display: grid;
-    grid:   'top top top top'
-            'left left right right'
-            'left left right right'
-            'left left right right'
-            'left left right right'
-            'left left right right';
+    grid:   'top top top top top'
+            'left left left right right'
+            'left left left right right'
+            'left left left right right'
+            'left left left right right'
+            'left left left right right';
     height: 100vh;
     width: 100vw;
-            
+}
+
+.mainFeed { 
+    grid-area: left;
+    padding: 2rem;
+    overflow: scroll;
+    width: 100%;
+
 }
 
 /*LIVE FEED PORTION: */
@@ -46,8 +38,9 @@ body {
     border: solid;
     padding: 5%;
     /* display: none; */
+    
     margin-bottom: 5%;
-
+    width: 90%;
     animation: fadeEffect 1s; /* fade in */
 }
 
@@ -86,19 +79,28 @@ li, ul {
     transition: 0.3s;
 }
 
+.buildingHub { 
+    grid-area: right;
+    border-left: solid;
+    /* padding: 5%; */
+    overflow: scroll;
+}
+
+
 /* BUILDING HUBS PORTION: */
 /* to format the buttons */ 
 .buildingHub .biRow {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 0 4px;
+    padding: 0 5rem;
+ 
 }
 
 .buildingHub .biCol {
     flex: 50%;
-    max-width: 45%;
-    padding: 0 4px;
+    max-width: 50%;
+    padding: 1rem;
 }
 
 /* make hubs stack when small screen  */
@@ -111,11 +113,16 @@ li, ul {
 
 /* style the buttons */
 .buildingHub button {
-    padding: 25%;
-    margin: 1rem;
+    
+    padding: 20%;
+    width: 100%;
+    margin: 1rem auto;
     border-radius: 25px;
     overflow: scroll;
-   
+}
+
+.buildingHub button:hover{
+    opacity: .7;
 }
 
 .buildingPage {
@@ -141,7 +148,7 @@ li, ul {
     opacity: .9;
 }
 
-.create {
+.popUp {
     display: none;
     border-radius: 25px;
     background-color: rgb(231, 231, 231);
@@ -173,10 +180,27 @@ select {
     border: none;
 }
 
-#addBuilding {
-    font-size: 1rem;
-    float: right;
-    margin: .8rem .6rem .8rem .4rem;
+#buildingEditors {
+    position: absolute;
+    float: left;
+    z-index: 1;
+    margin-right: .6rem;
+    right: 0;
+    bottom: 0;
+    /* border:solid black; */
+}
+
+
+#addBuilding, #removeBuilding {
+    display: block;
+    width: 100%;
+    padding: .5rem;
+    opacity: .7;
+
+}
+
+#addBuilding:hover, #removeBuilding:hover {
+    opacity: .9;
 }
 
 .addBuildingInput {

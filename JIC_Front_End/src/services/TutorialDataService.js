@@ -25,6 +25,11 @@ class TutorialDataService {
     return http.post("/buildinghub", building);
   }
 
+  removeBuilding(building) {
+    console.log("ENTERING REMOE");
+    return http.delete("/building", building);
+  }
+
 }
 
 export default new TutorialDataService();
