@@ -17,6 +17,11 @@ public class DbUtils {
         }
     }
 
+    public DbUtils(Connection conn) {
+        this.conn = conn;
+        initDefaultUser();
+    }
+
     private LiveAlertPost getLiveAlertPostFromResultSet(ResultSet rs) {
         String postTypeString;
         try {
@@ -547,20 +552,12 @@ public class DbUtils {
                 "INSERT INTO just_in_case.user(caseID, userName, postAnon, isAdmin, password)"
                 + " VALUES ('" + user.getCaseID() + "', '" + user.getUserName() 
                 + "', '" + user.getPostAnon() + "', '" + user.getIsAdmin()  
-                + "', '" + user.getPassword() + "')", 
-                stmt.RETURN_GENERATED_KEYS);
-            ResultSet rs = stmt.getGeneratedKeys();
+                + "', '" + user.getPassword() + "')");
             
-            if(rs.next()) {
-                long caseID = rs.getLong(1);
-                
-                ResultSet insertedResultSet = stmt.executeQuery(
-                    "SELECT * FROM just_in_case.building WHERE caseID='"+ caseID + "'");
-                if(insertedResultSet.next()) {
-                    return getUserFromResultSet(insertedResultSet);
-                }                
-                conn.close();
-                return null;
+            ResultSet insertedResultSet = stmt.executeQuery(
+                "SELECT * FROM just_in_case.user WHERE caseID='"+ user.getCaseID() + "'");
+            if(insertedResultSet.next()) {
+                return getUserFromResultSet(insertedResultSet);             
             } else {
                 conn.close();
                 return null;
@@ -617,7 +614,6 @@ public class DbUtils {
         return null;
     }
     
-
     private void openConnection() throws FileNotFoundException {
         String DB_URL = "jdbc:mysql://just-in-case.cn0mcjwf4mxn.us-east-1.rds.amazonaws.com:3306";
         String USER = "admin";
