@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <LogIn id="login" @logged-in="login" />
+    <LogIn v-if="!loggedIn" id="login" @logged-in="login" />
     <AddBuilding @add-building="setButtons"/>
     <EditBuildings @edit-buildings="setButtons"/>
     <form class="popUp" id="createPost">
