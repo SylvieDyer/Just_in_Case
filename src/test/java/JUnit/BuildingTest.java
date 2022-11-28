@@ -6,7 +6,7 @@ import com.csds393.Building;
 
 public class BuildingTest {
     @Test
-    public void testBuilding_oneParam(){
+    public void testBuilding_noParam(){
         Building building = new Building();
         assertNull(building.getBuildingName());
         assertNull(building.getDescription());
