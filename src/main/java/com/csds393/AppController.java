@@ -122,6 +122,24 @@ public class AppController {
         return dbUtils.getUserByID(caseID);
     }
 
+    @GetMapping("/user/isAdmin/{id}")
+    public boolean isAdmin(@PathVariable("id") String caseID) {
+        DbUtils dbUtils = new DbUtils(); 
+        return (dbUtils.getUserByID(caseID).getIsAdmin() % 2 != 0);
+    }
+
+    @GetMapping("/user/postAnon/{id}")
+    public boolean isAnonPost(@PathVariable("id") String caseID) {
+        DbUtils dbUtils = new DbUtils(); 
+        return (dbUtils.getUserByID(caseID).getPostAnon() % 2 != 0);
+    }
+
+    @GetMapping("/user/{id}/{password}")
+    public boolean doesIDMatchPass(@PathVariable("id") String caseID, @PathVariable("password") String password) {
+        DbUtils dbUtils = new DbUtils(); 
+        return (dbUtils.getUserByID(caseID).getPassword().equals(password));
+    }
+
     @PostMapping(path = "/user", consumes = "application/json", produces = "application/json")
     public User addUser(@RequestBody User user) {
         DbUtils dbUtils = new DbUtils(); 
