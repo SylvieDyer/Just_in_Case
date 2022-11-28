@@ -531,7 +531,7 @@ public class DbUtils {
         try {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(
-                "SELECT * FROM just_in_case.user WHERE caseID='"+ caseID + "'");
+                "SELECT * FROM just_in_case.app_users WHERE caseID='"+ caseID + "'");
             if(rs.next()) {
                 return getUserFromResultSet(rs);
             }
@@ -549,13 +549,13 @@ public class DbUtils {
         try {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(
-                "INSERT INTO just_in_case.user(caseID, userName, postAnon, isAdmin, password)"
+                "INSERT INTO just_in_case.app_users(caseID, userName, postAnon, isAdmin, password)"
                 + " VALUES ('" + user.getCaseID() + "', '" + user.getUserName() 
                 + "', '" + user.getPostAnon() + "', '" + user.getIsAdmin()  
                 + "', '" + user.getPassword() + "')");
             
             ResultSet insertedResultSet = stmt.executeQuery(
-                "SELECT * FROM just_in_case.user WHERE caseID='"+ user.getCaseID() + "'");
+                "SELECT * FROM just_in_case.app_users WHERE caseID='"+ user.getCaseID() + "'");
             if(insertedResultSet.next()) {
                 return getUserFromResultSet(insertedResultSet);             
             } else {
@@ -576,10 +576,10 @@ public class DbUtils {
     public Boolean deleteUser(User user) {
         try {
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("DELETE FROM just_in_case.user WHERE just_in_case.user.caseID = '" 
+            stmt.executeUpdate("DELETE FROM just_in_case.app_users WHERE just_in_case.app_users.caseID = '" 
                          + user.getCaseID() + "'", stmt.RETURN_GENERATED_KEYS);
             ResultSet deletedResultSet = stmt.executeQuery(
-                "SELECT * FROM just_in_case.user WHERE just_in_case.user.caseID='"+ user.getCaseID() + "'");
+                "SELECT * FROM just_in_case.app_users WHERE just_in_case.app_users.caseID='"+ user.getCaseID() + "'");
             if(deletedResultSet.next()) {
                 conn.close();
                 return false;
@@ -600,9 +600,9 @@ public class DbUtils {
         User user = new User("DEFAULT", "DEFAULT", 0, 1, "pass");
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM just_in_case.user WHERE just_in_case.user.caseID = 'DEFAULT';");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM just_in_case.app_users WHERE just_in_case.app_users.caseID = 'DEFAULT';");
             if(!rs.next()) {
-                stmt.executeUpdate("INSERT INTO just_in_case.user(caseID, userName, postAnon, isAdmin)"
+                stmt.executeUpdate("INSERT INTO just_in_case.app_users(caseID, userName, postAnon, isAdmin)"
                 + " VALUES ('" + user.getCaseID() + "', '" + user.getUserName() + "', '" 
                 + user.getPostAnon() + "', '" + user.getIsAdmin() + "')");
             }
