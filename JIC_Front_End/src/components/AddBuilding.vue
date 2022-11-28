@@ -31,7 +31,7 @@ export default {
                 buildingName: this.newBuilding.name,
                 description: this.newBuilding.description,
             };
-            alert(this.newBuilding.name);
+            alert("adding: "+this.newBuilding.name);
             console.log(newBuilding);
             TutorialDataService.createBuilding(newBuilding)
             .then(response => {

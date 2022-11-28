@@ -43,7 +43,7 @@ export default {
             let checkOptions = document.getElementsByClassName("checkOption");
             for (let i = 0; i < checkOptions.length; i++){
                 if (checkOptions[i].checked == true){
-                    TutorialDataService.removeBuilding(checkOptions[i].name)
+                    TutorialDataService.deleteBuilding(checkOptions[i].name)
                     .then(response => {
                         console.log(response.data);
                     })

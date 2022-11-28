@@ -25,9 +25,17 @@ class TutorialDataService {
     return http.post("/buildinghub", building);
   }
 
-  removeBuilding(building) {
+  deleteBuilding(building) {
     console.log("ENTERING REMOE");
     return http.delete("/building", building);
+  }
+
+  addUser(user){
+    return http.post("/user", user);
+  }
+
+  checkUser(caseEmail){
+    return http.get(`/user/${caseEmail}`);
   }
 
 }

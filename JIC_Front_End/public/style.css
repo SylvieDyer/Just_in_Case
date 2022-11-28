@@ -11,6 +11,13 @@ body {
     border-bottom: solid rgb(206, 206, 206);
 }
 
+#userInfo{
+    text-align: right;
+    font-size: .3rem;
+    width: 100%;
+    margin-right: .3rem;
+}
+
 /* landing page layout */
 .grid {
     position: relative;

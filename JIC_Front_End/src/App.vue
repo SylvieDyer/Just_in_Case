@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <LogIn id="login" @logged-in="login"/>
     <AddBuilding @add-building="setButtons"/>
     <EditBuildings @edit-buildings="setButtons"/>
     <form class="popUp" id="createPost">
@@ -30,6 +31,9 @@
 
       <div class="header">
         Just in Case
+        <div id="userInfo">
+          {{ this.user.email }}
+        </div>
       </div>
           
       <!--Feed/Building Page Section [LEFT]-->
@@ -82,10 +86,13 @@
   </div>
 </template>
 
+
+
 <script>
 import TutorialDataService from "./services/TutorialDataService";
  import AddBuilding from "./components/AddBuilding.vue";
- import EditBuildings from "./components/EditBuildings.vue"
+ import EditBuildings from "./components/EditBuildings.vue";
+ import LogIn from './components/LogIn.vue';
 
 
 
@@ -95,7 +102,8 @@ export default {
   //selectedBuilding: 'A',
   components: {
     AddBuilding,
-    EditBuildings
+    EditBuildings,
+    LogIn
   },
   data() {
     return {
@@ -111,12 +119,20 @@ export default {
       selectedBuildingName: null,
       buildingPairs: [],
       buildings: [],
+      user: {
+        email: "",
+        password: "",
+      }
     }
   },
   mounted() {
     this.setButtons();
   },
   methods: {
+    login(user){
+      document.getElementById("login").style.display = "none";
+      this.user= user;
+    },
     // send info in new post 
     newPost() {
       console.log(this.post);
