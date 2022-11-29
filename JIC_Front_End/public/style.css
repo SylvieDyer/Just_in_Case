@@ -11,11 +11,23 @@ body {
     border-bottom: solid rgb(206, 206, 206);
 }
 
+#title {
+    float: left;
+}
+
 #userInfo{
+    float: right;
     text-align: right;
     font-size: .8rem;
-    width: 100%;
+    width: max-content;
     margin-right: .3rem;
+
+}
+
+#userInfo div {
+    padding: .4rem;
+    text-align: right;
+    width: max-content;
 }
 
 /* landing page layout */

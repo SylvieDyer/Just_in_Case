@@ -30,11 +30,10 @@
     <div class="grid">
 
       <div class="header">
-        Just in Case
+        <div id="title">Just in Case</div>
         <div id="userInfo">
           <button v-on:click="logOut()">Log Out</button>
-          {{ this.user.email }}
-          {{this.user.admin }}
+          <div>Logged in as: {{ this.user.caseID }}</div>
         </div>
       </div>
           
@@ -79,7 +78,7 @@
           </div>  
           <div class="biCol" v-if="buildings.length % 2 != 0"> </div>
         </div>
-        <div v-if="this.user.admin" id="buildingEditors">
+        <div v-if="this.user.isAdmin == 1" id="buildingEditors">
           <button id="addBuilding" v-on:click="addBuilding()">Add Building</button>
           <button id="removeBuilding" v-on:click="editBuildings()">Edit Buildings</button>
         </div>
@@ -125,7 +124,7 @@ export default {
         caseID: "",
         userName: "",
         passWord: "",
-        isAdmin: false,
+        isAdmin: 0,
       },
       loggedIn: false,
     }
@@ -135,7 +134,8 @@ export default {
   },
   methods: {
     login(user){
-      console.log("login in app called");
+      console.log("login in app called: ");
+      console.log(user);
       document.getElementById("login").style.display = "none";
       this.user = user;
       this.loggedIn = true;

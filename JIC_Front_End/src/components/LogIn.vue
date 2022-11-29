@@ -12,17 +12,17 @@
             <div class="inputContainer">
                 <div class="emailContainer">
                     <label for="email"><b>Case Email: </b></label><br>
-                    <input id="email" v-model="this.user.email" type="text" placeholder="Enter Your Case Email" name="email" required>
+                    <input id="email" v-model="this.user.caseID" type="text" placeholder="Enter Your Case Email" name="email" required>
                     <div id="emptyEmail" class="hasError">Please enter you case email</div>
                     <div id="wrongEmail" class="hasError">There is no account associated with this email! Try again!</div>
                     <div id="invalidEmail" class="hasError">Invalid Case email! Try again!</div>
 
                 </div>
 
-                <!-- <div v-if="this.newUser" class="userName">
+                <div v-if="this.newUser" class="userName">
                     <label for="uname"><b>User Name: </b></label><br>
                     <input v-model="this.user.userName" type="text" placeholder="Create a Username" name="uname" required>
-                </div> -->
+                </div>
 
                 <div class="passwordContainer">
                     <label for="psw"><b>Password: </b></label><br>
@@ -57,9 +57,10 @@ export default {
         return {
             newUser: false,
             user: {
-                email: "",
-                password: "",
-                admin: false,
+                caseID: "",
+                userName: "",
+                isAdmin: 0,
+                postAnon: 0,
             },
             caseEmailVerif: new RegExp("^[a-z]{3}[0-9]+@case+.edu"),
         }
@@ -71,11 +72,13 @@ export default {
         },
 
         newAccount(){
+            console.log("CALLING NEW ACCOUNT");
+           
             let error = false;
            console.log("trying to log in ?");
 
            // check for a valid case email first
-            if (!this.caseEmailVerif.test(this.user.email)){
+            if (!this.caseEmailVerif.test(this.user.caseID)){
                 document.getElementById("invalidEmail").style.display = "block"; 
                 error = true;
             }
@@ -99,6 +102,7 @@ export default {
                     console.log(this.user);
                     TutorialDataService.addUser(this.user)
                     .then(response => {
+                        console.log("ADD USER:");
                         console.log(response.data);
                         this.newUser = false;
                     })
@@ -111,11 +115,9 @@ export default {
                 // if a returning user 
                 else {
                     // check DB for the email inputted 
-                    TutorialDataService.checkUser(this.user.email)
+                    TutorialDataService.checkUser(this.user.caseID)
                     .then(response => {
-                        let passwordMatch = false;
-                        console.log("USER: "+response.data);
-                        console.log(response.data);
+                    
                         if (response.data == "")
                             document.getElementById("wrongEmail").style.display = "block";
 
@@ -124,17 +126,15 @@ export default {
                             // check password
                             TutorialDataService.checkPassword(this.user.caseID, this.user.password)
                             .then(response => {
-                                passwordMatch = response.data;
+                                if (response.data)
+                                    this.$emit("logged-in", this.user);
+                                else
+                                    document.getElementById("wrongPassword").style.display = "block";
                             })
                             .catch(e =>{
                                 console.log(e);
                                 document.getElementById("wrongPassword").style.display = "block";
                             })
-
-                            if (passwordMatch){
-                                console.log("LOGGING IN USER: "+this.user);
-                                this.$emit("logged-in", this.user);
-                            }
                         }
                     })
                     .catch(e => {
