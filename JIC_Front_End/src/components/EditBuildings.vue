@@ -56,7 +56,6 @@ export default {
 
         close(){ 
             document.getElementById("editBuildings").style.display = "none";
-
         }
     },
     mounted() {

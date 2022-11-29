@@ -120,8 +120,9 @@ export default {
                             // check password
                             TutorialDataService.checkPassword(this.user.caseID, this.user.password)
                             .then(response => {
-                                if (response.data)
+                                if (response.data){
                                     this.$emit("logged-in", this.user);
+                                }
                                 else
                                     document.getElementById("wrongPassword").style.display = "block";
                             })

@@ -15,27 +15,31 @@ import TutorialDataService from "../services/TutorialDataService";
 
 export default {
   name: "tutorials-list",
-
+  props: {
+    buildingID: Number,
+  },
   data() {
     return {
-    //   buildings: [],
       building: {
         buildingName: null,
         description: null,
       },
+      routeParam: 0,
     };
   },
   methods: {
+    changeRouteParam(){
+      if (this.$route.params.id != this.routeParam){
+        this.getBuildingByID(this.$route.params.id);
+      }
+    },
     // pull from DB by ID
     getBuildingByID(id) {
         console.log("GETTING BUILDING BY ID..: "+ id);
       TutorialDataService.getBuildingByID(id)
         .then(response => {
-            // this.building = response.data;
             this.building.buildingName = response.data.buildingName;
             this.building.description = response.data.description;
-            // console.log(response.data.buildingName);
-            // console.log("this.building: " +this.building);
         })
         .catch(e => {
           console.log(e);
@@ -74,9 +78,8 @@ export default {
     
   },
   mounted() {
-    this.getBuildingByID(this.$route.params.id);
-    console.log(this.$route.params.id);
-    // this.getBuildingByName(this.$route.params.name);
+    // this.getBuildingByID(this.$route.params.id);
+    this.getBuildingByID(this.buildingID);
   }
 };
 </script>
