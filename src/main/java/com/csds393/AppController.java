@@ -26,6 +26,14 @@ public class AppController {
         return dbUtils.addLiveAlertPost(post, null);
     }
 
+    @PostMapping(path = "/feed", consumes = "application/json", produces = "application/json")
+    public LiveAlertPost createPost(@RequestBody LiveAlertPost post, @RequestBody User user) {
+        DbUtils dbUtils = new DbUtils(); 
+        return dbUtils.addLiveAlertPost(post, user);
+    }
+
+
+
     @PostMapping(path = "/feed/{id}", consumes = "application/json", produces = "application/json")
     public LiveAlertPost createPostByUserId(@RequestBody LiveAlertPost post, @PathVariable("id") String caseID) {
         DbUtils dbUtils = new DbUtils(); 
