@@ -9,7 +9,9 @@
           New Alert! <br>
           Reports of <b>{{ post.postType }}</b> at <b>{{ post.location }}</b> <br>
           <br>
-          <p style="text-align: right">posted at: {{parseDate(post.date)}}</p>
+          <p v-if="post.user == null" style="text-align: right">posted by: Anonymous Student <br> at: {{parseDate(post.date)}}</p>
+          <p v-else style="text-align: right">posted by: {{ post.userName }} <br> at: {{parseDate(post.date)}}</p>
+
         </li>
       </ul>
     </div>
@@ -35,6 +37,7 @@ export default {
       TutorialDataService.getFeed()
         .then(response => {
           this.feed = response.data;
+          console.log(this.feed);
         })
         .catch(e => {
           console.log(e);

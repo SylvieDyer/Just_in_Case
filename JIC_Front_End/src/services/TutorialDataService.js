@@ -5,8 +5,13 @@ class TutorialDataService {
     return http.get("/feed");
   }
 
-  createPost(post) {
+  createPostAnon(post) {
     return http.post("/feed", post);
+  }
+
+  createPost(post, user) {
+    alert("CREATING public POST ");
+    return http.post("/feed", post, user);
   }
 
   getBuildings(){

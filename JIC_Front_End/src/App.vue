@@ -6,7 +6,7 @@
     <form class="popUp" id="createPost">
       <h1>New Post <i id="postClose" class="fa fa-close" v-on:click="closePost()"></i></h1>
       <div>
-          Alert! 
+          New Alert!<br><br>
           <select v-model="post.postType" name="postType" id="postType">
               <option value="EXCESSIVE_RAIN">There is excessive rain on </option>
               <option value="EXCESSIVE_SNOW">There is excessive snow on </option>
@@ -23,6 +23,12 @@
               <option value="BELLFLOWER_HALL">Bellflower Hall</option>
               <option value="Bingham">Bingham</option>
           </select>
+        </div>
+
+        <div class="postAnonContainer">
+          <input type="checkBox" v-if="this.user.postAnon == 0"  v-model="this.anonymousPost" name="postUser" id="postUser"/>
+          <input type="checkbox" v-if="this.user.postAnon == 1" v-model="this.anonymousPost" name="postUser" id="postUser" checked/>
+          <label for="postUser">Post Anonymously?</label>
         </div>
         <button type="submit" id="submit" v-on:click="newPost()">Submit</button>
     </form>
@@ -47,13 +53,8 @@
           <button class="filter" onclick="showFeed(event, 'study')">Study Spots</button>
           <button class="filter" onclick="showFeed(event, 'food')">Food</button>
         </div>
-        <!-- <div class="postFeed" id="postFeed"> -->
           <router-view/>
-          <!-- <Building :buildingName=this.selectedBuilding /> -->
-        <!-- </div> -->
-        <!--Building Pages-->
-    
-          <!--Post Button-->
+        
         <button class="postBtn" id="postBtn" v-on:click="createPost()">
             +
         </button>
@@ -112,7 +113,6 @@ export default {
         location: "ADELBERT_HALL",
         // numDownVotes: 0,
         // numUpVotes: 0,
-        // postID: 0,
         postType: "EXCESSIVE_RAIN",
       },
       submitted: false,
@@ -120,11 +120,13 @@ export default {
       selectedBuildingName: null,
       buildingPairs: [],
       buildings: [],
+      anonymousPost: true,
       user: {
         caseID: "",
         userName: "",
         passWord: "",
         isAdmin: 0,
+        postAnon: 0,
       },
       loggedIn: false,
     }
@@ -134,12 +136,10 @@ export default {
   },
   methods: {
     login(user){
-      console.log("login in app called: ");
-      console.log(user);
+      
       document.getElementById("login").style.display = "none";
       this.user = user;
       this.loggedIn = true;
-    
     },
 
     logOut(){
@@ -156,14 +156,28 @@ export default {
         postType: this.post.postType,
       };
 
-      TutorialDataService.create(newPost)
-        .then(response => {
-          this.post.id = response.newPost.id;
-          this.submitted = true;
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      alert(this.anonymousPost);
+      // if posting anonymously 
+      if (this.anonymousPost){
+        TutorialDataService.createPostAnon(newPost)
+          .then(response => {
+            this.post.id = response.newPost.id;
+            this.submitted = true;
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
+      else {
+        TutorialDataService.createPost(newPost, this.user)
+          .then(response => {
+            this.post.id = response.newPost.id;
+            this.submitted = true;
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
     },
 
     // selectBuilding(val){
@@ -236,7 +250,6 @@ export default {
       console.log("SETTING BUTTONS");
       TutorialDataService.getBuildings()
         .then(response => {
-          console.log(response.data);
           this.buildings = response.data;
         })
 

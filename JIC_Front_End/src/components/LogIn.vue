@@ -1,5 +1,4 @@
 <template>
-
     <div class="logInContainer">
         <div class="topHalf">
             <h3>Just in Case</h3>
@@ -49,10 +48,6 @@ import TutorialDataService from '../services/TutorialDataService';
 
 export default {
     name: 'login',
-    // props :{
-    //     loggedOut: Boolean,
-    // },
-    emits: ["logged-in"],
     data() {
         return {
             newUser: false,
@@ -109,7 +104,6 @@ export default {
                     .catch(e => {
                         console.log(e);
                     }); 
-                
                 }
 
                 // if a returning user 

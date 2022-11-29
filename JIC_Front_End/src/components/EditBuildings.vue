@@ -31,8 +31,6 @@ export default {
         TutorialDataService.getBuildings()
             .then(response => {
             this.allBuildings = response.data;
-            console.log(response.data);
-            console.log("ALL: "+this.allBuildings);
             })
             .catch(e => {
             console.log(e);

@@ -190,6 +190,13 @@ select {
     padding: .2rem;
 }
 
+#createPost h1{
+    font-family: monospace;
+    border-bottom:rgb(152, 152, 152) solid;
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
+}
+
 #submit {
     float: right;
     margin: 5% 5% 2%;
@@ -198,6 +205,24 @@ select {
     background-color:rgb(202, 202, 202);
     border: none;
 }
+
+#postUser { 
+    vertical-align: middle;
+    margin-right: .3rem;
+    /* margin: 5% 5% 2%
+    padding: .7rem; */
+}
+
+.postAnonContainer {
+    float: left;
+    margin: 5% 5% 2% 0;
+    padding: .7rem;
+    vertical-align: middle;
+}
+
+
+
+
 
 #buildingEditors {
     position: absolute;
