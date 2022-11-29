@@ -40,7 +40,7 @@ public class BuildingTest {
     public void testSetBuildingName(){
         Building building = new Building();
         building.setBuildingName("Building A");
-        assertEquals("This is a building",building.getDescription());
+        assertEquals("Building A",building.getBuildingName());
     }
 
     @Test
