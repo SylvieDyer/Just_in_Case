@@ -1,56 +1,59 @@
-import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
 
-import org.dbunit.DataSourceBasedDBTestCase;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.ITable;
-import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
-import org.dbunit.operation.DatabaseOperation;
-import org.h2.jdbcx.JdbcDataSource;
+import com.csds393.DbUtils;
+import com.csds393.LiveAlertPost;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
-public class DbUtilsTest extends DataSourceBasedDBTestCase {
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-    @Override
-    protected DataSource getDataSource() {
-        JdbcDataSource dataSource = new JdbcDataSource();
-        dataSource.setURL(
-          "jdbc:h2:mem:default;DB_CLOSE_DELAY=-1;init=runscript from 'classpath:dbschema.sql'");
-        dataSource.setUser("sa");
-        dataSource.setPassword("sa");
-        return dataSource;
+public class DbUtilsTest {
+
+  private EmbeddedDatabase db;
+
+  private DbUtils dbUtils;
+  @BeforeEach
+  public void setUp() {
+    db = new EmbeddedDatabaseBuilder()
+        .setType(EmbeddedDatabaseType.HSQL)
+        .setName("testDb;MODE=MySQL;" +
+                 "INIT=create schema if not exists just_in_case;" +
+                 "DB_CLOSE_DELAY=-1;")
+        .addDefaultScripts()
+        .build();
+  }
+
+  @AfterEach
+  public void tearDown() {
+    db.shutdown();
+  }
+
+  @Test
+  public void testTest() throws Exception {
+    final Connection connection = db.getConnection();
+    Statement stmt = connection.createStatement();
+
+    ResultSet rset = stmt.executeQuery("select description from just_in_case.building limit 1");
+    while (rset.next()) {
+      String name = rset.getString(2);
+      System.out.println("Do we have the name?" + name);
     }
 
-    @Override
-    protected IDataSet getDataSet() throws Exception {
-        return new FlatXmlDataSetBuilder().build(getClass().getClassLoader()
-          .getResourceAsStream("data.xml"));
-    }
-    @Override
-    protected DatabaseOperation getSetUpOperation() {
-        return DatabaseOperation.REFRESH;
-    }
+  }
 
-    @Override
-    protected DatabaseOperation getTearDownOperation() {
-        return DatabaseOperation.DELETE_ALL;
-    }
-
-    @Test
-    public void testTest() throws Exception {
-        IDataSet expectedDataSet = getDataSet();
-        ITable expectedTable = expectedDataSet.getTable("just_in_case.building");
-        IDataSet databaseDataSet = getConnection().createDataSet();
-        ITable actualTable = databaseDataSet.getTable("just_in_case.building");
-        assertEquals(1, 1);
-    }
-
-    // @Test
-    // public void givenDataSetEmptySchema_whenDataSetCreated_thenTablesAreEqual() throws Exception {
-    //     IDataSet expectedDataSet = getDataSet();
-    //     ITable expectedTable = expectedDataSet.getTable("just_in_case.building");
-    //     IDataSet databaseDataSet = getConnection().createDataSet();
-    //     ITable actualTable = databaseDataSet.getTable("just_in_case.building");
-    //     assertEquals(expectedTable, actualTable);
-    // }
-    
+  @Test
+  public void testFeed() throws Exception {
+    dbUtils = new DbUtils(db.getConnection());
+    final List<LiveAlertPost> feed = dbUtils.getFeed();
+    assertTrue(feed != null);
+  }
 }

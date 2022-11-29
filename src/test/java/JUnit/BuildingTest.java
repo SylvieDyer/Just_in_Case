@@ -1,3 +1,4 @@
+package JUnit; 
 import java.util.*;
 import org.junit.*;
 import java.io.*;
@@ -40,7 +41,7 @@ public class BuildingTest {
     public void testGetSet_buildingName(){
         Building building = new Building();
         building.setBuildingName("Building A");
-        assertEquals("This is a building",building.getDescription());
+        assertEquals("Building A", building.getBuildingName());
     }
 
     @Test

@@ -545,6 +545,28 @@ public class DbUtils {
         return null;  
     }
 
+    public String getUserByPost(long postID) {
+        Statement stmt;
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT just_in_case.app_users.caseID" 
+                + " FROM just_in_case.app_users JOIN just_in_case.posts" 
+                + " WHERE just_in_case.app_users.caseID = just_in_case.posts.caseID"
+                + " AND just_in_case.posts.postID = '" + postID + "'");
+            if(rs.next()) {
+                return rs.getString("caseID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {}
+        }
+        return null;  
+        
+    }
+
     public User addUser(User user) {
         try {
             Statement stmt = conn.createStatement();

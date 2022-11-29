@@ -123,6 +123,12 @@ public class AppController {
         return dbUtils.updateStatus(facility, statusVal);
     }
 
+    @GetMapping("/userPost/{id}")
+    public String getCaseIDByPost(@PathVariable("id") long postID) {
+        DbUtils dbUtils = new DbUtils(); 
+        return dbUtils.getUserByPost(postID);
+    }
+
     @GetMapping("/user/{id}")
     public User getUserById(@PathVariable("id") String caseID) {
         DbUtils dbUtils = new DbUtils(); 
