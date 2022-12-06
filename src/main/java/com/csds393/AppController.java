@@ -99,13 +99,13 @@ public class AppController {
         return dbUtils.getFacilitiesByID(id);
     }
 
-    @GetMapping("/facility/{name}")
-    public List<Facility> getFacilitiesByBuildingName(@PathVariable("name") String name) {
-        DbUtils dbUtils = new DbUtils(); 
-        return dbUtils.getFacilitiesByName(name);
-    }
+    // @GetMapping("/facility/{name}")
+    // public List<Facility> getFacilitiesByBuildingName(@PathVariable("name") String name) {
+    //     DbUtils dbUtils = new DbUtils(); 
+    //     return dbUtils.getFacilitiesByName(name);
+    // }
 
-    @PostMapping(path = "/facility/{id}", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/createFacility/{id}", consumes = "application/json", produces = "application/json")
     public Facility createFacilityByBuildingId(@RequestBody Facility facility, @PathVariable("id") long buildingID) {
         DbUtils dbUtils = new DbUtils(); 
         return dbUtils.addFacilityByID(facility, buildingID);
