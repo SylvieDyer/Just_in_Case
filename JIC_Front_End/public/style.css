@@ -197,6 +197,9 @@ li, ul {
     padding: 1rem;
     background-color: #D8A7B1;
 }
+#createBuilding {
+    top: 10%;
+}
 
 #postClose {
     font-size:24px; 

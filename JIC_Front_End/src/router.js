@@ -55,7 +55,7 @@ const routes =  [
   component: () => import("./components/Building")
 },
 {
-  path: "/facility/:id",
+  path: "/facilityById/:id",
   name: "facilityByID",
   component: () => import("./components/Building")
 },

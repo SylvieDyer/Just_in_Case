@@ -36,11 +36,11 @@ class TutorialDataService {
   }
   
   addFacilities(id, facility){
-    return http.post(`/createFacility/${id}`, facility);
+    return http.post(`/createFacility/${id}`, facility, id);
   }
 
   getFacilities(buildingID){
-    return http.get(`/facility/${buildingID}`);
+    return http.get(`/facilityById/${buildingID}`);
   }
 
   addUser(user){
