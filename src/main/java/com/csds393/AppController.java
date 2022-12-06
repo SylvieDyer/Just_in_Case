@@ -26,6 +26,12 @@ public class AppController {
         return dbUtils.addLiveAlertPost(post, null);
     }
 
+    // @PostMapping(path = "/feed", consumes = "application/json", produces = "application/json")
+    // public LiveAlertPost createPostByUser(@RequestBody LiveAlertPost post, @RequestBody User user) {
+    //     DbUtils dbUtils = new DbUtils(); 
+    //     return dbUtils.addLiveAlertPost(post, user);
+    // }
+
     @PostMapping(path = "/feed/{id}", consumes = "application/json", produces = "application/json")
     public LiveAlertPost createPostByUserId(@RequestBody LiveAlertPost post, @PathVariable("id") String caseID) {
         DbUtils dbUtils = new DbUtils(); 
@@ -99,7 +105,7 @@ public class AppController {
         return dbUtils.getFacilitiesByName(name);
     }
 
-    @PostMapping(path = "/facility/{id}", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/createFacility/{id}", consumes = "application/json", produces = "application/json")
     public Facility createFacilityByBuildingId(@RequestBody Facility facility, @PathVariable("id") long buildingID) {
         DbUtils dbUtils = new DbUtils(); 
         return dbUtils.addFacilityByID(facility, buildingID);
