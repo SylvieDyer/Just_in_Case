@@ -1,3 +1,15 @@
+/* 
+HotPink
+#EF7C8E
+
+Cream
+#FAE8E0
+
+Spearmint
+#B6E2D3
+
+Rosewater
+#D8A7B1 */
 body {
  overflow: hidden;
 }
@@ -9,6 +21,7 @@ body {
     font-size: 2rem;
     padding: .8rem 0rem .8rem .4rem;
     border-bottom: solid rgb(206, 206, 206);
+    background-color:#FAE8E0;
 }
 
 #title {
@@ -21,7 +34,10 @@ body {
     font-size: .8rem;
     width: max-content;
     margin-right: .3rem;
+}
 
+#userInfo button{
+    background-color: #D8A7B1;
 }
 
 #userInfo div {
@@ -42,6 +58,7 @@ body {
             'left left left right right';
     height: 100vh;
     width: 100vw;
+    background-color: #fae8e0b6;
 }
 
 .mainFeed { 
@@ -56,11 +73,11 @@ body {
 .samplePost {
     border: solid;
     padding: 5%;
-    /* display: none; */
-    
+    background-color: #b6e2d351;
     margin-bottom: 5%;
     width: 90%;
     animation: fadeEffect 1s; /* fade in */
+    border-radius: 10px;
 }
 
 li, ul {
@@ -91,10 +108,10 @@ li, ul {
     outline: none;
     cursor: pointer;
     padding: 0 14px 0 16px;
-
+    color: #4d6c61;
     font-size: 18px;
     font-weight: 1000;
-    color:rgb(152, 152, 152);
+    /* color:rgb(152, 152, 152); */
     transition: 0.3s;
 }
 
@@ -104,7 +121,6 @@ li, ul {
     /* padding: 5%; */
     overflow: scroll;
 }
-
 
 /* BUILDING HUBS PORTION: */
 /* to format the buttons */ 
@@ -132,12 +148,12 @@ li, ul {
 
 /* style the buttons */
 .buildingHub button {
-    
     padding: 20%;
     width: 100%;
     margin: 1rem auto;
     border-radius: 25px;
     overflow: scroll;
+    background-color: #efc17c6c;
 }
 
 .buildingHub button:hover{
@@ -170,7 +186,7 @@ li, ul {
 .popUp {
     display: none;
     border-radius: 25px;
-    background-color: rgb(231, 231, 231);
+    /* background-color: rgb(231, 231, 231); */
     position: absolute;
     z-index: 11;
     top: 25%;
@@ -179,6 +195,7 @@ li, ul {
     margin-right: 5%;
     margin-left: 5%;
     padding: 1rem;
+    background-color: #D8A7B1;
 }
 
 #postClose {
@@ -187,6 +204,7 @@ li, ul {
 }
 
 select {
+    background-color: #ecd8dc;
     padding: .2rem;
 }
 
@@ -202,15 +220,13 @@ select {
     margin: 5% 5% 2%;
     padding: .7rem;
     border-radius: 25px;
-    background-color:rgb(202, 202, 202);
     border: none;
+    background-color: #ecd8dc;
 }
 
 #postUser { 
     vertical-align: middle;
     margin-right: .3rem;
-    /* margin: 5% 5% 2%
-    padding: .7rem; */
 }
 
 .postAnonContainer {
@@ -220,10 +236,6 @@ select {
     vertical-align: middle;
 }
 
-
-
-
-
 #buildingEditors {
     position: absolute;
     float: left;
@@ -231,16 +243,14 @@ select {
     margin-right: .6rem;
     right: 0;
     bottom: 0;
-    /* border:solid black; */
 }
-
 
 #addBuilding, #removeBuilding {
     display: block;
     width: 100%;
     padding: .5rem;
     opacity: .7;
-
+    background-color: #D8A7B1;
 }
 
 #addBuilding:hover, #removeBuilding:hover {
@@ -252,5 +262,5 @@ select {
     padding: .5rem;
     margin: 1%;
     border-radius: 10px;
+    background-color: #ecd8dc;
 }
-

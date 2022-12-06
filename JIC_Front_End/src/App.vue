@@ -1,8 +1,8 @@
 <template>
   <div id="app">
       <LogIn @logged-in="logIn" v-if="!this.loggedIn"/>
-      <!-- <router-view v-if="this.loggedIn"/> -->
       <Home @log-out="logOut" v-if="this.loggedIn" v-bind="this.user"/>
+      <!-- <Home/> -->
   </div>  
 </template>
 
@@ -18,8 +18,6 @@ export default {
   },
   mounted() {
    console.log(this.$route.query);
-  //   this.loggedIn = (new URL(location.href).searchParams.get('caseID') != null);
-    // alert(this.loggedIn);
   },
   data() {
     return {
