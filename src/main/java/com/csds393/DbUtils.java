@@ -357,7 +357,7 @@ public class DbUtils {
         List<Facility> facilities = new ArrayList<Facility>();
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM just_in_case.facility " +  
+            ResultSet rs = stmt.executeQuery("SELECT just_in_case.facility.* FROM just_in_case.facility JOIN just_in_case.within" +  
                 "WHERE just_in_case.facility.facilityID = just_in_case.within.facilityID " + 
                 "AND just_in_case.within.buildingID = '" + buildingID + "'");
             while(rs.next()) {
