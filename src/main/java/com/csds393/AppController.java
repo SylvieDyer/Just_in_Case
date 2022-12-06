@@ -87,13 +87,13 @@ public class AppController {
         return dbUtils.deleteBuilding(dbUtils.getBuildingByName(building));
     }
 
-    @GetMapping("/facility/{id}")
+    @GetMapping("/facilityById/{id}")
     public List<Facility> getFacilitiesByBuildingID(@PathVariable("id") long id) {
         DbUtils dbUtils = new DbUtils(); 
         return dbUtils.getFacilitiesByID(id);
     }
 
-    @GetMapping("/facility/{name}")
+    @GetMapping("/facilityByName/{name}")
     public List<Facility> getFacilitiesByBuildingName(@PathVariable("name") String name) {
         DbUtils dbUtils = new DbUtils(); 
         return dbUtils.getFacilitiesByName(name);
