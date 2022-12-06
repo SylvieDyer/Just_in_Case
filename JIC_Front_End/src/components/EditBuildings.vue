@@ -73,9 +73,5 @@ export default {
     margin-left: 1rem;
     margin-right: .5rem;
     size: 1rem;
-
 }
-
-
-
 </style>

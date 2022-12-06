@@ -4,7 +4,8 @@
      
         <input class="addBuildingInput" type="text" placeholder="Building Name" v-model="newBuilding.name"/><br>
         <textarea class="addBuildingInput" placeholder="Description of the building" v-model="newBuilding.description" rows="10"></textarea>
-        <select id="facilities">
+ 
+        <div class="facilityList">
             <input type="checkbox" id="studyArea" name="studyArea">
             <label for="studyArea">Study Area</label><br>
             <input type="checkbox" id="food" name="food">
@@ -13,7 +14,8 @@
             <label for="eatingArea">Eating Area</label><br>
             <input type="checkbox" id="emptyRooms" name="emptyRooms">
             <label for="emptyRooms">Empty Classrooms</label><br>
-        </select>
+        </div> 
+
         <button type="submit" id="submit" v-on:click="addBuilding()">Submit</button>
     </form>
 </template>
@@ -55,10 +57,12 @@ export default {
 
                 // add facilities if applicable
                 for (const facility in this.facilities){
-                    TutorialDataService.addFacilities(this.newBuilding.id, facility)
+                    TutorialDataService.addFacilities(this.newBuilding.id, this.facilities[facility])
                     .then(response => {
+                        
 //   console.log(`${property}: ${object[property]}`);
                         console.log(response.data);
+              
                     })
                     .catch(e => {
                         console.log(e);
@@ -77,3 +81,16 @@ export default {
     }
 }
 </script>
+<style>
+
+.facilityList, .facilityList label{
+    font-size: 1rem;
+}
+
+.facilityList input {
+    margin-left: 1rem;
+    margin-right: .5rem;
+    size: 1rem;
+}
+
+</style>
