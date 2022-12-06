@@ -34,6 +34,14 @@ class TutorialDataService {
     console.log("ENTERING REMOE");
     return http.delete("/building", building);
   }
+  
+  addFacilities(id, facility){
+    return http.post(`/createFacility/${id}`, facility);
+  }
+
+  getFacilities(buildingID){
+    return http.get(`/facility/${buildingID}`);
+  }
 
   addUser(user){
     return http.post("/user", user);

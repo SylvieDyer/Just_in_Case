@@ -54,16 +54,19 @@ const routes =  [
   name: "buildingID",
   component: () => import("./components/Building")
 },
-  {
-    path: "/tutorials/:id",
-    name: "tutorial-details",
-    component: () => import("./components/Tutorial")
-  },
-  {
-    path: "/add",
-    name: "add",
-    component: () => import("./components/AddTutorial")
-  }
+{
+  path: "/facility/:id",
+  name: "facilityByID",
+  component: () => import("./components/Building")
+},
+{
+  path: "/createFacility/:id",
+  name: "createFacilityByID",
+  component: () => import("./components/Building")
+},
+
+
+
 ];
 
 const router = createRouter({

@@ -23,6 +23,7 @@ export default {
       building: {
         buildingName: null,
         description: null,
+        facilities: [],
       },
       routeParam: 0,
     };
@@ -38,8 +39,21 @@ export default {
         console.log("GETTING BUILDING BY ID..: "+ id);
       TutorialDataService.getBuildingByID(id)
         .then(response => {
+          console.log(response.data);
             this.building.buildingName = response.data.buildingName;
             this.building.description = response.data.description;
+
+            console.log(id);
+            // getting the facilities
+           TutorialDataService.getFacilities(id)
+           .then(response => {
+            console.log("got facilities: ");
+            console.log(response.data);
+              this.building.facilities = response.data;
+           })
+           .catch(e => {
+            console.log(e);
+           })
         })
         .catch(e => {
           console.log(e);
