@@ -6,15 +6,16 @@
         <textarea class="addBuildingInput" placeholder="Description of the building" v-model="newBuilding.description" rows="10"></textarea>
  
         <div class="facilityList">
-            <input type="checkbox" id="studyArea" name="studyArea" value="Study Area" v-model="this.facilities">
+            <input type="checkbox" id="studyArea" name="studyArea" :value="this.studyArea" v-model="this.facilities">
             <label for="studyArea">Study Area</label><br>
-            <input type="checkbox" id="food" name="food" value="Food & Drink" v-model="this.facilities">
+            <input type="checkbox" id="food" name="food" :value="this.food" v-model="this.facilities">
             <label for="food">Food & Drink</label><br>
-            <input type="checkbox" id="eatingArea" name="eatingArea" value="Eating Area" v-model="this.facilities">
+            <input type="checkbox" id="eatingArea" name="eatingArea" :value="this.eatingArea" v-model="this.facilities">
             <label for="eatingArea">Eating Area</label><br>
-            <input type="checkbox" id="emptyRooms" name="emptyRooms" value="Empty Classrooms" v-model="this.facilities">
+            <input type="checkbox" id="emptyRooms" name="emptyRooms" :value="this.emptyRooms" v-model="this.facilities">
             <label for="emptyRooms">Empty Classrooms</label><br>
         </div> 
+        <div> {{ this.facilities[0] }}</div>
 
         <button type="submit" id="submit" v-on:click="addBuilding()">Submit</button>
     </form>
@@ -27,14 +28,38 @@ import TutorialDataService from "../services/TutorialDataService";
 export default {
     name: 'addBuilding',
     data() {
-    return {
-        newBuilding: {
-            id: null,
-            name: "",
-            description: "",
-        },
-        facilities : [],
-    }
+        return {
+            newBuilding: {
+                id: null,
+                name: "",
+                description: "",
+            },
+            facilities : [],
+            studyArea: {
+                facilityID: null,
+                facilityName: "Study Area",
+                status: "Empty",
+                TimeStamp: new Date().getDate(),
+            },
+            food: {
+                facilityID: null,
+                facilityName: "Food & Drink",
+                status: "Empty",
+                TimeStamp: new Date().getDate(),
+            },
+            eatingArea: {
+                facilityID: null,
+                facilityName: "Eating Area",
+                status: "Empty",
+                TimeStamp: new Date().getDate(),
+            },
+            emptyRooms: {
+                facilityID: null,
+                facilityName: "Empty Classrooms",
+                status: "Empty",
+                TimeStamp: new Date().getDate(),
+            },
+        }
     },
     methods: {
         // send info in new post 
@@ -43,35 +68,33 @@ export default {
                 buildingName: this.newBuilding.name,
                 description: this.newBuilding.description,
             };
-           
+            console.log(this.facilities);
+            alert(this.facilities);
+            
             TutorialDataService.createBuilding(newBuilding)
             .then(response => {
-                alert("ADDING BUILDING");
+                alert("ADDING BUILDING:");
+                alert(this.facilities);
                 newBuilding = response.data;
-                this.submitted = true;
 
                 // if no facilities, add building 
-                if (this.facilities.length === 0){
+                if (this.facilities.length == 0){
                     alert("no facilities");
-                    // this.$emit("add-building");
                     return;
                 }
                 
-                // add facilities if applicable
                 for (let i = 0; i < this.facilities.length; i++){
-                    TutorialDataService.addFacilities(this.newBuilding.buildingId, this.facilities[i])
+                    TutorialDataService.addFacilities(this.facilities[i], this.newBuilding.buildingId)
                     .then(response => {
+                        alert("adding facilities");
                         alert(this.facilities[i]);
-
                         console.log(response.data);
-                        // this.$emit("add-building");
                     })
                     .catch(e => {
                         alert("FAILED TO ADD FACILITIES ");
                         console.log(e);
                     })
                 }
-                
             })
             .catch(e => {
                 alert("FAILED TO ADD BUILDING");

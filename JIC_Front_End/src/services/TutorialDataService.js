@@ -27,6 +27,7 @@ class TutorialDataService {
   }
 
   createBuilding(building) {
+    alert("in CREATEBUILDING() tutorialdataservice");
     return http.post("/buildinghub", building);
   }
 
@@ -35,7 +36,8 @@ class TutorialDataService {
     return http.delete("/building", building);
   }
   
-  addFacilities(id, facility){
+  addFacilities(facility, id){
+    alert("ENTERING ADD FACILITIES TUTORIALDATASERVICE");
     return http.post(`/createFacility/${id}`, facility, id);
   }
 
