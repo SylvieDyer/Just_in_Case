@@ -178,15 +178,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.0</version>
 				 <configuration>
-					<excludes>
-						<exclude>DbUtilsTest.java</exclude> 
-					</excludes>
-					<includes>
-						<include>BuildingTest.java</include>
-						<include>FacilityTest.java</include>
-						<include>UserTest.java</include>
-						<include>LiveAlertPostTest.java</include>
-					</includes>
 					<forkCount>3</forkCount>
 					<reuseForks>true</reuseForks>
 					<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
