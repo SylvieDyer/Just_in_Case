@@ -1,4 +1,3 @@
-package JUnit; 
 import java.util.*;
 import org.junit.*;
 import java.io.*;
