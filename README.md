@@ -25,7 +25,7 @@ run `npm install`
 
 run `npm run serve`
 
-Then, use Google Chrome to navigate to `localhost:____`
+Then, use Google Chrome to navigate to `http://localhost:8081/`
 
 *To access the website as admin, you can use the following credentials:*
 
