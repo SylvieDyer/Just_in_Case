@@ -14,11 +14,15 @@ The Just In Case Application is divided into two main sections, the Live Feed an
 
 Running application:
 First, on backend branch (main branch), using the terminal:
+
 run `mvn clean install`
+
 run `mvn sprint-boot:run`
 
 Then, on frontend branch, using the terminal:
+
 run `npm install`
+
 run `npm run serve`
 
 Then, use Google Chrome to navigate to `localhost:____`
