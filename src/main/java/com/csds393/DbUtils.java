@@ -562,7 +562,7 @@ public class DbUtils {
         try {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT just_in_case.app_users.caseID" 
-                + " FROM just_in_case.app_users JOIN just_in_case.posts" 
+                + " FROM just_in_case.app_users, just_in_case.posts" 
                 + " WHERE just_in_case.app_users.caseID = just_in_case.posts.caseID"
                 + " AND just_in_case.posts.postID = '" + postID + "'");
             if(rs.next()) {
