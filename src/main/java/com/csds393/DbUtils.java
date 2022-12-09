@@ -624,9 +624,9 @@ public class DbUtils {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM just_in_case.app_users WHERE just_in_case.app_users.caseID = 'DEFAULT';");
             if(!rs.next()) {
-                stmt.executeUpdate("INSERT INTO just_in_case.app_users(caseID, userName, postAnon, isAdmin)"
+                stmt.executeUpdate("INSERT INTO just_in_case.app_users(caseID, userName, postAnon, isAdmin, password)"
                 + " VALUES ('" + user.getCaseID() + "', '" + user.getUserName() + "', '" 
-                + user.getPostAnon() + "', '" + user.getIsAdmin() + "')");
+                + user.getPostAnon() + "', '" + user.getIsAdmin() + "', '" + user.getPassword() + "')");
             }
             stmt.close();
             return user;
