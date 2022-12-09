@@ -80,7 +80,7 @@ public class DbUtils {
     private User getUserFromResultSet(ResultSet rs) {
         try {
             return new User(rs.getString("caseID"), rs.getString("userName"),  
-            rs.getInt("postAnon"), rs.getInt("isAdmin"), rs.getString("password"));
+            rs.getInt("isAdmin"), rs.getInt("postAnon"), rs.getString("password"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

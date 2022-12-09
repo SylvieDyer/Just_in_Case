@@ -3,7 +3,8 @@ insert into just_in_case.building values (2, 'Building2', 'Description2');
 
 insert into just_in_case.facility values (1, 'B1just_in_case.facility1', 'NOT_BUSY', NOW());
 insert into just_in_case.facility values (2, 'B1just_in_case.facility2', 'CLOSED', NOW());
-insert into just_in_case.facility values (3, 'B1just_in_case.facility1', 'NOT_BUSY', NOW());
+insert into just_in_case.facility values (3, 'B2just_in_case.facility1', 'NOT_BUSY', NOW());
+insert into just_in_case.facility values (4, 'B3just_in_case.facility1', 'FAIRLY_BUSY', NOW());
 
 insert into just_in_case.within values (1, 1);
 insert into just_in_case.within values (1, 2);
