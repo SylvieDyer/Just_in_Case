@@ -35,9 +35,9 @@ Password: admin!23
 
 *To access as non-admin, use the following credentials:*
 
-Email: abc123@case.edu
+Email: pop123@case.edu
 
-Password: pass!23
+Password: hihi
 
 
 ## 1.3 User Functionality
