@@ -170,7 +170,15 @@ public class DbUtils {
     public LiveAlertPost addLiveAlertPostWithID(LiveAlertPost liveAlertPost, String caseID) {
         try {
             Statement stmt = conn.createStatement();
-            User user = getUserByID(caseID);
+            stmt = conn.createStatement();
+            User user = null;
+
+            ResultSet userFromIDRS = stmt.executeQuery(
+                "SELECT * FROM just_in_case.app_users WHERE caseID='"+ caseID + "'");
+            if(userFromIDRS.next()) {
+                user = getUserFromResultSet(userFromIDRS);
+            }
+            
             stmt.executeUpdate(
                 "INSERT INTO just_in_case.livealertpost(postType, location, time, numUpvotes, numDownvotes)"
                 + " VALUES ('" + liveAlertPost.getPostType() + "', '" + liveAlertPost.getLocation() + "', " 
