@@ -187,7 +187,8 @@ public class DbUtilsTest {
 
         DbUtils dbUtils = new DbUtils(db.getConnection());
         dbUtils.addLiveAlertPost(liveAlertPost, null);
-        long returnedPostID = dbUtils.deleteLiveAlertPost(liveAlertPost);
+        DbUtils dbUtils2 = new DbUtils(db.getConnection());
+        long returnedPostID = dbUtils2.deleteLiveAlertPost(liveAlertPost);
 
         final Connection conn = db.getConnection();
         Statement stmt = conn.createStatement();
@@ -312,7 +313,8 @@ public class DbUtilsTest {
 
         DbUtils dbUtils = new DbUtils(db.getConnection());
         dbUtils.addBuilding(building, null);
-        long returnedBuildingID = dbUtils.deleteBuilding(building);
+        DbUtils dbUtils2 = new DbUtils(db.getConnection());
+        long returnedBuildingID = dbUtils2.deleteBuilding(building);
 
         final Connection conn = db.getConnection();
         Statement stmt = conn.createStatement();
@@ -401,7 +403,8 @@ public class DbUtilsTest {
 
         DbUtils dbUtils = new DbUtils(db.getConnection());
         dbUtils.addFacility(facility, building);
-        long returnedFacilityID = dbUtils.deleteFacility(facility);
+        DbUtils dbUtils2 = new DbUtils(db.getConnection());
+        long returnedFacilityID = dbUtils2.deleteFacility(facility);
 
         final Connection conn = db.getConnection();
         Statement stmt = conn.createStatement();
