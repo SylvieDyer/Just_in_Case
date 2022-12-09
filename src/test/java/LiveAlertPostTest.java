@@ -1,7 +1,7 @@
 import java.util.*;
 import java.sql.Timestamp;
 import com.csds393.Location;
-import org.junit.*;
+import org.junit.jupiter.api.Test;
 import java.io.*;
 import static org.junit.Assert.*;
 import com.csds393.LiveAlertPost;

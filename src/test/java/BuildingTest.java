@@ -1,5 +1,7 @@
 import java.util.*;
-import org.junit.*;
+
+import org.junit.jupiter.api.Test;
+
 import java.io.*;
 import static org.junit.Assert.*;
 import com.csds393.Building;
