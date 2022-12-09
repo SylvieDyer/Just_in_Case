@@ -93,7 +93,7 @@ Edit building currently only allows administrators to select a building from the
 
 <img width="300" alt="Screen Shot 2022-12-09 at 4 57 02 PM" src="https://user-images.githubusercontent.com/102556053/206802333-1413ebbc-27e5-4b78-b2c3-517519019737.png">
 
-#### 2.1.4 Log in Invalid e-mail error (not a CWRU email)
+#### 2.1.5 Log in Invalid e-mail error (not a CWRU email)
 
 <img width="300" alt="Screen Shot 2022-12-09 at 4 57 35 PM" src="https://user-images.githubusercontent.com/102556053/206802384-ef727197-d6de-465f-b838-5c7dc2bb7271.png">
 
