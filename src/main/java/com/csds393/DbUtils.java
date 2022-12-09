@@ -444,13 +444,20 @@ public class DbUtils {
     }
 
     public Facility addFacilityByID(Facility facility, long buildingID) {
-        Building building = getBuildingByID(buildingID);
+        Building building = null;
         try {
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate(
+            stmt = conn.createStatement();
+            ResultSet rsBuilding = stmt.executeQuery(
+                "SELECT * FROM just_in_case.building WHERE buildingID='"+ buildingID + "'");
+            if(rsBuilding.next()) {
+                building = getBuildingFromResultSet(rsBuilding);
+            }
+
+             stmt.executeUpdate(
                 "INSERT INTO just_in_case.facility(facilityName, status, statusLastUpdated)"
                 + " VALUES ('" + facility.getFacilityName() + "', '" + facility.getStatus() + "', " 
-                + "NOW()" + "')", stmt.RETURN_GENERATED_KEYS);
+                + "NOW()" + ")", stmt.RETURN_GENERATED_KEYS);
             ResultSet rs = stmt.getGeneratedKeys();
         
             if(rs.next()) {
