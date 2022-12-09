@@ -120,6 +120,7 @@ li, ul {
     border-left: solid;
     /* padding: 5%; */
     overflow: scroll;
+    width: 100%;
 }
 
 /* BUILDING HUBS PORTION: */

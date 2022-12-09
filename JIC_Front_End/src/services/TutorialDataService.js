@@ -27,17 +27,14 @@ class TutorialDataService {
   }
 
   createBuilding(building) {
-    alert("in CREATEBUILDING() tutorialdataservice");
     return http.post("/buildinghub", building);
   }
 
   deleteBuilding(building) {
-    console.log("ENTERING REMOE");
     return http.delete("/building", building);
   }
   
   addFacilities(facility, id){
-    alert("ENTERING ADD FACILITIES TUTORIALDATASERVICE");
     return http.post(`/createFacility/${id}`, facility, id);
   }
 

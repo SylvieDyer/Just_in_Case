@@ -53,7 +53,6 @@
         </div>
           <Feed v-if="this.feed"/>
           <Building v-if="this.building" :buildingID="this.selectedBuildingID"/>
-          
         
         <button class="postBtn" id="postBtn" v-on:click="createPost()">
             +
