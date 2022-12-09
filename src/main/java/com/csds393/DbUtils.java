@@ -382,10 +382,15 @@ public class DbUtils {
     }
 
     public List<Facility> getFacilitiesByName(String buildingName) {
-        Building building = getBuildingByName(buildingName);
+        Building building = null;
         List<Facility> facilities = new ArrayList<Facility>();
         try {
             Statement stmt = conn.createStatement();
+            ResultSet buildingRS = stmt.executeQuery(
+                "SELECT * FROM just_in_case.building WHERE buildingName='"+ buildingName + "'");
+            if(buildingRS.next()) {
+                building = getBuildingFromResultSet(buildingRS);
+            }
             ResultSet rs = stmt.executeQuery("SELECT just_in_case.facility.* FROM FROM just_in_case.facility JOIN just_in_case.within " +  
                 "WHERE just_in_case.facility.facilityID = just_in_case.within.facilityID " + 
                 "AND just_in_case.within.buildingID = '" + building.getBuildingID() + "'");
@@ -408,7 +413,7 @@ public class DbUtils {
             stmt.executeUpdate(
                 "INSERT INTO just_in_case.facility(facilityName, status, statusLastUpdated)"
                 + " VALUES ('" + facility.getFacilityName() + "', '" + facility.getStatus() + "', " 
-                + "NOW()" + "')", stmt.RETURN_GENERATED_KEYS);
+                + "NOW()" + ")", stmt.RETURN_GENERATED_KEYS);
             ResultSet rs = stmt.getGeneratedKeys();
         
             if(rs.next()) {
