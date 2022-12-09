@@ -515,26 +515,18 @@ public class DbUtils {
         try {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(
-                "UPDATE just_in_case.facility SET status = '" +  facility.getStatus().toString() 
+                "UPDATE just_in_case.facility SET status = '" +  status.toString() 
                 + "', statusLastUpdated = " + "NOW()" +
-                " WHERE just_in_case.facility.facilityID = '" + facility.getFacilityID() + "'",
-                stmt.RETURN_GENERATED_KEYS);
-            ResultSet rs = stmt.getGeneratedKeys();
-        
-            if(rs.next()) {
-                long facilityID = rs.getLong(1);
-                
-                ResultSet insertedResultSet = stmt.executeQuery(
-                    "SELECT * FROM just_in_case.facility WHERE facilityID='" + facilityID + "'");
-                if(insertedResultSet.next()) {
-                    return getFacilityFromResultSet(insertedResultSet);
-                }                
-                conn.close();
-                return null;
-            } else {
-                conn.close();
-                return null;
-            }
+                " WHERE just_in_case.facility.facilityID = '" + facility.getFacilityID() + "'");
+                    
+            ResultSet insertedResultSet = stmt.executeQuery(
+                "SELECT * FROM just_in_case.facility WHERE facilityID='" + facility.getFacilityID() + "'");
+            
+            if(insertedResultSet.next()) {
+                return getFacilityFromResultSet(insertedResultSet);
+            }                
+            conn.close();
+            return null;
             
         } catch (SQLException e) {
             e.printStackTrace();
