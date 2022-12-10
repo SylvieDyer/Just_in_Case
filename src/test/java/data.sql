@@ -1,5 +1,6 @@
 insert into just_in_case.building values (1, 'Building1', 'Description1');
 insert into just_in_case.building values (2, 'Building2', 'Description2');
+insert into just_in_case.building values (3, 'BuildingNoFacilities', 'Description2');
 
 insert into just_in_case.facility values (1, 'B1just_in_case.facility1', 'NOT_BUSY', NOW());
 insert into just_in_case.facility values (2, 'B1just_in_case.facility2', 'CLOSED', NOW());

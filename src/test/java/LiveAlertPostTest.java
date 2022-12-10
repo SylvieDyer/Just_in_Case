@@ -121,8 +121,9 @@ public class LiveAlertPostTest {
     @Test
     public void testSetDate(){
         LiveAlertPost post = new LiveAlertPost();
-        post.setDate(new Timestamp(System.currentTimeMillis()));
-        assertEquals(new Timestamp(System.currentTimeMillis()),post.getDate());
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        post.setDate(currentTime);
+        assertEquals(currentTime,post.getDate());
     }
 
     @Test

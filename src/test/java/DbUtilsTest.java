@@ -17,6 +17,7 @@ import com.csds393.Location;
 import com.csds393.PostType;
 import com.csds393.Status;
 import com.csds393.User;
+import com.mysql.cj.exceptions.AssertionFailedException;
 import com.mysql.cj.xdevapi.Result;
 
 import org.apache.catalina.startup.UserConfig;
@@ -30,9 +31,12 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.test.context.TestPropertySource;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DbUtilsTest {
@@ -66,6 +70,12 @@ public class DbUtilsTest {
     }
 
     @Test
+    public void dbUtilsInitTestWithActualDatabase() throws Exception {
+        DbUtils dbUtils = new DbUtils();
+        assertTrue(dbUtils != null); 
+    }
+
+    @Test
     public void testGetPost() throws Exception {
         long postID = 1;
 
@@ -81,6 +91,27 @@ public class DbUtilsTest {
         assertEquals(post, getLiveAlertPostFromResultSet(rs));
     }
 
+    @Test 
+    public void testGetPostThrowsException() throws Exception {
+        long postID = 1;
+
+        final Connection conn = db.getConnection();
+        conn.close();
+        DbUtils dbUtils = new DbUtils(conn);
+        assertNull(dbUtils.getPost(postID)); 
+    }  
+    
+    @Test 
+    public void testGetPostDoesNotExist() throws Exception {
+        long postID = 30;
+
+        final Connection conn = db.getConnection();
+        conn.close();
+        DbUtils dbUtils = new DbUtils(conn);
+        assertNull(dbUtils.getPost(postID)); 
+    }   
+
+
     @Test
     public void testFeed() throws Exception {
         final Connection conn = db.getConnection();
@@ -95,6 +126,14 @@ public class DbUtilsTest {
             rs.next();
             assertEquals(feed.get(i), getLiveAlertPostFromResultSet(rs));
         }
+    }
+
+    @Test
+    public void testFeedEmpty() throws Exception {
+        final Connection conn = db.getConnection();
+        conn.close();
+        DbUtils dbUtils = new DbUtils(conn);
+        assertTrue(dbUtils.getFeed().isEmpty());
     }
 
     @Test
@@ -118,6 +157,16 @@ public class DbUtilsTest {
         assertEquals(queriedPost.getNumDownvotes(), 5);
 
         conn.close();
+    }
+
+    @Test
+    public void testAddLiveAlertPostFromObjectDefaultUserThrowsException() throws Exception {
+        LiveAlertPost liveAlertPost = new LiveAlertPost(PostType.EXCESSIVE_SNOW, 
+                Location.CLEVELAND_INSTITUTE_OF_ART, 4, 5);
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();
+        assertNull(dbUtils.addLiveAlertPost(liveAlertPost, null));
     }
 
     @Test
@@ -151,6 +200,27 @@ public class DbUtilsTest {
     }
 
     @Test
+    public void testAddLiveAlertPostFromObjectSetUserThrowsException() throws Exception {
+        LiveAlertPost liveAlertPost = new LiveAlertPost(PostType.EXCESSIVE_SNOW, 
+                Location.CLEVELAND_INSTITUTE_OF_ART, 4, 5);
+        User user = new User("def456", "Test2", 0, 1, "def456");
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();
+        assertNull(dbUtils.addLiveAlertPost(liveAlertPost, user));
+    }
+
+    @Test
+    public void testAddLiveAlertPostFromObjectSetUserThrowsException2() throws Exception {
+        LiveAlertPost liveAlertPost = new LiveAlertPost(PostType.EXCESSIVE_SNOW, 
+                Location.CLEVELAND_INSTITUTE_OF_ART, 4, 5);
+        User user = new User("doesNotExist", "doesNotExist", 0, 1, "def456");
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        assertNull(dbUtils.addLiveAlertPost(liveAlertPost, user));
+    }
+
+    @Test
     public void testAddLiveAlertPostFromObjectSetUserID() throws Exception {
         LiveAlertPost liveAlertPost = new LiveAlertPost(PostType.EXCESSIVE_SNOW, 
                 Location.CLEVELAND_INSTITUTE_OF_ART, 4, 5);
@@ -181,6 +251,28 @@ public class DbUtilsTest {
     }
 
     @Test
+    public void testAddLiveAlertPostFromObjectSetUserIDThrowsException() throws Exception {
+        LiveAlertPost liveAlertPost = new LiveAlertPost(PostType.EXCESSIVE_SNOW, 
+                Location.CLEVELAND_INSTITUTE_OF_ART, 4, 5);
+        String caseID = "def456";
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();
+        assertNull(dbUtils.addLiveAlertPostWithID(liveAlertPost, caseID));
+    }
+
+    @Test
+    public void testAddLiveAlertPostFromObjectSetUserIDNoSuchID() throws Exception {
+        LiveAlertPost liveAlertPost = new LiveAlertPost(PostType.EXCESSIVE_SNOW, 
+                Location.CLEVELAND_INSTITUTE_OF_ART, 4, 5);
+        String caseID = "doesNotExist";
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        assertThrows(NullPointerException.class, () -> {
+            dbUtils.addLiveAlertPostWithID(liveAlertPost, caseID);});
+    }
+
+    @Test
     public void testDeletePost() throws Exception {
         LiveAlertPost liveAlertPost = new LiveAlertPost(PostType.EXCESSIVE_SNOW, 
                 Location.CLEVELAND_INSTITUTE_OF_ART, 4, 5);
@@ -197,6 +289,16 @@ public class DbUtilsTest {
         assertFalse(insertedResultSet.next());
 
         conn.close();
+    }
+
+    @Test
+    public void testDeletePostThrowsException() throws Exception {
+        LiveAlertPost liveAlertPost = new LiveAlertPost(PostType.EXCESSIVE_SNOW, 
+                Location.CLEVELAND_INSTITUTE_OF_ART, 4, 5);
+
+        DbUtils dbUtils = new DbUtils(db.getConnection());
+        dbUtils.addLiveAlertPost(liveAlertPost, null);
+        assertEquals(dbUtils.deleteLiveAlertPost(liveAlertPost), -1);
     }
 
     @Test
@@ -219,6 +321,25 @@ public class DbUtilsTest {
     }
 
     @Test
+    public void testGetBuildingByIDThrowsException() throws Exception {
+        long buildingID = 1;
+
+        final Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();
+        assertNull(dbUtils.getBuildingByID(buildingID));
+    }
+
+    @Test
+    public void testGetBuildingByIDNoSuchBuilding() throws Exception {
+        long buildingID = -1;
+
+        final Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        assertNull(dbUtils.getBuildingByID(buildingID));
+    }
+
+    @Test
     public void testGetBuildingByName() throws Exception {
         String buildingName = "Building1";
 
@@ -235,6 +356,27 @@ public class DbUtilsTest {
         assertEquals(building.getBuildingID(), queriedBuilding.getBuildingID());
         assertEquals(building.getBuildingName(), queriedBuilding.getBuildingName());
         assertEquals(building.getDescription(), queriedBuilding.getDescription());
+    }
+
+    @Test
+    public void testGetBuildingByNameThrowsException() throws Exception {
+        String buildingName = "Building1";
+
+        final Connection conn = db.getConnection();
+
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();
+        assertNull(dbUtils.getBuildingByName(buildingName));
+    }
+
+    @Test
+    public void testGetBuildingByNameNoSuchName() throws Exception {
+        String buildingName = "Does Not Exist";
+
+        final Connection conn = db.getConnection();
+
+        DbUtils dbUtils = new DbUtils(conn);
+        assertNull(dbUtils.getBuildingByName(buildingName));
     }
 
     @Test
@@ -258,6 +400,15 @@ public class DbUtilsTest {
     }
 
     @Test
+    public void testBuildingHubThrowsException() throws Exception {
+        final Connection conn = db.getConnection();
+
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();
+        assertTrue(dbUtils.getBuildingHub().isEmpty());
+    }
+
+    @Test
     public void testAddBuildingFromObjectDefaultFacilities() throws Exception {
         Building building = new Building("Building3", "Description3");
 
@@ -275,6 +426,16 @@ public class DbUtilsTest {
         assertEquals(queriedBuilding.getDescription(), "Description3");
 
         conn.close();
+    }
+
+    @Test
+    public void testAddBuildingFromObjectDefaultFacilitiesThrowsException() throws Exception {
+        Building building = new Building("Building3", "Description3");
+
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();
+        assertNull(dbUtils.addBuilding(building, null));
     }
 
     @Test
@@ -308,6 +469,31 @@ public class DbUtilsTest {
     }
 
     @Test
+    public void testAddBuildingFromObjectSetFacilitiesThrowsException() throws Exception {
+        Building building = new Building("Building3", "Description3");
+        Facility facility = new Facility(4, "B3just_in_case.facility1", Status.FAIRLY_BUSY, Timestamp.from(Instant.now()));
+        List<Facility> facilities = new ArrayList<Facility>();
+        facilities.add(facility);
+
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();
+        assertNull(dbUtils.addBuilding(building, facilities));
+    }
+
+    @Test
+    public void testAddBuildingFromObjectSetFacilitiesNoSuchFacility() throws Exception {
+        Building building = new Building("Building3", "Description3");
+        Facility facility = new Facility(-1, "Doesnt exist", Status.FAIRLY_BUSY, Timestamp.from(Instant.now()));
+        List<Facility> facilities = new ArrayList<Facility>();
+        facilities.add(facility);
+
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        assertNull(dbUtils.addBuilding(building, facilities));
+    }
+
+    @Test
     public void testDeleteBuilding() throws Exception {
         Building building = new Building("toDelete", "toDelete");
 
@@ -323,6 +509,23 @@ public class DbUtilsTest {
         assertFalse(insertedResultSet.next());
 
         conn.close();
+    }
+
+    @Test
+    public void testDeleteBuildingThrowsException() throws Exception {
+        Building building = new Building("toDelete", "toDelete");
+
+        DbUtils dbUtils = new DbUtils(db.getConnection());
+        dbUtils.addBuilding(building, null);
+        assertEquals(dbUtils.deleteBuilding(building), -1);
+    }
+
+    @Test
+    public void testDeleteBuildingNoSuchBuilding() throws Exception {
+        Building building = new Building(-1, "does not exist", "toDelete");
+
+        DbUtils dbUtils = new DbUtils(db.getConnection());
+        assertEquals(dbUtils.deleteBuilding(building), -1);
     }
 
     @Test
@@ -344,6 +547,25 @@ public class DbUtilsTest {
 
         conn.close();
 
+    }
+
+    @Test
+    public void testGetFacilitiesByBuildingIDThrowsException() throws Exception {
+        long buildingID = 1;
+
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();
+        assertTrue(dbUtils.getFacilitiesByID(buildingID).isEmpty());
+    }
+
+    @Test
+    public void testGetFacilitiesByBuildingIDNoSuchID() throws Exception {
+        long buildingID = -1;
+
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        assertTrue(dbUtils.getFacilitiesByID(buildingID).isEmpty());
     }
     
     @Test
@@ -367,6 +589,36 @@ public class DbUtilsTest {
 
         conn.close();
 
+    }
+
+    @Test
+    public void testGetFacilitiesByBuildingNameThrowsException() throws Exception {
+        String buildingName = "Building1";
+
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();        
+        assertTrue(dbUtils.getFacilitiesByName(buildingName).isEmpty());
+    }
+
+    @Test
+    public void testGetFacilitiesByBuildingNameNoSuchName() throws Exception {
+        String buildingName = "Does Not Exist";
+
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);  
+        assertThrows(NullPointerException.class, () -> {
+            dbUtils.getFacilitiesByName(buildingName);});
+    }
+
+    @Test
+    public void testGetFacilitiesByBuildingNameBuildingHasNoFacilities() throws Exception {
+        String buildingName = "BuildingNoFacilities";
+
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);  
+        assertThrows(NullPointerException.class, () -> {
+            dbUtils.getFacilitiesByName(buildingName);});
     }
 
     @Test
@@ -397,6 +649,25 @@ public class DbUtilsTest {
     }
 
     @Test
+    public void testAddFacilityThrowsException() throws Exception {
+        Facility facility = new Facility("B1just_in_case.facility3", Status.SUPER_BUSY, Timestamp.from(Instant.now()));
+        Building building = new Building(1, "Building1", "Description1");
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();
+        assertNull(dbUtils.addFacility(facility, building));
+    }
+
+    @Test
+    public void testAddFacilityNoSuchBuilding() throws Exception {
+        Facility facility = new Facility("B1just_in_case.facility3", Status.SUPER_BUSY, Timestamp.from(Instant.now()));
+        Building building = new Building(-1, "Does Not Exist", "Description1");
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        assertNull(dbUtils.addFacility(facility, building));
+    }
+
+    @Test
     public void testDeleteFacility() throws Exception {
         Facility facility = new Facility("toDelete", Status.CLOSED, Timestamp.from(Instant.now()));
         Building building = new Building(1, "Building1", "Description1");
@@ -413,6 +684,16 @@ public class DbUtilsTest {
         assertFalse(insertedResultSet.next());
 
         conn.close();
+    }
+
+    @Test
+    public void testDeleteFacilityThrowsException() throws Exception {
+        Facility facility = new Facility("toDelete", Status.CLOSED, Timestamp.from(Instant.now()));
+        Building building = new Building(1, "Building1", "Description1");
+
+        DbUtils dbUtils = new DbUtils(db.getConnection());
+        dbUtils.addFacility(facility, building);
+        assertEquals(dbUtils.deleteFacility(facility), -1);
     }
 
     @Test
@@ -443,6 +724,26 @@ public class DbUtilsTest {
     }
 
     @Test
+    public void testAddFacilityByBuildingIDThrowsException() throws Exception {
+        Facility facility = new Facility("B1just_in_case.facility3", Status.SUPER_BUSY, Timestamp.from(Instant.now()));
+        long buildingID = 1;
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();
+        assertNull(dbUtils.addFacilityByID(facility, buildingID));
+    }
+
+    @Test
+    public void testAddFacilityByBuildingIDNoSuchID() throws Exception {
+        Facility facility = new Facility("B1just_in_case.facility3", Status.SUPER_BUSY, Timestamp.from(Instant.now()));
+        long buildingID = -1;
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        assertThrows(NullPointerException.class, () -> {
+            dbUtils.addFacilityByID(facility, buildingID);});
+    }
+
+    @Test
     public void testUpdateStatus() throws Exception {
         Facility facility = new Facility(4, "B3just_in_case.facility1", Status.FAIRLY_BUSY, Timestamp.from(Instant.now()));
         Status newStatus = Status.CLOSED;
@@ -457,6 +758,25 @@ public class DbUtilsTest {
         insertedResultSet.next();
 
         assertEquals(insertedResultSet.getString("status"), Status.CLOSED.toString());
+    }
+
+    @Test
+    public void testUpdateStatusThrowsException() throws Exception {
+        Facility facility = new Facility(4, "B3just_in_case.facility1", Status.FAIRLY_BUSY, Timestamp.from(Instant.now()));
+        Status newStatus = Status.CLOSED;
+        Connection conn = db.getConnection();
+        conn.close();
+        DbUtils dbUtils = new DbUtils(conn);
+        assertNull(dbUtils.updateStatus(facility, newStatus));
+    }
+
+    @Test
+    public void testUpdateStatusNoSuchFacility() throws Exception {
+        Facility facility = new Facility(-1, "Does Not Exist", Status.FAIRLY_BUSY, Timestamp.from(Instant.now()));
+        Status newStatus = Status.CLOSED;
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        assertNull(dbUtils.updateStatus(facility, newStatus));
     }
 
     @Test
@@ -481,6 +801,23 @@ public class DbUtilsTest {
     }
 
     @Test
+    public void testGetUserByIDThrowsException() throws Exception {
+        String caseID = "abc123";
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();
+        assertNull(dbUtils.getUserByID(caseID));
+    }
+
+    @Test
+    public void testGetUserByIDNoSuchID() throws Exception {
+        String caseID = "doesNotExist";
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        assertNull(dbUtils.getUserByID(caseID));
+    }
+
+    @Test
     public void testGetUserByPost() throws Exception {
         long postID = 1;
         DbUtils dbUtils = new DbUtils(db.getConnection());
@@ -493,6 +830,23 @@ public class DbUtilsTest {
         rs.next();
         assertEquals(caseID, rs.getString("caseID"));
 
+    }
+
+    @Test
+    public void testGetUserByPostThrowsException() throws Exception {
+        long postID = 1;
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils();
+        conn.close();
+        assertNull(dbUtils.getUserByPost(postID));
+    }
+
+    @Test
+    public void testGetUserByPostNoSuchPost() throws Exception {
+        long postID = -1;
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils();
+        assertNull(dbUtils.getUserByPost(postID));
     }
 
     @Test
@@ -519,6 +873,15 @@ public class DbUtilsTest {
     }
 
     @Test
+    public void testAddUserThrowsException() throws Exception {
+        User user = new User("test", "test", 0, 1, "pass!23");
+        Connection conn = db.getConnection();
+        DbUtils dbUtils = new DbUtils(conn);
+        conn.close();
+        assertNull(dbUtils.addUser(user));
+    }
+
+    @Test
     public void testDeleteUser() throws Exception {
         User user = new User("test", "test", 0, 1, "pass!23");
         DbUtils dbUtils = new DbUtils(db.getConnection());
@@ -536,6 +899,14 @@ public class DbUtilsTest {
         conn.close();
     }
 
+    @Test
+    public void testDeleteUserThrowsException() throws Exception {
+        User user = new User("test", "test", 0, 1, "pass!23");
+        DbUtils dbUtils = new DbUtils(db.getConnection());
+        dbUtils.addUser(user);
+        boolean returnedCaseID = dbUtils.deleteUser(user);
+        assertFalse(returnedCaseID);
+    }
 
     private LiveAlertPost getLiveAlertPostFromResultSet(ResultSet rs) {
         String postTypeString;
