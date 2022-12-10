@@ -142,5 +142,7 @@ Edit building currently only allows administrators to select a building from the
 
 ### 3.0.3.1 Code Coverage
 To access code coverage, after running mvn clean install on the backend, navigate to target/site.jacoco/index.html. Below is an up to date screenshot of code coverage.
+
+
 <img width="741" alt="image" src="https://user-images.githubusercontent.com/22923306/206828503-9a008ef1-68e7-4656-9587-9856dfa5e53a.png">
 
