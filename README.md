@@ -4,7 +4,9 @@
 Just In Case User Manual
 
 ## 1.0 General Information
-Just in Case is an application meant to help CWRU students plan for their day in advance by allowing them to post and receive updates on what’s happening on Campus. 
+Just in Case is an application meant to help CWRU students plan for their day in advance by allowing them to post and receive updates on what’s happening on Campus.
+
+Known issues and omissions in the application are listed under the GitHub issues page of this repository.
 
 ## 1.1 System Overview
 The Just In Case Application is divided into two main sections, the Live Feed and the Building Hub. It opens up with a login page for CWRU users or admin, taking in their case email in the format abc123@case.edu and a password from the user. 
