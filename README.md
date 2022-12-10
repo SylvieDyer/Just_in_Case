@@ -1,5 +1,5 @@
 # Just_in_Case
-Please note that front end code is in branch frontend, while back end code is in main.
+***Please note that front end code is in branch frontend, while back end code is in main.***
 
 Just In Case User Manual
 
@@ -127,7 +127,7 @@ Edit building currently only allows administrators to select a building from the
 #### 2.3.4 Remove Building Pop-up
 <img width="300" alt="Screen Shot 2022-12-09 at 4 51 26 PM" src="https://user-images.githubusercontent.com/102556053/206801724-035550d1-a911-47e9-82bf-20594599c509.png">
 
-## 3.0 Relevant documentation:
+## 3.0 Relevant documentation
 ### 3.0.1 Software Requirements Specifications
 
 [Software Requirements Specification.pdf](https://github.com/SylvieDyer/Just_in_Case/files/10198454/Software.Requirements.Specification.pdf)
